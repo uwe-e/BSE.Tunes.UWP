@@ -1,13 +1,10 @@
-﻿using BSE.Tunes.Data;
+﻿using BSE.Tunes.StoreApp.Models.Contract;
 using BSE.Tunes.StoreApp.Mvvm;
 using BSE.Tunes.StoreApp.Mvvm.Messaging;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -15,15 +12,11 @@ namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class DeletePlaylistContentDialogViewModel : ViewModelBase
     {
-        #region FieldsPrivate
         private ObservableCollection<Playlist> m_playlists;
         private ICommand m_deletePlaylistCommand;
         private bool m_cancel;
         private string m_errorMessage;
         private string m_deleteInformation;
-        #endregion
-
-        #region Properties
 
         public ObservableCollection<Playlist> Playlists => m_playlists ?? (m_playlists = new ObservableCollection<Playlist>());
         public bool Cancel
@@ -63,9 +56,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
         }
         public ICommand DeletePlaylistCommand => m_deletePlaylistCommand ?? (m_deletePlaylistCommand = new RelayCommand(DeletePlaylist));
-        #endregion
 
-        #region MethodsPrivate
         private void DeletePlaylist()
         {
             Cancel = !ValidateDialog();
@@ -105,6 +96,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
             return isValid;
         }
-        #endregion
     }
 }

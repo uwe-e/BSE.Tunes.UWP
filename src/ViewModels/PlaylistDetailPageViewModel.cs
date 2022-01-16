@@ -1,7 +1,7 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.Data.Extensions;
+﻿using BSE.Tunes.StoreApp.Collections;
 using BSE.Tunes.StoreApp.Managers;
 using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using BSE.Tunes.StoreApp.Mvvm.Messaging;
 using BSE.Tunes.StoreApp.Services;
 using GalaSoft.MvvmLight.Command;
@@ -22,16 +22,13 @@ namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class PlaylistDetailPageViewModel : PlaylistBaseViewModel
     {
-        #region FieldsPrivate
         private Playlist m_playlist;
         private BitmapSource m_coverSource;
         private string m_subTitle;
         private ICommand m_showAlbumCommand;
         private RelayCommand m_playRandomCommand;
         private ICommand m_updatePlaylistCommand;
-        #endregion
 
-        #region Properties
         public Playlist Playlist
         {
             get
@@ -74,9 +71,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             await UpdatePlaylistEntries();
         }));
         public RelayCommand PlayRandomCommand => m_playRandomCommand ?? (m_playRandomCommand = new RelayCommand(PlayRandom, CanPlayRandom));
-        #endregion
 
-        #region MethodsPublic
         public PlaylistDetailPageViewModel()
         {
             Messenger.Default.Register<PlaylistChangedArgs>(this, args =>
@@ -133,9 +128,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 Messenger.Default.Send<PlaylistChangedArgs>(new PlaylistEntriesChangedArgs(Playlist));
             }
         }
-        #endregion
 
-        #region MethodsProtected
         protected override void OnSelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             base.OnSelectedItemsCollectionChanged(sender, e);
@@ -143,9 +136,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 SelectedItems.Cast<ListViewItemViewModel>().OrderBy(itm => ((PlaylistEntry)itm.Data).SortOrder));
             AllItemsSelectable = HasSelectedItems & !AllItemsSelected;
         }
-        #endregion
 
-        #region MethodsPrivate
         private async void LoadData(Playlist playlist)
         {
             Items.Clear();
@@ -237,6 +228,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
                     PlayerMode.Playlist);
             }
         }
-        #endregion
     }
 }

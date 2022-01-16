@@ -1,22 +1,14 @@
-﻿using BSE.Tunes.Data;
+﻿using BSE.Tunes.StoreApp.Models.Contract;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class PlaylistFlyoutItemViewModel : MenuFlyoutItemViewModel
     {
-        #region FieldsPrivate
         private Playlist m_playlist;
         private ICommand m_addSelectedToPlaylistCommand;
-        #endregion
 
-        #region Properties
         public Playlist Playlist
         {
             get
@@ -35,7 +27,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
         {
             //throw new NotImplementedException();
         }
-
-        #endregion
     }
 }

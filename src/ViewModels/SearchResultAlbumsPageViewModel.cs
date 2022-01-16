@@ -1,13 +1,11 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Collections;
+﻿using BSE.Tunes.StoreApp.Collections;
 using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace BSE.Tunes.StoreApp.ViewModels

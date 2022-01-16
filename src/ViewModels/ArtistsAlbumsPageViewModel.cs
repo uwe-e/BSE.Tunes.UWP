@@ -1,25 +1,22 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Collections;
+﻿using BSE.Tunes.StoreApp.Collections;
+using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
-using BSE.Tunes.StoreApp.Models;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class ArtistsAlbumsPageViewModel : SelectableItemsBaseViewModel
     {
-        #region FieldsPrivate
         private IncrementalObservableCollection<ListViewItemViewModel> m_albums;
         private string m_headerText;
         private string m_pageHeaderText;
         private Artist m_artist;
-        #endregion
 
-        #region Properties
         public string HeaderText
         {
             get
@@ -68,9 +65,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 RaisePropertyChanged("Albums");
             }
         }
-        #endregion
-
-        #region MethodsPublic
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
@@ -121,9 +115,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
             ClearSelection();
         }
-        #endregion
 
-        #region MethodsPrivate
         private async void LoadData(Artist artist)
         {
             Albums = null;
@@ -167,6 +159,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 );
             }
         }
-        #endregion
     }
 }

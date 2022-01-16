@@ -1,10 +1,5 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 
 namespace BSE.Tunes.StoreApp.Mvvm.Messaging
 {
@@ -14,7 +9,8 @@ namespace BSE.Tunes.StoreApp.Mvvm.Messaging
         {
             get; private set;
         }
-        public PlaylistCreatedArgs(Playlist playlist, InsertMode insertMode) : base(playlist) {
+        public PlaylistCreatedArgs(Playlist playlist, InsertMode insertMode) : base(playlist)
+        {
             InsertMode = insertMode;
         }
     }

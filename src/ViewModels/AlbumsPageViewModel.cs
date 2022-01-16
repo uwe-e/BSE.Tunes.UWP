@@ -1,33 +1,28 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.Data.Extensions;
-using BSE.Tunes.StoreApp.Collections;
+﻿using BSE.Tunes.StoreApp.Collections;
+using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using BSE.Tunes.StoreApp.Models;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
-	public class AlbumsPageViewModel : SelectableItemsBaseViewModel
-	{
-		#region FieldsPrivate
-		private IncrementalObservableCollection<ListViewItemViewModel> m_albums;
+    public class AlbumsPageViewModel : SelectableItemsBaseViewModel
+    {
+        private IncrementalObservableCollection<ListViewItemViewModel> m_albums;
         private ObservableCollection<int> m_filteredTrackIds;
         private ObservableCollection<MenuFlyoutItemViewModel> m_genres;
         private int m_tracksCount;
         private string m_headerText;
-		private string m_pageHeaderText;
-		private bool m_isGenreFlyoutOpen;
-		private ICommand m_openGenreFlyoutCommand;
+        private string m_pageHeaderText;
+        private bool m_isGenreFlyoutOpen;
+        private ICommand m_openGenreFlyoutCommand;
         private RelayCommand m_playRandomCommand;
         private Genre m_selectedGenre;
 
-        #endregion
-
-        #region Properties
         public ObservableCollection<int> FilteredTrackIds
         {
             get
@@ -53,74 +48,72 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
         }
         public Genre SelectedGenre
-		{
-			get
-			{
-				return m_selectedGenre;
-			}
-			set
-			{
-				m_selectedGenre = value;
-				RaisePropertyChanged(() => SelectedGenre);
-			}
-		}
-		public bool IsGenreFlyoutOpen
-		{
-			get
-			{
-				return m_isGenreFlyoutOpen;
-			}
-			set
-			{
-				m_isGenreFlyoutOpen = value;
-				RaisePropertyChanged(() => IsGenreFlyoutOpen);
-			}
-		}
-		public string HeaderText
-		{
-			get
-			{
-				return m_headerText;
-			}
-			set
-			{
-				m_headerText = value;
-				RaisePropertyChanged(() => HeaderText);
-			}
-		}
-		public string PageHeaderText
-		{
-			get
-			{
-				return m_pageHeaderText;
-			}
-			set
-			{
-				m_pageHeaderText = value;
-				RaisePropertyChanged(() => PageHeaderText);
-			}
-		}
-		public IncrementalObservableCollection<ListViewItemViewModel> Albums
-		{
-			get
-			{
-				return this.m_albums;
-			}
-			private set
-			{
-				this.m_albums = value;
-				RaisePropertyChanged("Albums");
-			}
-		}
-		public ObservableCollection<MenuFlyoutItemViewModel> Genres => m_genres ?? (m_genres = new ObservableCollection<MenuFlyoutItemViewModel>());
-		public ICommand OpenGenreFlyoutCommand => m_openGenreFlyoutCommand ?? (m_openGenreFlyoutCommand = new RelayCommand(() =>
-		{
-			IsGenreFlyoutOpen = true;
-		}));
+        {
+            get
+            {
+                return m_selectedGenre;
+            }
+            set
+            {
+                m_selectedGenre = value;
+                RaisePropertyChanged(() => SelectedGenre);
+            }
+        }
+        public bool IsGenreFlyoutOpen
+        {
+            get
+            {
+                return m_isGenreFlyoutOpen;
+            }
+            set
+            {
+                m_isGenreFlyoutOpen = value;
+                RaisePropertyChanged(() => IsGenreFlyoutOpen);
+            }
+        }
+        public string HeaderText
+        {
+            get
+            {
+                return m_headerText;
+            }
+            set
+            {
+                m_headerText = value;
+                RaisePropertyChanged(() => HeaderText);
+            }
+        }
+        public string PageHeaderText
+        {
+            get
+            {
+                return m_pageHeaderText;
+            }
+            set
+            {
+                m_pageHeaderText = value;
+                RaisePropertyChanged(() => PageHeaderText);
+            }
+        }
+        public IncrementalObservableCollection<ListViewItemViewModel> Albums
+        {
+            get
+            {
+                return this.m_albums;
+            }
+            private set
+            {
+                this.m_albums = value;
+                RaisePropertyChanged("Albums");
+            }
+        }
+        public ObservableCollection<MenuFlyoutItemViewModel> Genres => m_genres ?? (m_genres = new ObservableCollection<MenuFlyoutItemViewModel>());
+        public ICommand OpenGenreFlyoutCommand => m_openGenreFlyoutCommand ?? (m_openGenreFlyoutCommand = new RelayCommand(() =>
+        {
+            IsGenreFlyoutOpen = true;
+        }));
         public RelayCommand PlayRandomCommand => m_playRandomCommand ?? (m_playRandomCommand = new RelayCommand(PlayRandom, CanPlayRandom));
-        #endregion
 
-        #region MethodsPublic
         public async override void LoadData()
         {
             SelectedGenre = new Genre
@@ -151,7 +144,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                         Genres.Add(menuItem);
                     }
                 }
-                
+
             }
             await LoadAlbums(null);
         }
@@ -202,64 +195,62 @@ namespace BSE.Tunes.StoreApp.ViewModels
             PlayRandomCommand.RaiseCanExecuteChanged();
         }
 
-		public override void SelectItem(GridPanelItemViewModel item)
-		{
-			NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), item.Data);
-		}
-		public async override void PlayAll(GridPanelItemViewModel item)
-		{
-			if (HasSelectedItems)
-			{
-				PlaySelectedItems();
-			}
-			else
-			{
-				Album album = item.Data as Album;
-				if (album != null)
-				{
-					album = await DataService.GetAlbumById(album.Id);
-					if (album.Tracks != null)
-					{
-						var trackIds = album.Tracks.Select(track => track.Id);
-						if (trackIds != null)
-						{
-							PlayerManager.PlayTracks(
-								new System.Collections.ObjectModel.ObservableCollection<int>(trackIds),
-								PlayerMode.CD);
-						}
-					}
-				}
-			}
-		}
-		public async override void PlaySelectedItems()
-		{
-			var albumIds = SelectedItems.Cast<GridPanelItemViewModel>().Select(itm => (Album)itm.Data).Select(itm => itm.Id).ToList();
-			if (albumIds != null)
-			{
-				var entryIds = await DataService.GetTrackIdsByAlbumIds(albumIds);
-				if (entryIds != null)
-				{
-					PlayerManager.PlayTracks(
-						new System.Collections.ObjectModel.ObservableCollection<int>(entryIds),
-						PlayerMode.CD);
-				}
-			}
-			ClearSelection();
-		}
-		#endregion
+        public override void SelectItem(GridPanelItemViewModel item)
+        {
+            NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), item.Data);
+        }
+        public async override void PlayAll(GridPanelItemViewModel item)
+        {
+            if (HasSelectedItems)
+            {
+                PlaySelectedItems();
+            }
+            else
+            {
+                Album album = item.Data as Album;
+                if (album != null)
+                {
+                    album = await DataService.GetAlbumById(album.Id);
+                    if (album.Tracks != null)
+                    {
+                        var trackIds = album.Tracks.Select(track => track.Id);
+                        if (trackIds != null)
+                        {
+                            PlayerManager.PlayTracks(
+                                new System.Collections.ObjectModel.ObservableCollection<int>(trackIds),
+                                PlayerMode.CD);
+                        }
+                    }
+                }
+            }
+        }
+        public async override void PlaySelectedItems()
+        {
+            var albumIds = SelectedItems.Cast<GridPanelItemViewModel>().Select(itm => (Album)itm.Data).Select(itm => itm.Id).ToList();
+            if (albumIds != null)
+            {
+                var entryIds = await DataService.GetTrackIdsByAlbumIds(albumIds);
+                if (entryIds != null)
+                {
+                    PlayerManager.PlayTracks(
+                        new System.Collections.ObjectModel.ObservableCollection<int>(entryIds),
+                        PlayerMode.CD);
+                }
+            }
+            ClearSelection();
+        }
 
-		#region MethodsPrivate
-		private void OnMenuItemViewModelClicked(object sender, EventArgs e)
-		{
-			IsGenreFlyoutOpen = false;
-			SetGenre(sender as MenuFlyoutItemViewModel);
-		}
+        private void OnMenuItemViewModelClicked(object sender, EventArgs e)
+        {
+            IsGenreFlyoutOpen = false;
+            SetGenre(sender as MenuFlyoutItemViewModel);
+        }
 
-		private async void SetGenre(MenuFlyoutItemViewModel menuItemViewModel)
-		{
-			SelectedGenre = menuItemViewModel.Data;
-			await LoadAlbums(SelectedGenre.Id);
-		}
+        private async void SetGenre(MenuFlyoutItemViewModel menuItemViewModel)
+        {
+            SelectedGenre = menuItemViewModel.Data;
+            await LoadAlbums(SelectedGenre.Id);
+        }
         private bool CanPlayRandom()
         {
             return FilteredTrackIds?.Count > 0;
@@ -269,6 +260,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
         {
             PlayerManager.PlayTracks(this.FilteredTrackIds, PlayerMode.Random);
         }
-        #endregion
     }
 }

@@ -1,10 +1,6 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Mvvm;
-using System;
+﻿using BSE.Tunes.StoreApp.Models.Contract;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 

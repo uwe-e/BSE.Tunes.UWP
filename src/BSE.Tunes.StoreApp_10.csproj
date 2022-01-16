@@ -108,6 +108,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Collections\CollectionExtensions.cs" />
+    <Compile Include="Collections\NavigableCollection.cs" />
     <Compile Include="Controls\Carousel\AnimationExtensions.cs" />
     <Compile Include="Controls\Carousel\Carousel.cs" />
     <Compile Include="Controls\Carousel\Carousel.Manipulation.cs" />
@@ -128,6 +130,15 @@
     <Compile Include="Converters\AutoSuggestQueryParameterConverter.cs" />
     <Compile Include="Converters\HamburgerMenuIsOpenChangedConverter.cs" />
     <Compile Include="Extensions\DynamicExtension.cs" />
+    <Compile Include="Models\Contract\Album.cs" />
+    <Compile Include="Models\Contract\Artist.cs" />
+    <Compile Include="Models\Contract\Genre.cs" />
+    <Compile Include="Models\Contract\History.cs" />
+    <Compile Include="Models\Contract\Playlist.cs" />
+    <Compile Include="Models\Contract\PlaylistEntry.cs" />
+    <Compile Include="Models\Contract\Query.cs" />
+    <Compile Include="Models\Contract\SystemInfo.cs" />
+    <Compile Include="Models\Contract\Track.cs" />
     <Compile Include="Mvvm\Messaging\PlaylistDeletedArgs.cs" />
     <Compile Include="Mvvm\Messaging\PlaylistEntriesChanged.cs" />
     <Compile Include="ViewModels\AboutItemViewModel.cs" />
@@ -562,16 +573,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BSE.Tunes.Data\BSE.Tunes.Data.csproj">
-      <Project>{ed746c94-c561-4573-a2c9-fa7a3830a995}</Project>
-      <Name>BSE.Tunes.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <SDKReference Include="WindowsMobile, Version=10.0.17763.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

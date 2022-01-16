@@ -1,12 +1,6 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Models;
-using BSE.Tunes.StoreApp.Mvvm;
+﻿using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BSE.Tunes.StoreApp.ViewModels
@@ -24,7 +18,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         #region MethodsPublic
         public override async void LoadData()
         {
-            var tracks = await DataService.GetTopTracks(0,10);
+            var tracks = await DataService.GetTopTracks(0, 10);
             if (tracks != null)
             {
                 foreach (var track in tracks)

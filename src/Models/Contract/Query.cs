@@ -1,20 +1,20 @@
-﻿namespace BSE.Tunes.StoreApp.Models
+﻿namespace BSE.Tunes.StoreApp.Models.Contract
 {
-    public class User
+    public class Query
     {
-        public string UserName
+        public string SearchPhrase
         {
             get;
             set;
         }
 
-        public string Password
+        public int PageIndex
         {
             get;
             set;
         }
 
-        public bool UseSecureLogin
+        public int PageSize
         {
             get;
             set;

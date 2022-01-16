@@ -1,4 +1,4 @@
-﻿using BSE.Tunes.Data;
+﻿using BSE.Tunes.StoreApp.Models.Contract;
 using CommonServiceLocator;
 using System;
 using System.Collections.Concurrent;

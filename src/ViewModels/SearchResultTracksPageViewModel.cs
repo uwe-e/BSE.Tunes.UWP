@@ -1,13 +1,11 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Collections;
+﻿using BSE.Tunes.StoreApp.Collections;
 using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Navigation;
@@ -62,7 +60,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         }
         public ICommand ShowAlbumCommand => m_showAlbumCommand ?? (m_showAlbumCommand = new RelayCommand<GridPanelItemViewModel>(ShowAlbum));
 
-        
+
         #endregion
 
         #region MethodsPublic

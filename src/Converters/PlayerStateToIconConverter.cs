@@ -1,9 +1,5 @@
-﻿using BSE.Tunes.Data.Audio;
+﻿using BSE.Tunes.StoreApp.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
 namespace BSE.Tunes.StoreApp.Converter
@@ -13,9 +9,9 @@ namespace BSE.Tunes.StoreApp.Converter
         public object Convert(object value, System.Type type, object parameter, string language)
         {
             PlayerState playerstate = (PlayerState)value;
-                if (playerstate == PlayerState.Playing)
-                {
-                    return "";
+            if (playerstate == PlayerState.Playing)
+            {
+                return "";
             }
             return "";
         }

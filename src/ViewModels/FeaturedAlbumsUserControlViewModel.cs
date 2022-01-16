@@ -1,19 +1,11 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Models;
-using BSE.Tunes.StoreApp.Mvvm;
-using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
+﻿using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class FeaturedAlbumsUserControlViewModel : FeaturedItemsBaseViewModel
     {
-        #region MethodsPublic
         public override async void LoadData()
         {
             var newestAlbums = await DataService.GetNewestAlbums(20);
@@ -60,9 +52,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
             }
         }
-        #endregion
-
-        #region MethodsPrivate
-        #endregion
     }
 }

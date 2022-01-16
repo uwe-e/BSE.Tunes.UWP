@@ -1,10 +1,6 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Models;
-using System;
-using System.Collections.Generic;
+﻿using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
@@ -27,7 +23,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public SearchResultAlbumsUserControlViewModel()
         {
         }
-        public SearchResultAlbumsUserControlViewModel(Query query): base()
+        public SearchResultAlbumsUserControlViewModel(Query query) : base()
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {

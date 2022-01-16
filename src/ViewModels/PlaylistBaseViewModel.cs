@@ -1,27 +1,22 @@
-﻿using BSE.Tunes.StoreApp.Mvvm;
+﻿using BSE.Tunes.StoreApp.Managers;
+using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
+using BSE.Tunes.StoreApp.Mvvm.Messaging;
+using BSE.Tunes.StoreApp.Services;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Navigation;
-using System.Collections.Specialized;
-using Template10.Services.NavigationService;
-using GalaSoft.MvvmLight.Command;
-using BSE.Tunes.StoreApp.Services;
-using BSE.Tunes.StoreApp.Models;
-using BSE.Tunes.Data;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Messaging;
-using BSE.Tunes.StoreApp.Mvvm.Messaging;
-using BSE.Tunes.StoreApp.Managers;
+using Windows.UI.Xaml.Navigation;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class PlaylistBaseViewModel : SearchSuggestionsViewModel
     {
-        #region FieldsPrivate
         private bool m_hasSelectedItems;
         private bool m_allItemsSelectable;
         private bool m_allItemsSelected;
@@ -42,9 +37,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private ObservableCollection<ListViewItemViewModel> m_listViewItems;
         private ObservableCollection<MenuFlyoutItemViewModel> m_playlistMenuItems;
 
-        #endregion
-
-        #region Properties
         public bool IsPlaylistFlyoutOpen
         {
             get
@@ -147,7 +139,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 return m_playlistMenuItems;
             }
         }
-        public PlayerManager PlayerManager {get;} = PlayerManager.Instance;
+        public PlayerManager PlayerManager { get; } = PlayerManager.Instance;
         public ObservableCollection<ListViewItemViewModel> Items => m_listViewItems ?? (m_listViewItems = new ObservableCollection<ListViewItemViewModel>());
         public RelayCommand PlaySelectedItemsCommand => m_playSelectedItemsCommand ?? (m_playSelectedItemsCommand = new RelayCommand(PlaySelectedItems, CanPlaySelectedItems));
         public ICommand PlayTrackCommand => m_playTrackCommand ?? (m_playTrackCommand = new RelayCommand<ListViewItemViewModel>(PlayTrack, CanPlayTrack));
@@ -159,9 +151,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public ICommand SelectItemsCommand => m_selectItemsCommand ?? (m_selectItemsCommand = new RelayCommand<ListViewItemViewModel>(SelectItems));
         public ICommand SelectAllItemsCommand => m_selectAllItemsCommand ?? (m_selectAllItemsCommand = new RelayCommand(SelectAll));
         public RelayCommand DeleteSelectedItemsCommand => m_deleteSelectedItemsCommand ?? (m_deleteSelectedItemsCommand = new RelayCommand(DeleteSelectedItems, CanDeleteSelectedItems));
-        #endregion
 
-        #region MethodsPublic
         public PlaylistBaseViewModel()
         {
             Messenger.Default.Register<PlaylistChangedArgs>(this, args =>
@@ -264,9 +254,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
             item.IsOpen = true;
         }
-        #endregion
 
-        #region MethodsProtected
         /// <summary>
         /// Occurs when an item is added, removed, changed, moved, or the entire list is refreshed.
         /// </summary>
@@ -355,9 +343,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
             }
         }
-        #endregion
 
-        #region MethodsPrivate
         private bool CanPlaySelectedItems()
         {
             return SelectedItems?.Count > 0;
@@ -417,6 +403,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
             }
         }
-        #endregion
     }
 }

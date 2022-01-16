@@ -1,11 +1,8 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.Data.Collections;
+﻿using BSE.Tunes.StoreApp.Collections;
 using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BSE.Tunes.StoreApp.Managers
@@ -14,7 +11,7 @@ namespace BSE.Tunes.StoreApp.Managers
     {
         NavigableCollection<int> Playlist
         {
-            get;set;
+            get; set;
         }
         PlayerMode PlayerMode { get; }
         Track CurrentTrack { get; }

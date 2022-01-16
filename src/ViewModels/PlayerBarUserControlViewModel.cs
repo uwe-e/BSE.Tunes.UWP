@@ -1,24 +1,19 @@
 ﻿using BSE.Tunes.StoreApp.Managers;
+using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using BSE.Tunes.StoreApp.Mvvm;
 using BSE.Tunes.StoreApp.Mvvm.Messaging;
 using BSE.Tunes.StoreApp.Services;
-using BSE.Tunes.StoreApp.Models;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
-using BSE.Tunes.Data;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class PlayerBarUserControlViewModel : ViewModelBase
     {
-        #region FieldsPrivate
         private PlayerManager m_playerManager;
         private IDialogService m_dialogService;
         private ICommand m_playCommand;
@@ -36,9 +31,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private Track m_currentTrack;
         private string m_currentTrackDuration;
         private Uri m_coverSource;
-        #endregion
 
-        #region Properties
         public Uri CoverSource
         {
             get
@@ -165,9 +158,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public ICommand SelectItemCommand => m_selectItemCommand ?? (this.m_selectItemCommand = new RelayCommand(this.SelectItem));
         public RelayCommand PreviousTrackCommand => m_previousTrackCommand ?? (m_previousTrackCommand = new RelayCommand(ExecutePreviousTrack, CanExecutePreviousTrack));
         public RelayCommand NextTrackCommand => m_nextTrackCommand ?? (m_nextTrackCommand = new RelayCommand(ExecuteNextTrack, CanExecuteNextTrack));
-        #endregion
 
-        #region MethodsPublic
         public PlayerBarUserControlViewModel()
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
@@ -207,9 +198,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 });
             }
         }
-        #endregion
 
-        #region MethodsPrivate
         private async void Play()
         {
             try
@@ -299,7 +288,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             this.m_progressTimer.Tick += OnProgressTimerTick;
             this.m_progressTimer.Start();
         }
-        
+
         private void OnMediaEnded()
         {
             m_progressTimer.Stop();
@@ -355,6 +344,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
             }
         }
-        #endregion
     }
 }

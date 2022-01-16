@@ -1,5 +1,5 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Models;
+﻿using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using BSE.Tunes.StoreApp.Mvvm.Messaging;
 using BSE.Tunes.StoreApp.Services;
 using GalaSoft.MvvmLight.Command;

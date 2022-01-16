@@ -1,7 +1,6 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.Data.Collections;
-using BSE.Tunes.Data.Extensions;
+﻿using BSE.Tunes.StoreApp.Collections;
 using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using BSE.Tunes.StoreApp.Mvvm.Messaging;
 using BSE.Tunes.StoreApp.Services;
 using CommonServiceLocator;
@@ -15,23 +14,22 @@ namespace BSE.Tunes.StoreApp.Managers
 {
     public class PlayerManager : IPlayerManager
     {
-        #region FieldsPrivate
         private IDataService m_dataService;
         private IAuthenticationService m_accountService;
         private IDialogService m_dialogService;
         private IResourceService m_resourceService;
-        #endregion
 
-        #region Properties
         public IPlayerService PlayerService
         {
             get;
             private set;
         }
+
         public NavigableCollection<int> Playlist
         {
             get; set;
         }
+
         public Track CurrentTrack
         {
             get
@@ -39,6 +37,7 @@ namespace BSE.Tunes.StoreApp.Managers
                 return this.PlayerService.CurrentTrack;
             }
         }
+
         public TimeSpan Duration
         {
             get
@@ -46,6 +45,7 @@ namespace BSE.Tunes.StoreApp.Managers
                 return this.PlayerService.Duration;
             }
         }
+
         public TimeSpan Position
         {
             get
@@ -53,15 +53,13 @@ namespace BSE.Tunes.StoreApp.Managers
                 return this.PlayerService.Position;
             }
         }
+
         public PlayerMode PlayerMode
         {
             get;
             private set;
         }
 
-        #endregion
-
-        #region MethodsPublic
         public static PlayerManager Instance
         {
             get
@@ -69,6 +67,7 @@ namespace BSE.Tunes.StoreApp.Managers
                 return ServiceLocator.Current.GetInstance<IPlayerManager>() as PlayerManager;
             }
         }
+
         public PlayerManager(IDataService dataService, IAuthenticationService accountService, IPlayerService playerService, IDialogService dialogservice, IResourceService resourceService)
         {
             this.m_dataService = dataService;
@@ -98,6 +97,7 @@ namespace BSE.Tunes.StoreApp.Managers
                 }
             });
         }
+
         public async void ReplayPlayTracks()
         {
             int trackId = this.Playlist?.FirstOrDefault() ?? 0;
@@ -110,11 +110,13 @@ namespace BSE.Tunes.StoreApp.Managers
                 }
             }
         }
+
         public void PlayTracks(ObservableCollection<int> trackIds, PlayerMode playerMode)
         {
             this.Playlist = trackIds?.ToNavigableCollection();
             PlayTrack(this.Playlist?.FirstOrDefault() ?? 0, playerMode);
         }
+
         public async void PlayTrack(int trackId, PlayerMode playerMode)
         {
             this.PlayerMode = playerMode;
@@ -141,10 +143,12 @@ namespace BSE.Tunes.StoreApp.Managers
                 }
             }
         }
+
         public bool CanExecuteNextTrack()
         {
             return this.Playlist?.CanMoveNext ?? false;
         }
+
         public async void ExecuteNextTrack()
         {
             if (this.CanExecuteNextTrack())
@@ -214,9 +218,7 @@ namespace BSE.Tunes.StoreApp.Managers
         {
             this.PlayerService.Pause();
         }
-        #endregion
 
-        #region MethodsPrivate
         private void OnMediaEnded()
         {
             if (this.PlayerMode != PlayerMode.None && this.PlayerMode != PlayerMode.Song)
@@ -240,7 +242,7 @@ namespace BSE.Tunes.StoreApp.Managers
 
                 this.m_dataService.UpdateHistory(new History
                 {
-                    PlayMode = (Data.Audio.PlayerMode)this.PlayerMode,
+                    PlayMode = (int)this.PlayerMode,
                     AlbumId = this.CurrentTrack.Album.Id,
                     TrackId = this.CurrentTrack.Id,
                     UserName = userName,
@@ -249,6 +251,5 @@ namespace BSE.Tunes.StoreApp.Managers
             }
             catch { }
         }
-        #endregion
     }
 }

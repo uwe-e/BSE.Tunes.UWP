@@ -1,30 +1,22 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.Managers;
+﻿using BSE.Tunes.StoreApp.Managers;
 using BSE.Tunes.StoreApp.Models;
-using BSE.Tunes.StoreApp.Mvvm;
-using GalaSoft.MvvmLight.Command;
+using BSE.Tunes.StoreApp.Models.Contract;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Navigation;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class AlbumDetailPageViewModel : PlaylistBaseViewModel
     {
-        #region FieldsPrivate
         private Album m_album;
         private Uri m_coverSource;
         private ArtistsAlbumsUserControlViewModel m_artistsAlbums;
-        #endregion
 
-        #region Properties
         public Album Album
         {
             get
@@ -61,12 +53,11 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 RaisePropertyChanged(() => ArtistsAlbums);
             }
         }
-        #endregion
 
-        #region MethodsPublic
         public AlbumDetailPageViewModel()
         {
         }
+
         public async override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             await base.OnNavigatedToAsync(parameter, mode, state);
@@ -99,9 +90,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 this.PlayTracks(tracks);
             }
         }
-        #endregion
 
-        #region MethodsProtected
         protected override void PlaySelectedItems()
         {
             var selectedItems = this.SelectedItems;
@@ -150,9 +139,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 SelectedItems.Cast<ListViewItemViewModel>().OrderBy(itm => ((Track)itm.Data).TrackNumber));
             AllItemsSelectable = HasSelectedItems & !AllItemsSelected;
         }
-        #endregion
-
-        #region MethodsPrivate
 
         private void PlayTracks(System.Collections.ObjectModel.ObservableCollection<Track> tracks)
         {
@@ -186,6 +172,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 this.AppendToPlaylist(playlist);
             }
         }
-        #endregion
     }
 }

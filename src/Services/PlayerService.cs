@@ -1,6 +1,6 @@
-﻿using BSE.Tunes.Data;
-using BSE.Tunes.StoreApp.IO;
+﻿using BSE.Tunes.StoreApp.IO;
 using BSE.Tunes.StoreApp.Models;
+using BSE.Tunes.StoreApp.Models.Contract;
 using BSE.Tunes.StoreApp.Mvvm.Messaging;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Messaging;
@@ -20,7 +20,6 @@ namespace BSE.Tunes.StoreApp.Services
 {
     public class PlayerService : IPlayerService
     {
-        #region Attached
         /// <summary>
         /// Provides the data binding and property change notification of the <b>RegisterAsMediaService</b> attached property.
         /// </summary>
@@ -67,9 +66,7 @@ namespace BSE.Tunes.StoreApp.Services
                 }
             }
         }
-        #endregion
 
-        #region FieldsPrivate
         private IDataService m_dataService;
         private IAuthenticationService m_accountService;
         private MediaPlayerElement m_mediaElement;
@@ -93,9 +90,6 @@ namespace BSE.Tunes.StoreApp.Services
         private const UInt32 sampleSize = 1152;
         private TimeSpan sampleDuration = new TimeSpan(0, 0, 0, 0, 70);
 
-        #endregion
-
-        #region Properties
         public Track CurrentTrack
         {
             get
@@ -159,9 +153,7 @@ namespace BSE.Tunes.StoreApp.Services
             }
         }
         public MediaPlayer MediaPlayer => m_mediaPlayer ?? (m_mediaPlayer = new MediaPlayer());
-        #endregion
 
-        #region MethodsPublic
         public PlayerService(IDataService dataService, IAuthenticationService accountService)
         {
             this.CurrentState = PlayerState.Closed;
@@ -285,9 +277,7 @@ namespace BSE.Tunes.StoreApp.Services
                 });
             }
         }
-        #endregion
 
-        #region MethodsPrivate
         private void OnDownloadProgessStarted(object sender, EventArgs e)
         {
             // initialize Parsing Variables
@@ -510,6 +500,5 @@ namespace BSE.Tunes.StoreApp.Services
                 Messenger.Default.Send(new MediaStateChangedArgs(MediaState.Ended));
             });
         }
-        #endregion
     }
 }
