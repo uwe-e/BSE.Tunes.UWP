@@ -81,7 +81,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 await this.m_authenticationService.AuthenticateAsync(UserName, Password).ConfigureAwait(true);
                 m_settingsService.IsFullScreen = false;
                 //Clears the cache with the back stack before navigate
-                NavigationService.ClearCache(true);
+                //NavigationService.ClearCache(true);
                 await NavigationService.NavigateAsync(typeof(Views.MainPage));
                 
             }

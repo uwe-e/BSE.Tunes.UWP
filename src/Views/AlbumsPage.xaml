@@ -61,7 +61,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <!--  header  -->
-        <usercontrols:AutoSuggestionPageHeader x:Name="pageHeader"
+        <!--<usercontrols:AutoSuggestionPageHeader x:Name="pageHeader"
                                                x:Uid="AlbumsPage_Header"
                                                PlaceholderText="Search"
                                                QueryIcon="Find"
@@ -83,7 +83,7 @@
                     <core:InvokeCommandAction Command="{x:Bind ViewModel.SuggestionChosenCommand}"/>
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
-        </usercontrols:AutoSuggestionPageHeader>
+        </usercontrols:AutoSuggestionPageHeader>-->
 
         <RelativePanel x:Name="pageContent" 
                        RelativePanel.AlignLeftWithPanel="True"

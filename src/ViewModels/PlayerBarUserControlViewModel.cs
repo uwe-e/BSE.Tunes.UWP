@@ -171,10 +171,11 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 this.ProgressValue = 0;
 
                 //The event when the IsFullScreen property has changed.
-                Messenger.Default.Register<ScreenSizeChangedArgs>(this, args =>
-                {
-                    IsVisible = !args.IsFullScreen;
-                });
+                //Messenger.Default.Register<ScreenSizeChangedArgs>(this, args =>
+                //{
+                //    IsVisible = !args.IsFullScreen;
+                //});
+                IsVisible = true;
                 Messenger.Default.Register<PlayerStateChangedArgs>(this, args =>
                 {
                     OnPlayerStateChanged(args.PlayerState);

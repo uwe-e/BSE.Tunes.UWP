@@ -1,26 +1,19 @@
-﻿using BSE.Tunes.StoreApp.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BSE.Tunes.StoreApp.Models;
 using BSE.Tunes.StoreApp.Mvvm;
+using BSE.Tunes.StoreApp.Services;
 using GalaSoft.MvvmLight.Command;
-using BSE.Tunes.StoreApp.Models;
+using System;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class ServiceUrlWizzardPageViewModel : ViewModelBase
     {
-        #region FieldsPrivate
-        private SettingsService m_settingsService;
+        private SettingsService _settingsService => SettingsService.Instance;
         private IDialogService m_dialogSService;
         private IAuthenticationService m_authenticationHandler;
         private RelayCommand m_saveHostCommand;
         private string m_strServiceUrl;
-        #endregion
 
-        #region Properties
         public string ServiceUrl
         {
             get
@@ -34,23 +27,19 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 this.SaveHostCommand.RaiseCanExecuteChanged();
             }
         }
-        #endregion
 
-        #region MethodsPublic
         public ServiceUrlWizzardPageViewModel()
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                m_settingsService = SettingsService.Instance;
-                m_dialogSService = DialogService.Instance;
-                m_authenticationHandler = AuthenticationService.Instance;
-                ServiceUrl = m_settingsService.ServiceUrl;
+                //_settingsService = SettingsService.Instance;
+                //m_dialogSService = DialogService.Instance;
+                //m_authenticationHandler = AuthenticationService.Instance;
+                //ServiceUrl = m_settingsService.GetServiceUrl.ServiceUrl;
             }
         }
         public RelayCommand SaveHostCommand => m_saveHostCommand ?? (m_saveHostCommand = new RelayCommand(SaveUrl));
-        #endregion
 
-        #region MethodsPrivate
         public async void SaveUrl()
         {
             var serviceUrl = ServiceUrl;
@@ -63,24 +52,24 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
 
                 await DataService.IsHostAccessible(serviceUrl);
-                m_settingsService.ServiceUrl = serviceUrl;
+                _settingsService.ServiceUrl = serviceUrl;
                 try
                 {
                     User user = await m_authenticationHandler.VerifyUserAuthenticationAsync().ConfigureAwait(true);
                     if (user == null)
                     {
-                        m_settingsService.IsFullScreen = true;
+                        _settingsService.IsFullScreen = true;
                         await NavigationService.NavigateAsync(typeof(Views.SignInWizzardPage));
                     }
                     else
                     {
-                        m_settingsService.IsFullScreen = false;
+                        _settingsService.IsFullScreen = false;
                         await NavigationService.NavigateAsync(typeof(Views.MainPage));
                     }
                 }
-                catch(UnauthorizedAccessException)
+                catch (UnauthorizedAccessException)
                 {
-                    m_settingsService.IsFullScreen = true;
+                    _settingsService.IsFullScreen = true;
                     await NavigationService.NavigateAsync(typeof(Views.SignInWizzardPage));
                 }
             }
@@ -91,6 +80,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
                     ResourceService.GetString("ExceptionMessageDialogHeader", "Error"));
             }
         }
-        #endregion
-    }
+        }
 }

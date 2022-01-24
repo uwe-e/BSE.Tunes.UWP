@@ -1,4 +1,5 @@
 ﻿using BSE.Tunes.StoreApp.Services;
+using BSE.Tunes.StoreApp.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,26 +10,29 @@ using Windows.UI.Xaml.Navigation;
 
 namespace BSE.Tunes.StoreApp.Mvvm
 {
-    public abstract class ViewModelBase : GalaSoft.MvvmLight.ViewModelBase, Template10.Services.NavigationService.INavigable
+    public abstract class ViewModelBase : GalaSoft.MvvmLight.ViewModelBase, INavigable
     {
         #region Properties
-        [JsonIgnore]
-        public Template10.Services.NavigationService.INavigationService NavigationService
-        {
-            get; set;
-        }
 
-        [JsonIgnore]
-        public Template10.Common.IDispatcherWrapper Dispatcher
-        {
-            get; set;
-        }
+        public static NavigationServiceEx NavigationService => ViewModelLocator.Current.NavigationService;
 
-        [JsonIgnore]
-        public Template10.Common.IStateItems SessionState
-        {
-            get; set;
-        }
+        //[JsonIgnore]
+        //public Template10.Services.NavigationService.INavigationService NavigationService
+        //{
+        //    get; set;
+        //}
+
+        //[JsonIgnore]
+        //public Template10.Common.IDispatcherWrapper Dispatcher
+        //{
+        //    get; set;
+        //}
+
+        //[JsonIgnore]
+        //public Template10.Common.IStateItems SessionState
+        //{
+        //    get; set;
+        //}
         [JsonIgnore]
         public IResourceService ResourceService
         {
@@ -50,14 +54,10 @@ namespace BSE.Tunes.StoreApp.Mvvm
         #region MethodsPublic
         public ViewModelBase()
         {
-            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                NavigationService = NavigationService ?? Template10.Common.WindowWrapper.Current().NavigationServices.FirstOrDefault();
-            }
-        }
-        public virtual Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
-        {
-            return Task.CompletedTask;
+            //if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            //{
+            //    NavigationService = NavigationService ?? Template10.Common.WindowWrapper.Current().NavigationServices.FirstOrDefault();
+            //}
         }
 
         public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
@@ -65,10 +65,15 @@ namespace BSE.Tunes.StoreApp.Mvvm
             return Task.CompletedTask;
         }
 
-        public virtual Task OnNavigatingFromAsync(Template10.Services.NavigationService.NavigatingEventArgs args)
+        public virtual Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             return Task.CompletedTask;
         }
+
+        //public virtual Task OnNavigatingFromAsync(Template10.Services.NavigationService.NavigatingEventArgs args)
+        //{
+        //    return Task.CompletedTask;
+        //}
         #endregion
 
 

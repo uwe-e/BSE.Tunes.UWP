@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BSE.Tunes.StoreApp.Views"
     xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"
-    xmlns:controls="using:Template10.Controls"
     xmlns:usercontrols="using:BSE.Tunes.StoreApp.Controls"
     xmlns:controlextensions="using:BSE.Tunes.StoreApp.Controls.Extensions"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
@@ -35,7 +34,6 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="pageHeader.Visibility" Value="Visible"/>
                         <Setter Target="narrowPageTitle.Visibility" Value="Visible"/>
                         <Setter Target="normalPageHeader.Visibility" Value="Collapsed"/>
                         <!--<Setter Target="listview.ItemContainerStyle" Value="{StaticResource narrowListViewItemStyle}"/>
@@ -51,7 +49,6 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="pageHeader.Visibility" Value="Collapsed"/>
                         <Setter Target="narrowPageTitle.Visibility" Value="Collapsed"/>
                         <Setter Target="normalPageHeader.Visibility" Value="Visible"/>
                         <!--<Setter Target="listview.ItemContainerStyle" Value="{StaticResource normalListViewItemStyle}"/>
@@ -73,31 +70,6 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <usercontrols:AutoSuggestionPageHeader x:Name="pageHeader"
-                                               x:Uid="SearchResultAlbumsPage_Header"
-                                               PlaceholderText="Search"
-                                               QueryIcon="Find"
-                                               ButtonIcon="Find"
-                                               HeaderText="{x:Bind ViewModel.HeaderText}"
-                                               QueryText="{x:Bind ViewModel.QueryText, Mode=TwoWay}"
-                                               ItemsSource="{x:Bind ViewModel.SearchSuggestions}"
-                                               RelativePanel.AlignLeftWithPanel="True"
-                                               RelativePanel.AlignRightWithPanel="True"
-                                               RelativePanel.AlignTopWithPanel="True"
-                                               Visibility="Collapsed">
-            <interactivity:Interaction.Behaviors>
-                <core:EventTriggerBehavior EventName="TextChanged">
-                    <core:InvokeCommandAction Command="{x:Bind ViewModel.TextChangedCommand}"/>
-                </core:EventTriggerBehavior>
-                <core:EventTriggerBehavior EventName="QuerySubmitted">
-                    <core:InvokeCommandAction Command="{x:Bind ViewModel.QuerySubmittedCommand}" InputConverter="{StaticResource AutoSuggestQueryParameterConverter}" />
-                </core:EventTriggerBehavior>
-                <core:EventTriggerBehavior EventName="SuggestionChosen">
-                    <core:InvokeCommandAction Command="{x:Bind ViewModel.SuggestionChosenCommand}"/>
-                </core:EventTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
-        </usercontrols:AutoSuggestionPageHeader>
 
         <RelativePanel x:Name="pageContent" 
                        RelativePanel.AlignLeftWithPanel="True"

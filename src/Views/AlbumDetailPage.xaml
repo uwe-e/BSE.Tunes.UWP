@@ -184,7 +184,7 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="pageHeader.Visibility" Value="Visible"/>
+                        <!--<Setter Target="pageHeader.Visibility" Value="Visible"/>-->
                         <Setter Target="infoHeader.Orientation" Value="Vertical"/>
                         <Setter Target="infoCover.Width" Value="160"/>
                         <Setter Target="infoAction.Height" Value="Auto"/>
@@ -203,7 +203,6 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="pageHeader.Visibility" Value="Collapsed"/>
                         <Setter Target="listview.ItemContainerStyle" Value="{StaticResource normalListViewItemStyle}"/>
                         <Setter Target="listview.ItemTemplate" Value="{StaticResource normalListViewItem}"/>
                         <Setter Target="listview.AlternatingRow" Value="{StaticResource ListViewAlternatingRowBrush}"/>
@@ -222,7 +221,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <usercontrols:AutoSuggestionPageHeader x:Name="pageHeader"
+        <!--<usercontrols:AutoSuggestionPageHeader x:Name="pageHeader"
                                                x:Uid="AlbumsDetailPage_Header"
                                                PlaceholderText="Search"
                                                QueryIcon="Find"
@@ -245,13 +244,12 @@
                     <core:InvokeCommandAction Command="{x:Bind ViewModel.SuggestionChosenCommand}"/>
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
-        </usercontrols:AutoSuggestionPageHeader>
+        </usercontrols:AutoSuggestionPageHeader>-->
 
         <ScrollViewer EntranceNavigationTransitionInfo.IsTargetElement="True"
                       RelativePanel.AlignBottomWithPanel="True"
                       RelativePanel.AlignLeftWithPanel="True"
-                      RelativePanel.AlignRightWithPanel="True"
-                      RelativePanel.Below="pageHeader">
+                      RelativePanel.AlignRightWithPanel="True">
             <RelativePanel EntranceNavigationTransitionInfo.IsTargetElement="True"
                        RelativePanel.AlignTopWithPanel="True"
                        RelativePanel.AlignLeftWithPanel="True"

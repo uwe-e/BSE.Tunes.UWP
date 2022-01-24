@@ -1,14 +1,10 @@
-using BSE.Tunes.StoreApp.IO;
 using BSE.Tunes.StoreApp.Models;
 using BSE.Tunes.StoreApp.Services;
+using BSE.Tunes.StoreApp.ViewModels;
 using CommonServiceLocator;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Template10.Common;
-using Template10.Controls;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
@@ -18,128 +14,108 @@ namespace BSE.Tunes.StoreApp
     /// https://github.com/Windows-XAML/Template10/wiki
 
     [Bindable]
-    sealed partial class App : BootStrapper
+    sealed partial class App : Application
     {
-        #region FieldsPrivate
+        private Lazy<ActivationService> _activationService;
+
+        private ActivationService ActivationService
+        {
+            get { return _activationService.Value; }
+        }
         private SettingsService m_settingsService;
-        #endregion
+
         public App()
         {
             InitializeComponent();
 
-            //For localization tests
-            //var culture = new System.Globalization.CultureInfo("en-US");
-            //var culture = new System.Globalization.CultureInfo("de-DE");
-            //Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = culture.Name;
-            //System.Globalization.CultureInfo.DefaultThreadCurrentCulture = culture;
-            //System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = culture;
-
-            #region app settings
+            UnhandledException += OnAppUnhandledException;
 
             // some settings must be set in app.constructor
             m_settingsService = SettingsService.Instance;
-            RequestedTheme = m_settingsService.UseLightTheme ? ApplicationTheme.Light : ApplicationTheme.Dark;
-            CacheMaxDuration = m_settingsService.CacheMaxDuration;
-            AutoSuspendAllFrames = true;
-            AutoRestoreAfterTerminated = true;
-            AutoExtendExecutionSession = true;
 
-            #endregion
+            // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
+            //_activationService = new Lazy<ActivationService>(CreateActivationService);
         }
 
-        public override UIElement CreateRootElement(IActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            //Relaunching suspended app on W10 Mobile shows blank page.
-            //https://github.com/Windows-XAML/Template10/issues/1286
-            var service = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-            //The style resource contains the mediaelement and registers the player service
-            service.Frame.Style = Resources["RootFrameStyle"] as Style;
-
-            return new ModalDialog
+            if (!args.PrelaunchActivated)
             {
-                DisableBackButtonWhenModal = true,
-                Content = new Views.Shell(service),
-                ModalContent = new Views.Busy(),
-            };
-        }
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
-        {
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
-            {
-                var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-                if (titleBar != null)
+                IDataService dataService = ServiceLocator.Current.GetInstance<IDataService>();
+                try
                 {
-                    titleBar.ButtonBackgroundColor = (Windows.UI.Color)Current.Resources["SystemAltHighColor"];
-                    titleBar.ButtonForegroundColor = (Windows.UI.Color)Current.Resources["SystemBaseHighColor"];
-                    titleBar.ButtonHoverBackgroundColor = (Windows.UI.Color)Current.Resources["SystemChromeMediumLowColor"];
-                    titleBar.ButtonHoverForegroundColor = (Windows.UI.Color)Current.Resources["SystemAccentColor"];
-                    titleBar.BackgroundColor = (Windows.UI.Color)Current.Resources["SystemAltHighColor"];
-                    titleBar.ForegroundColor = (Windows.UI.Color)Current.Resources["SystemBaseHighColor"];
-                }
-            }
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                var statusBar = StatusBar.GetForCurrentView();
-                if (statusBar != null)
-                {
-                    statusBar.BackgroundColor = (Windows.UI.Color)Current.Resources["SystemChromeLowColor"];
-                    statusBar.BackgroundOpacity = 1;
-                    statusBar.ForegroundColor = (Windows.UI.Color)Current.Resources["SystemBaseHighColor"];
-                }
-            }
-            return base.OnInitializeAsync(args);
-        }
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
-        {
-            IDataService dataService = ServiceLocator.Current.GetInstance<IDataService>();
-            try
-            {
-                var isAccessible = await dataService.IsHostAccessible().ConfigureAwait(true);
-                if (isAccessible)
-                {
-                    try
+                    var isAccessible = await dataService.IsHostAccessible().ConfigureAwait(true);
+                    if (isAccessible)
                     {
-                        IAuthenticationService authenticationHandler = ServiceLocator.Current.GetInstance<IAuthenticationService>();
-                        User user = await authenticationHandler.VerifyUserAuthenticationAsync().ConfigureAwait(true);
-                        if (user != null)
+                        try
                         {
-                            //clears the cache only if the application lauches
-                            if (startKind == StartKind.Launch)
+                            IAuthenticationService authenticationService = ViewModelLocator.Current.AuthenticationService;
+                            User user = await authenticationService.VerifyUserAuthenticationAsync().ConfigureAwait(true);
+                            if (user != null)
                             {
-                                //Deletes the tmp download folder with its files from the local store.
-                                await LocalStorage.ClearTempFolderAsync();
-                                m_settingsService.ApplyStartUpSettings();
-
-                                await NavigationService.NavigateAsync(typeof(Views.MainPage));
+                                _activationService = new Lazy<ActivationService>(() => {
+                                    return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
+                                });
                             }
                         }
-                        else
+                        catch(Exception exception)
                         {
-                            m_settingsService.IsFullScreen = true;
-                            await NavigationService.NavigateAsync(typeof(Views.SignInWizzardPage));
+                            
                         }
-                    }
-                    catch (AggregateException ae)
-                    {
-                        var unauthorizedAccessException = ae.Flatten().InnerExceptions
-                            .Select(exception => exception as UnauthorizedAccessException).FirstOrDefault();
-                        if (unauthorizedAccessException != null)
-                        {
-                            await NavigationService.NavigateAsync(typeof(Views.SignInWizzardPage), unauthorizedAccessException);
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        m_settingsService.IsFullScreen = true;
-                        await NavigationService.NavigateAsync(typeof(Views.SignInWizzardPage), exception);
                     }
                 }
+                catch (Exception ex)
+                {
+                    _activationService = new Lazy<ActivationService>(() =>
+                    {
+                        return new ActivationService(this, typeof(Views.ServiceUrlWizzardPage));
+                    });
+                }
+
+
+                await ActivationService.ActivateAsync(args);
+
+                var navigationService = ViewModelLocator.Current.NavigationService;
+                navigationService.Frame.Style = Resources["RootFrameStyle"] as Style;
+
             }
-            catch (Exception)
-            {
-                m_settingsService.IsFullScreen = true;
-                await NavigationService.NavigateAsync(typeof(Views.ServiceUrlWizzardPage));
-            }
+        }
+
+        protected override async void OnActivated(IActivatedEventArgs args)
+        {
+            await ActivationService.ActivateAsync(args);
+        }
+
+        private void OnAppUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            // TODO WTS: Please log and handle the exception as appropriate to your scenario
+            // For more info see https://docs.microsoft.com/uwp/api/windows.ui.xaml.application.unhandledexception
+        }
+
+        private ActivationService CreateActivationService()
+        {
+            //IDataService dataService = ServiceLocator.Current.GetInstance<IDataService>();
+            //try
+            //{
+            //    var t = Task.Run(() =>
+            //    {
+            //        return dataService.IsHostAccessible().ConfigureAwait(true);
+            //    });
+
+            //    var h = t;
+
+            //}
+            //catch (Exception ex)
+            //{
+
+            //}
+            //return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
+            return new ActivationService(this, typeof(Views.ServiceUrlWizzardPage));
+        }
+
+        private UIElement CreateShell()
+        {
+            return new Views.ShellPage();
         }
     }
 }

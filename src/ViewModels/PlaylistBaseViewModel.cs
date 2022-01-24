@@ -176,6 +176,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
             });
         }
+
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             if (SelectedItems == null)

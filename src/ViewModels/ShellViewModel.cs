@@ -1,6 +1,9 @@
 ﻿using BSE.Tunes.StoreApp.Services;
 using GalaSoft.MvvmLight.Command;
+using System.Collections.Generic;
 using System.Windows.Input;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
@@ -37,7 +40,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
        }));
         #endregion
 
-        #region MethodsPublic
         public ShellViewModel()
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
@@ -45,6 +47,17 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 m_settingsService = SettingsService.Instance;
             }
         }
-        #endregion
+
+        public void Initialize(Frame frame, IList<KeyboardAccelerator> keyboardAccelerators)
+        {
+            //_navigationView = navigationView;
+            //_keyboardAccelerators = keyboardAccelerators;
+            NavigationService.Frame = frame;
+            //NavigationService.NavigationFailed += Frame_NavigationFailed;
+            //NavigationService.Navigated += Frame_Navigated;
+            //_navigationView.BackRequested += OnBackRequested;
+        }
+
+
     }
 }

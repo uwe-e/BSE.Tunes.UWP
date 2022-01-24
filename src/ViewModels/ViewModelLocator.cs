@@ -7,9 +7,15 @@ namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class ViewModelLocator
     {
+        private static ViewModelLocator _current;
+
+        public static ViewModelLocator Current => _current ?? (_current = new ViewModelLocator());
+
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            SimpleIoc.Default.Register(() => new NavigationServiceEx());
+            SimpleIoc.Default.Register<ShellViewModel>();
             SimpleIoc.Default.Register<IDialogService, DialogService>();
             SimpleIoc.Default.Register<IResourceService, ResourceService>();
             SimpleIoc.Default.Register<IDataService, DataService>();
@@ -20,6 +26,12 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
             //SimpleIoc.Default.Register<SettingsMainPageViewModel>();
         }
+
+        public NavigationServiceEx NavigationService => SimpleIoc.Default.GetInstance<NavigationServiceEx>();
+
+        public IAuthenticationService AuthenticationService => SimpleIoc.Default.GetInstance<IAuthenticationService>(); 
+        public ShellViewModel ShellViewModel => SimpleIoc.Default.GetInstance<ShellViewModel>();
+
 
         //public SettingsMainPageViewModel SettingsHostPageViewModel
         //{

@@ -66,7 +66,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         #region MethodsPublic
         public SettingsItemViewModel()
         {
-            NavigationService = NavigationService ?? Template10.Common.WindowWrapper.Current().NavigationServices.FirstOrDefault();
+            //NavigationService = NavigationService ?? Template10.Common.WindowWrapper.Current().NavigationServices.FirstOrDefault();
         }
         public abstract void Navigate();
         #endregion

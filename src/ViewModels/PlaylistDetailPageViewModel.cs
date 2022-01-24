@@ -89,11 +89,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
             await base.OnNavigatedToAsync(parameter, mode, state);
         }
 
-        public async override Task OnNavigatingFromAsync(NavigatingEventArgs args)
-        {
-            await base.OnNavigatingFromAsync(args);
-        }
-
         public override bool CanPlayAll()
         {
             return this.Playlist?.Entries != null && this.Playlist.Entries.Count() > 0;
