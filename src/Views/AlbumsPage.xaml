@@ -5,7 +5,6 @@
     xmlns:local="using:BSE.Tunes.StoreApp.Views"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:controls="using:Template10.Controls"
     xmlns:converters="using:BSE.Tunes.StoreApp.Converters"
     xmlns:controlextensions="using:BSE.Tunes.StoreApp.Controls.Extensions"
     xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"
@@ -34,7 +33,6 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="pageHeader.Visibility" Value="Visible"/>
                         <Setter Target="normalPageHeader.Visibility" Value="Collapsed"/>
                         <!--<Setter Target="gridView.(RelativePanel.Below)" Value="narrowPageTitle"/>-->
                         <Setter Target="pageContent.(RelativePanel.AlignTopWithPanel)" Value="False"/>
@@ -46,7 +44,6 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="pageHeader.Visibility" Value="Collapsed"/>
                         <Setter Target="normalPageHeader.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -89,8 +86,7 @@
                        RelativePanel.AlignLeftWithPanel="True"
                        RelativePanel.AlignRightWithPanel="True"
                        RelativePanel.AlignTopWithPanel="True"
-                       RelativePanel.AlignBottomWithPanel="True"
-                       RelativePanel.Below="pageHeader">
+                       RelativePanel.AlignBottomWithPanel="True">
 
             <!-- normal header  -->
             <TextBlock x:Name="normalPageHeader" x:Uid="AlbumsPage_PageHeader" Text="Albums" Style="{StaticResource PageHeaderTextBlockStyle}"

@@ -17,8 +17,7 @@
         <RelativePanel EntranceNavigationTransitionInfo.IsTargetElement="True"
                        x:Name="infoPart"
                        RelativePanel.AlignLeftWithPanel="True"
-                       RelativePanel.AlignRightWithPanel="True"
-                       RelativePanel.Below="pageHeader" Margin="12,14,0,13">
+                       RelativePanel.AlignRightWithPanel="True" Margin="12,14,0,13">
             <Border x:Name="LogoImage"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"

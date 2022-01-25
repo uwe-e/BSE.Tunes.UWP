@@ -30,6 +30,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public NavigationServiceEx NavigationService => SimpleIoc.Default.GetInstance<NavigationServiceEx>();
 
         public IAuthenticationService AuthenticationService => SimpleIoc.Default.GetInstance<IAuthenticationService>(); 
+        
         public ShellViewModel ShellViewModel => SimpleIoc.Default.GetInstance<ShellViewModel>();
 
 

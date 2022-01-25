@@ -6,6 +6,8 @@
     xmlns:views="using:BSE.Tunes.StoreApp.Views"
     xmlns:helpers="using:BSE.Tunes.StoreApp.Helpers"
     xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -21,6 +23,7 @@
                               IsBackButtonVisible="Visible"
                               IsBackEnabled="True"
                               IsSettingsVisible="True"
+                              
                               Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
             <winui:NavigationView.PaneHeader>
                 <TextBlock Text="asdasd"/>
@@ -68,7 +71,14 @@
                 </winui:NavigationViewItem>
                 
             </winui:NavigationView.MenuItems>
-
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="BackRequested">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.BackRequestedCommand}" />
+                </ic:EventTriggerBehavior>
+                <ic:EventTriggerBehavior EventName="ItemInvoked">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemInvokedCommand}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
             <Grid>
                 <Frame x:Name="shellFrame" />
             </Grid>
