@@ -11,6 +11,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public override string Icon => "Setting";
         public override string Description => ResourceService.GetString("IDS_SystemSettingsDescription", "Colors");
         public override string Title => ResourceService.GetString("IDS_SystemSettingsHeader", "Personalization");
-        public override void Navigate() => NavigationService.NavigateAsync(typeof(Views.SettingsPage),0);
+        public override async void Navigate() => await NavigationService.NavigateAsync(typeof(Views.SettingsPage),0);
     }
 }

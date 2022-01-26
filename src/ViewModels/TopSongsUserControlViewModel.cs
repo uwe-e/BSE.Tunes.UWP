@@ -40,9 +40,9 @@ namespace BSE.Tunes.StoreApp.ViewModels
         #endregion
 
         #region MethodsPrivate
-        private void ShowAlbum(GridPanelItemViewModel item)
+        private async void ShowAlbum(GridPanelItemViewModel item)
         {
-            NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), (Album)((Track)item.Data).Album);
+            await NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), (Album)((Track)item.Data).Album);
         }
         #endregion
     }

@@ -17,6 +17,7 @@
 
 
         <RelativePanel EntranceNavigationTransitionInfo.IsTargetElement="True"
+                       RelativePanel.AlignTopWithPanel="True"
                        RelativePanel.AlignBottomWithPanel="True"
                        RelativePanel.AlignLeftWithPanel="True"
                        RelativePanel.AlignRightWithPanel="True" Margin="12,14,0,13">

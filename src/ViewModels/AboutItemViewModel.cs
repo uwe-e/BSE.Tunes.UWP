@@ -11,6 +11,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public override string Icon => "Help";
         public override string Description => string.Empty;
         public override string Title => ResourceService.GetString("IDS_AboutPageHeader", "Info");
-        public override void Navigate() => NavigationService.NavigateAsync(typeof(Views.AboutPage));
+        public override async void Navigate() => await NavigationService.NavigateAsync(typeof(Views.AboutPage));
     }
 }

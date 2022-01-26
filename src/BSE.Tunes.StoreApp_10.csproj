@@ -208,7 +208,6 @@
     <Compile Include="Extensions\HttpClientExtensions.cs" />
     <Compile Include="Extensions\HttpContentExtensions.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
-    <Compile Include="Extensions\NavigationServiceExtension.cs" />
     <Compile Include="Extensions\ScaledImageFile.cs" />
     <Compile Include="Extensions\WriteableBitmapLoadExtensions.cs" />
     <Compile Include="Extensions\WriteableBitmapSaveExtensions.cs" />
@@ -319,9 +318,6 @@
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Shell.xaml.cs">
-      <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellPage.xaml.cs">
       <DependentUpon>ShellPage.xaml</DependentUpon>
@@ -489,10 +485,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Shell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -24,9 +24,21 @@ namespace BSE.Tunes.StoreApp.Models.Contract
             get; set;
         }
 
+        public int? Year
+        {
+            get; set;
+        }
+
+        public Genre Genre
+        {
+            get;
+            set;
+        }
+
         public Track[] Tracks
         {
             get; set;
         }
+
     }
 }

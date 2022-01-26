@@ -11,6 +11,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public override string Icon => "World";
         public override string Description => ResourceService.GetString("IDS_ServiceUrlSettingsDescription", "The address of the webserver that contains the services");
         public override string Title => ResourceService.GetString("IDS_ServiceUrlSettingsHeader", "Service Address");
-        public override void Navigate() => NavigationService.NavigateAsync(typeof(Views.ServiceUrlSettingsPage));
+        public override async void Navigate() => await NavigationService.NavigateAsync(typeof(Views.ServiceUrlSettingsPage));
     }
 }

@@ -226,9 +226,9 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 await m_dialogService.ShowMessageDialogAsync(exception.Message);
             }
         }
-        private void SelectItem()
+        private async void SelectItem()
         {
-            NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), CurrentTrack.Album);
+            await NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), CurrentTrack.Album);
         }
         private bool CanExecutePreviousTrack()
         {

@@ -5,7 +5,6 @@
     xmlns:local="using:BSE.Tunes.StoreApp.Views"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:controls="using:Template10.Controls"
     xmlns:converters="using:BSE.Tunes.StoreApp.Converters"
     xmlns:controlextensions="using:BSE.Tunes.StoreApp.Controls.Extensions"
     xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"

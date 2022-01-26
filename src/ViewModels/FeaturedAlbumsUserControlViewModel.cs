@@ -26,13 +26,13 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
             }
         }
-        public override void SelectItem(GridPanelItemViewModel item)
+        public override async void SelectItem(GridPanelItemViewModel item)
         {
-            NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), item.Data);
+            await NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), item.Data);
         }
-        public override void NavigateTo()
+        public override async void NavigateTo()
         {
-            NavigationService.NavigateAsync(typeof(Views.AlbumsPage));
+            await NavigationService.NavigateAsync(typeof(Views.AlbumsPage));
         }
         public override async void PlayAll(GridPanelItemViewModel item)
         {

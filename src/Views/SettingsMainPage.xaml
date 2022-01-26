@@ -41,6 +41,7 @@
         
         <ScrollViewer EntranceNavigationTransitionInfo.IsTargetElement="True"
                       Padding="12,8,0,0"
+                      RelativePanel.AlignTopWithPanel="True"
                       RelativePanel.AlignBottomWithPanel="True"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True"
@@ -78,7 +79,7 @@
                 </ListView>
                 <GridView x:Name="gridView" ItemsSource="{x:Bind ViewModel.SettingItems}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <GridView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate> 
                             <StackPanel Orientation="Vertical" Width="200" Height="160">
                                 <Viewbox x:Name="icon" MaxHeight="40" MaxWidth="40">
                                     <SymbolIcon Symbol="{Binding Icon}" Foreground="{ThemeResource SystemAccentColor}"/>

@@ -108,9 +108,9 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
             }
         }
-        public override void SelectItem(GridPanelItemViewModel item)
+        public override async void SelectItem(GridPanelItemViewModel item)
         {
-            NavigationService.NavigateAsync(typeof(Views.PlaylistDetailPage), item.Data);
+            await NavigationService.NavigateAsync(typeof(Views.PlaylistDetailPage), item.Data);
         }
         public override void OpenFlyout(GridPanelItemViewModel item)
         {

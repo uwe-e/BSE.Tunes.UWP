@@ -10,9 +10,6 @@ using Windows.UI.Xaml.Data;
 
 namespace BSE.Tunes.StoreApp
 {
-    /// Documentation on APIs used in this page:
-    /// https://github.com/Windows-XAML/Template10/wiki
-
     [Bindable]
     sealed partial class App : Application
     {

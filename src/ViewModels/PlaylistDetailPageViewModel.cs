@@ -14,7 +14,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
@@ -203,9 +202,9 @@ namespace BSE.Tunes.StoreApp.ViewModels
             return string.Format(CultureInfo.CurrentUICulture, "{0} {1}", numberOfEntries, ResourceService.GetString("PlaylistItem_PartNumberOfEntries", "Songs"));
         }
 
-        private void ShowAlbum(ListViewItemViewModel item)
+        private async void ShowAlbum(ListViewItemViewModel item)
         {
-            NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), ((Track)((PlaylistEntry)item.Data).Track).Album);
+            await NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), ((Track)((PlaylistEntry)item.Data).Track).Album);
         }
 
         private bool CanPlayRandom()

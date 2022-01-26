@@ -89,13 +89,13 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 );
             }
         }
-        public override void NavigateTo()
+        public async override void NavigateTo()
         {
-            NavigationService.NavigateAsync(typeof(Views.ArtistsAlbumsPage), Artist);
+            await NavigationService.NavigateAsync(typeof(Views.ArtistsAlbumsPage), Artist);
         }
-        public override void SelectItem(GridPanelItemViewModel item)
-        {
-            NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), item.Data);
+        public async override void SelectItem(GridPanelItemViewModel item)
+        { 
+            await NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), item.Data);
         }
         public override async void PlayAll(GridPanelItemViewModel item)
         {
