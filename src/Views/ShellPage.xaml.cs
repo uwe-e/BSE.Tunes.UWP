@@ -31,8 +31,8 @@ namespace BSE.Tunes.StoreApp.Views
         public ShellPage()
         {
             this.InitializeComponent();
-            DataContext = ViewModel;
-            ViewModel.Initialize(shellFrame, KeyboardAccelerators);
+            //DataContext = ViewModel;
+            ViewModel.Initialize(shellFrame, navigationView, KeyboardAccelerators);
         }
 
 

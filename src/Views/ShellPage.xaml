@@ -13,6 +13,10 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.DataContext>
+        <vm:ShellViewModel/>
+    </Page.DataContext>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -23,13 +27,27 @@
                               IsBackButtonVisible="Visible"
                               IsBackEnabled="True"
                               IsSettingsVisible="True"
-                              
+                              SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
                               Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
             <winui:NavigationView.PaneHeader>
-                <TextBlock Text="asdasd"/>
+                <TextBlock Text="BSEtunes"/>
             </winui:NavigationView.PaneHeader>
             <winui:NavigationView.AutoSuggestBox>
-                <AutoSuggestBox QueryIcon="Find"/>
+                <AutoSuggestBox QueryIcon="Find"
+                                ItemsSource="{x:Bind ViewModel.SearchSuggestions}"
+                                Text="{x:Bind ViewModel.QueryText, Mode=TwoWay}">
+                    <i:Interaction.Behaviors>
+                        <ic:EventTriggerBehavior EventName="TextChanged">
+                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.TextChangedCommand}"/>
+                        </ic:EventTriggerBehavior>
+                        <ic:EventTriggerBehavior EventName="QuerySubmitted">
+                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.QuerySubmittedCommand}" InputConverter="{StaticResource AutoSuggestQueryParameterConverter}" />
+                        </ic:EventTriggerBehavior>
+                        <ic:EventTriggerBehavior EventName="SuggestionChosen">
+                            <ic:InvokeCommandAction Command="{x:Bind ViewModel.SuggestionChosenCommand}"/>
+                        </ic:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </AutoSuggestBox>
             </winui:NavigationView.AutoSuggestBox>
             <winui:NavigationView.MenuItems>
 

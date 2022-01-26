@@ -3,6 +3,7 @@ using BSE.Tunes.StoreApp.Services;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -18,6 +19,9 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private ICommand m_openMenuPanelCommand;
         private ICommand _itemInvokedCommand;
         private ICommand _backRequestedCommand;
+        private bool _isBackEnabled;
+        private WinUI.NavigationView _navigationView;
+        private WinUI.NavigationViewItem _selected;
 
         #region Properties
         public bool IsHamburgerMenuOpen
@@ -32,6 +36,19 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 RaisePropertyChanged(() => IsHamburgerMenuOpen);
             }
         }
+
+        public bool IsBackEnabled
+        {
+            get { return _isBackEnabled; }
+            set { Set(ref _isBackEnabled, value); }
+        }
+
+        public WinUI.NavigationViewItem Selected
+        {
+            get { return _selected; }
+            set { Set(ref _selected, value); }
+        }
+
         public ICommand OpenMenuPanelCommand => m_openMenuPanelCommand ?? (m_openMenuPanelCommand = new RelayCommand(() =>
         {
             IsHamburgerMenuOpen = true;
@@ -46,9 +63,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
         public ICommand BackRequestedCommand => _backRequestedCommand ?? (_backRequestedCommand = new RelayCommand<WinUI.NavigationViewBackRequestedEventArgs>(OnBackRequested));
 
-        
-
-
         #endregion
 
         public ShellViewModel()
@@ -59,14 +73,46 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
         }
 
-        public void Initialize(Frame frame, IList<KeyboardAccelerator> keyboardAccelerators)
+        public void Initialize(Frame frame, WinUI.NavigationView navigationView, IList<KeyboardAccelerator> keyboardAccelerators)
         {
-            //_navigationView = navigationView;
+            _navigationView = navigationView;
             //_keyboardAccelerators = keyboardAccelerators;
             NavigationService.Frame = frame;
+            NavigationService.Navigated += OnFrameNavigated;
             //NavigationService.NavigationFailed += Frame_NavigationFailed;
             //NavigationService.Navigated += Frame_Navigated;
             //_navigationView.BackRequested += OnBackRequested;
+        }
+
+        private void OnFrameNavigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            IsBackEnabled = NavigationService.CanGoBack;
+            var selectedItem = GetSelectedItem(_navigationView.MenuItems, e.SourcePageType);
+            if (selectedItem != null)
+            {
+                Selected = selectedItem;
+            }
+        }
+
+        private WinUI.NavigationViewItem GetSelectedItem(IList<object> menuItems, Type sourcePageType)
+        {
+            foreach (var item in menuItems.OfType<WinUI.NavigationViewItem>())
+            {
+                if (IsMenuItemForPageType(item, sourcePageType))
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+
+        private bool IsMenuItemForPageType(WinUI.NavigationViewItem item, Type sourcePageType)
+        {
+            var navigatedPageKey = NavigationService.GetNameOfRegisteredPage(sourcePageType);
+            var pageType = item.GetValue(NavHelper.PageTypeProperty) as Type;
+            //return pageKey == navigatedPageKey;
+            return pageType.Equals(sourcePageType);
         }
 
         private async void OnItemInvoked(WinUI.NavigationViewItemInvokedEventArgs args)

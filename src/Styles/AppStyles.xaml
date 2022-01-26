@@ -4,7 +4,6 @@
                     xmlns:styles="using:BSE.Tunes.StoreApp.Controls.StyleSelector"
                     xmlns:services="using:BSE.Tunes.StoreApp.Services"
                     xmlns:controls="using:BSE.Tunes.StoreApp.Controls"
-                    xmlns:template10="using:Template10.Controls"
                     xmlns:views="using:BSE.Tunes.StoreApp.Views">
     
     

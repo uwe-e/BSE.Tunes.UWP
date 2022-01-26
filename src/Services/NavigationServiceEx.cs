@@ -142,7 +142,8 @@ namespace BSE.Tunes.StoreApp.Services
                 }
                 else
                 {
-                    throw new ArgumentException(string.Format("The page '{0}' is unknown by the NavigationService", page.Name));
+                    //throw new ArgumentException(string.Format("The page '{0}' is unknown by the NavigationService", page.Name));
+                    return "";
                 }
             }
         }
