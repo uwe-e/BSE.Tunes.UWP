@@ -9,8 +9,8 @@ namespace BSE.Tunes.StoreApp.ViewModels
     public class ServiceUrlWizzardPageViewModel : ViewModelBase
     {
         private SettingsService _settingsService => SettingsService.Instance;
-        private IDialogService m_dialogSService;
-        private IAuthenticationService m_authenticationHandler;
+        private IDialogService _dialogSService => DialogService.Instance;
+        private IAuthenticationService _authenticationHandler => ViewModelLocator.Current.AuthenticationService;
         private RelayCommand m_saveHostCommand;
         private string m_strServiceUrl;
 
@@ -55,7 +55,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 _settingsService.ServiceUrl = serviceUrl;
                 try
                 {
-                    User user = await m_authenticationHandler.VerifyUserAuthenticationAsync().ConfigureAwait(true);
+                    User user = await _authenticationHandler.VerifyUserAuthenticationAsync().ConfigureAwait(true);
                     if (user == null)
                     {
                         _settingsService.IsFullScreen = true;
@@ -75,7 +75,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
             catch (Exception)
             {
-                await m_dialogSService.ShowMessageDialogAsync(
+                await _dialogSService.ShowMessageDialogAsync(
                     ResourceService.GetString("ServiceUrlNotAvailableExceptionMessage", "The address of your webserver was entered incorrectly or the webserver is not available."),
                     ResourceService.GetString("ExceptionMessageDialogHeader", "Error"));
             }

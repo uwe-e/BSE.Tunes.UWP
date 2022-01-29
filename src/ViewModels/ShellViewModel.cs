@@ -1,6 +1,8 @@
 ﻿using BSE.Tunes.StoreApp.Helpers;
+using BSE.Tunes.StoreApp.Mvvm.Messaging;
 using BSE.Tunes.StoreApp.Services;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private bool _isBackEnabled;
         private WinUI.NavigationView _navigationView;
         private WinUI.NavigationViewItem _selected;
+        private bool _isNavigationVisible;
 
         #region Properties
         public bool IsHamburgerMenuOpen
@@ -41,6 +44,17 @@ namespace BSE.Tunes.StoreApp.ViewModels
         {
             get { return _isBackEnabled; }
             set { Set(ref _isBackEnabled, value); }
+        }
+
+        public bool IsNavigationVisible
+        {
+            get { return _isNavigationVisible; }
+            set { Set(ref _isNavigationVisible, value); }
+        }
+
+        private void Set(ref object isNavigationVisible, bool value)
+        {
+            throw new NotImplementedException();
         }
 
         public WinUI.NavigationViewItem Selected
@@ -71,6 +85,13 @@ namespace BSE.Tunes.StoreApp.ViewModels
             {
                 m_settingsService = SettingsService.Instance;
             }
+
+            //IsNavigationVisible = true;
+
+            //Messenger.Default.Register<ScreenSizeChangedArgs>(this, args => {
+            //    IsNavigationVisible = !args.IsFullScreen;
+            
+            //});
         }
 
         public void Initialize(Frame frame, WinUI.NavigationView navigationView, IList<KeyboardAccelerator> keyboardAccelerators)

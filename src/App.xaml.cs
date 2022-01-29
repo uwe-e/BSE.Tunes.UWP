@@ -3,7 +3,6 @@ using BSE.Tunes.StoreApp.Services;
 using BSE.Tunes.StoreApp.ViewModels;
 using CommonServiceLocator;
 using System;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;

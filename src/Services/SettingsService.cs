@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml;
 
 namespace BSE.Tunes.StoreApp.Services
 {
@@ -65,29 +66,23 @@ namespace BSE.Tunes.StoreApp.Services
         }
         public bool IsFullScreen
         {
-            //get
-            //{
-            //    return m_settingsHelper.Read<bool>(nameof(IsFullScreen), false);
-            //}
-            //set
-            //{
-            //    m_settingsHelper.Write(nameof(IsFullScreen), value);
-            //    Views.Shell.HamburgerMenu.IsFullScreen = value;
-            //    Messenger.Default.Send(new ScreenSizeChangedArgs(value));
-            //}
-
             get
             {
-                var isFullscreen = ApplicationData.Current.LocalSettings.ReadAsync<bool>(nameof(IsFullScreen))
-                    .GetAwaiter()
-                    .GetResult();
-                return isFullscreen;
+                return ApplicationData.Current.LocalSettings.Read<bool>(nameof(IsFullScreen));
             }
             set
             {
-                ApplicationData.Current.LocalSettings.SaveAsync(nameof(IsFullScreen), value).GetAwaiter();
-                //Views.Shell.HamburgerMenu.IsFullScreen = value;
-                Messenger.Default.Send(new ScreenSizeChangedArgs(value));
+                ApplicationData.Current.LocalSettings.Write<bool>(nameof(IsFullScreen), value);
+                //Task.Run(async () =>
+                //{
+                //    await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                //    {
+                        var t = "";
+                //        //Views.ShellPage.NavigationView.IsPaneVisible = !value;
+                //    });
+                //});
+                //Views.ShellPage.NavigationView.IsPaneVisible = !value;
+                //Messenger.Default.Send(new ScreenSizeChangedArgs(value));
             }
         }
 		/// <summary>

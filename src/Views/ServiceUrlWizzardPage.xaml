@@ -5,6 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:uibehaviours="using:Microsoft.Toolkit.Uwp.UI.Behaviors"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -19,12 +22,11 @@
                      x:Uid="HostSettingsPage_TxtServiceUrl"
                      Text="{Binding ServiceUrl, Mode=TwoWay}" Margin="4" Width="300">
 <!--  enable submit on enter key  -->
-                <!--<interactivity:Interaction.Behaviors>
-                    
-                    <behaviors:KeyBehavior Key="Enter">
-                        <core:CallMethodAction MethodName="SaveUrl" TargetObject="{Binding}" />
-                    </behaviors:KeyBehavior>
-                </interactivity:Interaction.Behaviors>-->
+                <i:Interaction.Behaviors>
+                    <uibehaviours:KeyDownTriggerBehavior Key="Enter">
+                        <ic:CallMethodAction MethodName="SaveUrl" TargetObject="{Binding}" />
+                    </uibehaviours:KeyDownTriggerBehavior>
+                </i:Interaction.Behaviors>
             </TextBox>
             <Button x:Uid="HostSettingsPage_ButtonSave" Command="{x:Bind ViewModel.SaveHostCommand}" Content="Speichern" Width="Auto" HorizontalAlignment="Center" Margin="0,20"/>
         </StackPanel>

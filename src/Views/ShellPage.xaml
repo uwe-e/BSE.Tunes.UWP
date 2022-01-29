@@ -23,7 +23,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <winui:NavigationView x:Name="navigationView"
-                              IsPaneVisible="True"
                               IsBackButtonVisible="Visible"
                               IsBackEnabled="True"
                               IsSettingsVisible="True"

@@ -40,9 +40,8 @@
         </VisualStateManager.VisualStateGroups>
         
         <ScrollViewer EntranceNavigationTransitionInfo.IsTargetElement="True"
-                      Padding="12,8,0,0"
+                      Padding="20,100"
                       RelativePanel.AlignTopWithPanel="True"
-                      RelativePanel.AlignBottomWithPanel="True"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True"
                       VerticalScrollBarVisibility="Auto">

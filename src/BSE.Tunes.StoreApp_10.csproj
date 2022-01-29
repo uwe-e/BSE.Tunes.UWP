@@ -110,6 +110,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviours\Microsoft.Toolkit.Uwp.UI.Behaviors\KeyDownTriggerBehavior.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
     <Compile Include="Collections\NavigableCollection.cs" />
     <Compile Include="Controls\Carousel\AnimationExtensions.cs" />

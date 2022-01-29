@@ -63,10 +63,19 @@ namespace BSE.Tunes.StoreApp.Extensions
                     compositeValue.TryGetValue("Value", out obj);
                 }
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<T>((string)obj);
-                //return await Json.ToObjectAsync<T>((string)obj);
             }
 
             return default;
+        }
+
+        public static void Write<T>(this ApplicationDataContainer settings, string key, T value)
+        {
+            //var type = typeof(T);
+            //if (value != null)
+            //{
+            //    type = value.GetType();
+            //}
+            settings.Values[key] = Newtonsoft.Json.JsonConvert.SerializeObject(value);
         }
 
         public static async Task<T> ReadAsync<T>(this ApplicationDataContainer settings, string key)

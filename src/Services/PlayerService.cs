@@ -257,6 +257,7 @@ namespace BSE.Tunes.StoreApp.Services
                 this.m_mediaElement.MediaPlayer.Pause();
             });
         }
+
         public async void NextTrack()
         {
             if (this.CanExecuteNextTrack)
