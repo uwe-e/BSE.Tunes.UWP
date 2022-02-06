@@ -3,7 +3,6 @@ using BSE.Tunes.StoreApp.Services;
 using BSE.Tunes.StoreApp.Views;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
-using Windows.UI.Xaml.Controls;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
@@ -12,8 +11,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private static ViewModelLocator _current;
 
         public static ViewModelLocator Current => _current ?? (_current = new ViewModelLocator());
-
-
 
         static ViewModelLocator()
         {
@@ -64,11 +61,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public static void RegisterNavigationPage<V>()
             where V : class
         {
-            //var navigationServiec = ViewModelLocator.Current.NavigationService;
-
             ViewModelLocator.Current.NavigationService.Configure(typeof(V).FullName, typeof(V));
-            
-            //NavigationService.Configure(typeof(VM).FullName, typeof(V));
         }
     }
 }

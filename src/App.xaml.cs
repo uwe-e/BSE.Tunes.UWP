@@ -30,13 +30,18 @@ namespace BSE.Tunes.StoreApp
             m_settingsService = SettingsService.Instance;
 
             // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
-            //_activationService = new Lazy<ActivationService>(CreateActivationService);
+            _activationService = new Lazy<ActivationService>(CreateActivationService);
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             if (!args.PrelaunchActivated)
             {
+                await ActivationService.ActivateAsync(args);
+
+                var navigationService = ViewModels.ViewModelLocator.Current.NavigationService;
+                navigationService.Frame.Style = Resources["RootFrameStyle"] as Style;
+                
                 IDataService dataService = ServiceLocator.Current.GetInstance<IDataService>();
                 try
                 {
@@ -49,9 +54,8 @@ namespace BSE.Tunes.StoreApp
                             User user = await authenticationService.VerifyUserAuthenticationAsync().ConfigureAwait(true);
                             if (user != null)
                             {
-                                _activationService = new Lazy<ActivationService>(() => {
-                                    return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
-                                });
+                                await navigationService.NavigateAsync(typeof(Views.MainPage));
+                                
                             }
                         }
                         catch(Exception exception)
@@ -62,19 +66,12 @@ namespace BSE.Tunes.StoreApp
                 }
                 catch (Exception ex)
                 {
-                    _activationService = new Lazy<ActivationService>(() =>
-                    {
-                        return new ActivationService(this, typeof(Views.ServiceUrlWizzardPage));
-                    });
+                    await navigationService.NavigateAsync(typeof(Views.ServiceUrlWizzardPage), navitageFullscreen:true);
                 }
-
-
-                await ActivationService.ActivateAsync(args);
-
-                var navigationService = ViewModelLocator.Current.NavigationService;
-                navigationService.Frame.Style = Resources["RootFrameStyle"] as Style;
-
             }
+
+            Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
         }
 
         protected override async void OnActivated(IActivatedEventArgs args)
@@ -106,7 +103,8 @@ namespace BSE.Tunes.StoreApp
 
             //}
             //return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
-            return new ActivationService(this, typeof(Views.ServiceUrlWizzardPage));
+            //return new ActivationService(this, typeof(Views.ServiceUrlWizzardPage));
+            return new ActivationService(this, new Lazy<UIElement>(CreateShell));
         }
 
         private UIElement CreateShell()

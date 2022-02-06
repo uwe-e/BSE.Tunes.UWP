@@ -7,12 +7,18 @@
       xmlns:local="using:BSE.Tunes.StoreApp.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"
+      xmlns:converter="using:BSE.Tunes.StoreApp.Converters"
+      xmlns:xaml="using:Windows.UI.Xaml"
       mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:SettingsPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
+    <Page.Resources>
+        <converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="ElementTheme"/>
+    </Page.Resources>
+    
     <!--<Page.Resources>
         <converter:ValueWhenConverter x:Name="FalseWhenTrueConverter">
             <converter:ValueWhenConverter.When>
@@ -48,11 +54,42 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBlock x:Uid="SettingsPage_TxtModeTitle" Text="Mode" Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}"/>
-                        <TextBlock x:Uid="SettingsPage_TxtModeChangedMessage" Text="You'll see your change the next time you start the app66" Grid.Row="1"  Visibility="{Binding ThemeSelectionHasChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                        <StackPanel Margin="{StaticResource XSmallTopMargin}">
+                            <RadioButton x:Uid="Settings_Theme_Light"
+                                         Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                                         IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
+                                         FontSize="15"
+                                         GroupName="AppTheme">
+                                <RadioButton.CommandParameter>
+                                    <xaml:ElementTheme>Light</xaml:ElementTheme>
+                                </RadioButton.CommandParameter>
+                            </RadioButton>
+                            <RadioButton x:Uid="Settings_Theme_Dark"
+                                         Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                                         IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
+                                         FontSize="15"
+                                         GroupName="AppTheme">
+                                <RadioButton.CommandParameter>
+                                    <xaml:ElementTheme>Dark</xaml:ElementTheme>
+                                </RadioButton.CommandParameter>
+                            </RadioButton>
+                            <RadioButton x:Uid="Settings_Theme_Default"
+                                         Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                                         IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}"
+                                         FontSize="15"
+                                         GroupName="AppTheme">
+                                <RadioButton.CommandParameter>
+                                    <xaml:ElementTheme>Default</xaml:ElementTheme>
+                                </RadioButton.CommandParameter>
+                            </RadioButton>
+                        </StackPanel>
+
+                        <!--<TextBlock x:Uid="SettingsPage_TxtModeChangedMessage" Text="You'll see your change the next time you start the app66" Grid.Row="1"  Visibility="{Binding ThemeSelectionHasChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         <StackPanel Orientation="Vertical" Grid.Row="2">
                             <RadioButton Content="Light" Tag="True" IsChecked="{Binding UseLightTheme, Mode=TwoWay}"/>
                             <RadioButton Content="Dark" Tag="True" IsChecked="{Binding UseDarkTheme, Mode=TwoWay}"/>
-                        </StackPanel>
+                        </StackPanel>-->
                     </Grid>
 
                 </RelativePanel>

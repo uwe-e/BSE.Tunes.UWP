@@ -12,26 +12,6 @@ namespace BSE.Tunes.StoreApp.Activation
 
         public NavigationServiceEx NavigationService => ViewModelLocator.Current.NavigationService;
 
-        public DefaultActivationHandler(Type navElement)
-        {
-            _navType = navElement;
-        }
-
-        protected override async Task HandleInternalAsync(IActivatedEventArgs args)
-        {
-            // When the navigation stack isn't restored, navigate to the first page and configure
-            // the new page by passing required information in the navigation parameter
-            object arguments = null;
-            if (args is LaunchActivatedEventArgs launchArgs)
-            {
-                arguments = launchArgs.Arguments;
-            }
-
-            await NavigationService.NavigateAsync(_navType, arguments);
-            //NavigationService.Navigate(_navType, arguments);
-            await Task.CompletedTask;
-        }
-
         protected override bool CanHandleInternal(IActivatedEventArgs args)
         {
             // None of the ActivationHandlers has handled the app activation

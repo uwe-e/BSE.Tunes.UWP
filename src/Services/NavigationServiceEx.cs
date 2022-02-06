@@ -13,6 +13,17 @@ namespace BSE.Tunes.StoreApp.Services
 {
     public class NavigationServiceEx
     {
+        // This NavigationService can handle navigation in an application that uses various frames.
+        // The NavigationService manages a global backstack with entries from all frames.
+        // Internally the NavigationService uses these frame keys to identify the frame in navigation and manage the navigation back stack.
+        private const string FrameKeyMain = "Main";
+        private const string FrameKeyShell = "ShellFrame";
+
+        private Frame _frame;
+        private bool _navigateFullscreen;
+        private UIElement _shell;
+        private static readonly Dictionary<string, Frame> _frames = new Dictionary<string, Frame>();
+
         public event Windows.UI.Xaml.Navigation.NavigatedEventHandler Navigated;
 
         public event NavigatingCancelEventHandler Navigating;
@@ -20,9 +31,6 @@ namespace BSE.Tunes.StoreApp.Services
         public event NavigationFailedEventHandler NavigationFailed;
 
         private readonly Dictionary<string, Type> _pages = new Dictionary<string, Type>();
-
-        private Frame _frame;
-        private object _lastParamUsed;
 
         public Frame Frame
         {
@@ -41,6 +49,7 @@ namespace BSE.Tunes.StoreApp.Services
             {
                 UnregisterFrameEvents();
                 _frame = value;
+                _frame?.BackStack.Clear();
                 RegisterFrameEvents();
             }
         }
@@ -62,11 +71,36 @@ namespace BSE.Tunes.StoreApp.Services
 
         public void GoForward() => Frame.GoForward();
 
-        public async Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public async Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null, bool navitageFullscreen = false)
         {
-            //return await Task.Run(() => Navigate(page, parameter, infoOverride));
-            //return await Task.Run(() => Frame.Navigate(page, parameter, infoOverride));
-            //return Frame.Navigate(page, parameter, infoOverride);
+            if (navitageFullscreen && _navigateFullscreen != navitageFullscreen)
+            {
+                // the default frame should be the shell frame. This frame was created at startup
+                _shell = _shell ?? Window.Current.Content;
+
+                if (!_frames.ContainsKey(FrameKeyMain))
+                {
+                    _frames.Add(FrameKeyMain, new Frame());
+                }
+
+                Window.Current.Content = Frame = _frames.GetValueOrDefault(FrameKeyMain);
+
+            }
+            //if (!navitageFullscreen && _navigateFullscreen != navitageFullscreen)
+            if (!navitageFullscreen)
+            {
+                // if the call comes from a fullscreen page
+                if (_navigateFullscreen != navitageFullscreen)
+                {
+                    Window.Current.Content = _shell;
+                    Frame = _frames.GetValueOrDefault(FrameKeyShell);
+                }
+
+                //If the first navigate call comes from the shellpage
+                Frame = Frame ?? _frames.GetValueOrDefault(FrameKeyShell);
+            }
+            _navigateFullscreen = navitageFullscreen;
+
 
             var navigationHandled = new TaskCompletionSource<bool>();
 
@@ -77,40 +111,11 @@ namespace BSE.Tunes.StoreApp.Services
             return await navigationHandled.Task;
         }
 
-        public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public void InitializeShell(Frame shellFrame)
         {
-            //return Navigate(page.FullName, parameter, infoOverride);
-            //if (Frame.Content is Page page)
-            //{
-
-            //}
-            return Frame.Navigate(page, parameter, infoOverride); ;
-        }
-
-        public bool Navigate(string pageKey, object parameter = null, NavigationTransitionInfo infoOverride = null)
-        {
-            Type page;
-            lock (_pages)
+            if (shellFrame != null)
             {
-                if (string.IsNullOrEmpty(pageKey) || !_pages.TryGetValue(pageKey, out page))
-                {
-                    throw new ArgumentException(string.Format("Invalid pageKey '{0}', please provide a valid pageKey. Maybe you forgot to call NavigationService.Configure?", pageKey), nameof(pageKey));
-                }
-            }
-
-            if (Frame.Content?.GetType() != page || (parameter != null && !parameter.Equals(_lastParamUsed)))
-            {
-                var navigationResult = Frame.Navigate(page, parameter, infoOverride);
-                if (navigationResult)
-                {
-                    _lastParamUsed = parameter;
-                }
-
-                return navigationResult;
-            }
-            else
-            {
-                return false;
+                _frames.Add(FrameKeyShell, shellFrame);
             }
         }
 

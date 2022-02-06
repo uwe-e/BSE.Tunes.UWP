@@ -10,7 +10,7 @@
     <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -45,10 +45,7 @@
         </VisualStateManager.VisualStateGroups>
 
 
-        <ScrollViewer EntranceNavigationTransitionInfo.IsTargetElement="True"
-                      RelativePanel.AlignBottomWithPanel="True"
-                      RelativePanel.AlignLeftWithPanel="True"
-                      RelativePanel.AlignRightWithPanel="True">
+        <ScrollViewer >
             
             <RelativePanel x:Name="hubContainer" EntranceNavigationTransitionInfo.IsTargetElement="True"
                        RelativePanel.AlignTopWithPanel="True"
@@ -76,6 +73,6 @@
                 </Grid>
             </RelativePanel>
         </ScrollViewer>
-    </RelativePanel>
+    </Grid>
 </Page>
 

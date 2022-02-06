@@ -11,12 +11,8 @@ namespace BSE.Tunes.StoreApp.Services
 {
     public class SettingsService
     {
-		#region FieldsPrivate
-		//private Template10.Services.SettingsService.ISettingsHelper m_settingsHelper;
 		private bool m_isStartUp;
-		#endregion
 		
-		#region Properties
 		public static SettingsService Instance { get; } = new SettingsService();
 		public bool UseLightTheme
         {
@@ -64,27 +60,7 @@ namespace BSE.Tunes.StoreApp.Services
                 ApplicationData.Current.LocalSettings.SaveAsync(nameof(CacheMaxDuration), value).GetAwaiter();
             }
         }
-        public bool IsFullScreen
-        {
-            get
-            {
-                return ApplicationData.Current.LocalSettings.Read<bool>(nameof(IsFullScreen));
-            }
-            set
-            {
-                ApplicationData.Current.LocalSettings.Write<bool>(nameof(IsFullScreen), value);
-                //Task.Run(async () =>
-                //{
-                //    await Window.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                //    {
-                        var t = "";
-                //        //Views.ShellPage.NavigationView.IsPaneVisible = !value;
-                //    });
-                //});
-                //Views.ShellPage.NavigationView.IsPaneVisible = !value;
-                //Messenger.Default.Send(new ScreenSizeChangedArgs(value));
-            }
-        }
+
 		/// <summary>
 		/// Gets or sets an information that indicates the HamburgerMenu IsOpen state.
 		/// </summary>
@@ -124,24 +100,9 @@ namespace BSE.Tunes.StoreApp.Services
         /// </summary>
         public string ServiceUrl
         {
-            //get
-            //{
-            //    return m_settingsHelper.Read<string>(nameof(ServiceUrl), null);
-            //}
-            //set
-            //{
-            //    m_settingsHelper.Write(nameof(ServiceUrl), value);
-            //}
             get
             {
                 return ApplicationData.Current.LocalSettings.Read<string>(nameof(ServiceUrl));
-                //var t = ApplicationData.Current.LocalSettings.ReadAsync<string>(nameof(ServiceUrl));
-                //t.Wait();
-                //return t.Result;
-                //var serviceUrl = ApplicationData.Current.LocalSettings.ReadAsync<string>(nameof(ServiceUrl))
-                //    .GetAwaiter()
-                //    .GetResult();
-                //return serviceUrl;
             }
             set
             {
@@ -169,29 +130,24 @@ namespace BSE.Tunes.StoreApp.Services
             }
 
         }
-		#endregion
 
-		#region MethodsPublic
 		public void ApplyStartUpSettings()
 		{
 			//A successful startup needs no fullscreen. A fullscreen has no visible hamburger menu.
-			IsFullScreen = false;
+			//IsFullScreen = false;
 			//Sets the HamurgerMenu's IsOpen state.
 			//Views.Shell.HamburgerMenu.IsOpen = IsHamburgerMenuOpen;
 		}
-		#endregion
 
-		#region MethodsPrivate
 		private SettingsService()
 		{
 			//m_settingsHelper = new Template10.Services.SettingsService.SettingsHelper();
 		}
 
-        public async Task<string> GetServiceUrl()
-        {
-            return await ApplicationData.Current.LocalSettings.ReadAsync<string>(nameof(ServiceUrl));
-        }
-		#endregion
+        //public async Task<string> GetServiceUrl()
+        //{
+        //    return await ApplicationData.Current.LocalSettings.ReadAsync<string>(nameof(ServiceUrl));
+        //}
 	}
 }
 

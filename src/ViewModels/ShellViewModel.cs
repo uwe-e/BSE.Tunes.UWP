@@ -123,6 +123,12 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 {
                     return item;
                 }
+
+                var selectedChild = GetSelectedItem(item.MenuItems, sourcePageType);
+                if (selectedChild != null)
+                {
+                    return selectedChild;
+                }
             }
 
             return null;
@@ -130,10 +136,10 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
         private bool IsMenuItemForPageType(WinUI.NavigationViewItem item, Type sourcePageType)
         {
-            var navigatedPageKey = NavigationService.GetNameOfRegisteredPage(sourcePageType);
+            //var navigatedPageKey = NavigationService.GetNameOfRegisteredPage(sourcePageType);
             var pageType = item.GetValue(NavHelper.PageTypeProperty) as Type;
             //return pageKey == navigatedPageKey;
-            return pageType.Equals(sourcePageType);
+            return pageType?.Equals(sourcePageType) ?? false;
         }
 
         private async void OnItemInvoked(WinUI.NavigationViewItemInvokedEventArgs args)

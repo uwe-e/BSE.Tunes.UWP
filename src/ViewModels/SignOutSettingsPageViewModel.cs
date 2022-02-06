@@ -65,7 +65,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
             try
             {
                 await this.m_authenticationHandler.LogoutAsync();
-                m_settingsService.IsFullScreen = true;
                 await NavigationService.NavigateAsync(typeof(Views.SignInWizzardPage));
             }
             catch (Exception exception)

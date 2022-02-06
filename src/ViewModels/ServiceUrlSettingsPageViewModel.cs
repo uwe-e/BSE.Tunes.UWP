@@ -33,8 +33,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public async void RemoveUrl()
         {
             _settingsService.ServiceUrl = null;
-            _settingsService.IsFullScreen = true;
-            await NavigationService.NavigateAsync(typeof(Views.ServiceUrlWizzardPage));
+            await NavigationService.NavigateAsync(typeof(Views.ServiceUrlWizzardPage), navitageFullscreen:true);
         }
     }
 }

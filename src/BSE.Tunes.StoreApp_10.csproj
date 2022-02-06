@@ -130,6 +130,7 @@
     <Compile Include="Collections\IncrementalObservableCollection.cs" />
     <Compile Include="Controls\ListView\ListView.cs" />
     <Compile Include="Converters\AutoSuggestQueryParameterConverter.cs" />
+    <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Extensions\DynamicExtension.cs" />
     <Compile Include="Extensions\SettingsStorageExtensions.cs" />
     <Compile Include="Helpers\Json.cs" />
@@ -364,6 +365,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Styles\_Thickness.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

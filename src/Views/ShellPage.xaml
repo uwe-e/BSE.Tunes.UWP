@@ -8,9 +8,8 @@
     xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.DataContext>
@@ -22,15 +21,25 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
+        <Border x:Name="AppTitleBar"
+                IsHitTestVisible="True"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                Height="{Binding ElementName=navigationView, Path=CompactPaneLength}"
+                Canvas.ZIndex="1">
+            <TextBlock x:Name="AppTitle"
+                       Text="BSEtunes"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource CaptionTextBlockStyle}" />
+        </Border>
+        
         <winui:NavigationView x:Name="navigationView"
                               IsBackButtonVisible="Visible"
                               IsBackEnabled="True"
                               IsSettingsVisible="True"
-                              SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
-                              Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
-            <winui:NavigationView.PaneHeader>
-                <TextBlock Text="BSEtunes"/>
-            </winui:NavigationView.PaneHeader>
+                              IsTitleBarAutoPaddingEnabled="False"
+                              SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
             <winui:NavigationView.AutoSuggestBox>
                 <AutoSuggestBox QueryIcon="Find"
                                 ItemsSource="{x:Bind ViewModel.SearchSuggestions}"
@@ -58,9 +67,7 @@
             -->
                 <winui:NavigationViewItem x:Uid="Shell_Main" helpers:NavHelper.PageType="views:MainPage">
                     <StackPanel Orientation="Horizontal">
-                        <FontIcon Width="48"
-                                  Height="48"
-                                  Glyph="&#xE7F6;"/>
+                        <FontIcon Glyph="&#xE7F6;"/>
                         <TextBlock x:Uid="Shell_TxtHome" Margin="12,0,0,0"
                                VerticalAlignment="Center"
                                Text="Explore" />
@@ -68,9 +75,7 @@
                 </winui:NavigationViewItem>
                 <winui:NavigationViewItem x:Uid="Shell_Albums" helpers:NavHelper.PageType="views:AlbumsPage">
                     <StackPanel Orientation="Horizontal">
-                        <FontIcon Width="48"
-                                  Height="48"
-                                  Glyph="&#xE93C;"/>
+                        <FontIcon Glyph="&#xE93C;"/>
                         <TextBlock x:Uid="Shell_TxtAlbums" Margin="12,0,0,0"
                                VerticalAlignment="Center"
                                Text="Albums" />
@@ -78,9 +83,7 @@
                 </winui:NavigationViewItem>
                 <winui:NavigationViewItem x:Uid="Shell_PlayLists" helpers:NavHelper.PageType="views:PlaylistsPage">
                     <StackPanel Orientation="Horizontal">
-                        <FontIcon Width="48"
-                                  Height="48"
-                                  Glyph="&#xE8FD;"/>
+                        <FontIcon Glyph="&#xE8FD;"/>
                         <TextBlock x:Uid="Shell_TxtPlaylists" Margin="12,0,0,0"
                                VerticalAlignment="Center"
                                Text="Playlists" />

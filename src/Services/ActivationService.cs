@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -13,16 +15,13 @@ namespace BSE.Tunes.StoreApp.Services
     internal class ActivationService
     {
         private readonly App _app;
-        private readonly Type _defaultNavItem;
         private Lazy<UIElement> _shell;
-
         private object _lastActivationArgs;
 
-        public ActivationService(App app, Type defaultNavItem, Lazy<UIElement> shell = null)
+        public ActivationService(App app, Lazy<UIElement> shell)
         {
             _app = app;
             _shell = shell;
-            _defaultNavItem = defaultNavItem;
         }
 
         public async Task ActivateAsync(object activationArgs)
@@ -42,9 +41,6 @@ namespace BSE.Tunes.StoreApp.Services
                 }
             }
 
-            // Depending on activationArgs one of ActivationHandlers or DefaultActivationHandler
-            // will navigate to the first page
-            await HandleActivationAsync(activationArgs);
             _lastActivationArgs = activationArgs;
 
             if (IsInteractive(activationArgs))
@@ -59,37 +55,12 @@ namespace BSE.Tunes.StoreApp.Services
 
         private async Task InitializeAsync()
         {
-            await Task.CompletedTask;
-        }
-
-        private async Task HandleActivationAsync(object activationArgs)
-        {
-            var activationHandler = GetActivationHandlers()
-                                                .FirstOrDefault(h => h.CanHandle(activationArgs));
-
-            if (activationHandler != null)
-            {
-                await activationHandler.HandleAsync(activationArgs);
-            }
-
-            if (IsInteractive(activationArgs))
-            {
-                var defaultHandler = new DefaultActivationHandler(_defaultNavItem);
-                if (defaultHandler.CanHandle(activationArgs))
-                {
-                    await defaultHandler.HandleAsync(activationArgs);
-                }
-            }
+            await ThemeSelectorService.InitializeAsync().ConfigureAwait(false);
         }
 
         private async Task StartupAsync()
         {
-            await Task.CompletedTask;
-        }
-
-        private IEnumerable<ActivationHandler> GetActivationHandlers()
-        {
-            yield break;
+            await ThemeSelectorService.SetRequestedThemeAsync();
         }
 
         private bool IsInteractive(object args)
