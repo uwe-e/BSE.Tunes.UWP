@@ -19,53 +19,50 @@
         <converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="ElementTheme"/>
     </Page.Resources>
     
-    <!--<Page.Resources>
-        <converter:ValueWhenConverter x:Name="FalseWhenTrueConverter">
-            <converter:ValueWhenConverter.When>
-                <x:Boolean>True</x:Boolean>
-            </converter:ValueWhenConverter.When>
-            <converter:ValueWhenConverter.Value>
-                <x:Boolean>False</x:Boolean>
-            </converter:ValueWhenConverter.Value>
-            <converter:ValueWhenConverter.Otherwise>
-                <x:Boolean>True</x:Boolean>
-            </converter:ValueWhenConverter.Otherwise>
-        </converter:ValueWhenConverter>
-    </Page.Resources>-->
+    <Grid >
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition />
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource Breakpoint640Plus}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="contentSV.Padding" Value="14,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer x:Name="contentSV"
+                      Padding="56,0,0,0"
+                      VerticalScrollBarVisibility="Auto">
+                
+            <StackPanel HorizontalAlignment="Left">
 
-        <!--  content  -->
-        <RelativePanel EntranceNavigationTransitionInfo.IsTargetElement="True"
-                       RelativePanel.AlignBottomWithPanel="True"
-                       RelativePanel.AlignLeftWithPanel="True"
-                       RelativePanel.AlignRightWithPanel="True" 
-                       Margin="12,14,0,13">
-
-            <ScrollViewer Margin="0,12,-12,0"
-                              HorizontalContentAlignment="Left"
-                              VerticalScrollBarVisibility="Auto">
-                <RelativePanel HorizontalAlignment="Left">
-
-                    <Grid RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignTopWithPanel="True">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
                         <TextBlock x:Uid="SettingsPage_TxtModeTitle" Text="Mode" Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}"/>
 
                         <StackPanel Margin="{StaticResource XSmallTopMargin}">
-                            <RadioButton x:Uid="Settings_Theme_Light"
+                            <RadioButton x:Uid="SettingsPage_Settings_Theme_Light"
                                          Command="{x:Bind ViewModel.SwitchThemeCommand}"
                                          IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
                                          FontSize="15"
+                                         
                                          GroupName="AppTheme">
                                 <RadioButton.CommandParameter>
                                     <xaml:ElementTheme>Light</xaml:ElementTheme>
                                 </RadioButton.CommandParameter>
                             </RadioButton>
-                            <RadioButton x:Uid="Settings_Theme_Dark"
+                            <RadioButton x:Uid="SettingsPage_Settings_Theme_Dark"
                                          Command="{x:Bind ViewModel.SwitchThemeCommand}"
                                          IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
                                          FontSize="15"
@@ -74,7 +71,7 @@
                                     <xaml:ElementTheme>Dark</xaml:ElementTheme>
                                 </RadioButton.CommandParameter>
                             </RadioButton>
-                            <RadioButton x:Uid="Settings_Theme_Default"
+                            <RadioButton x:Uid="SettingsPage_Settings_Theme_Default"
                                          Command="{x:Bind ViewModel.SwitchThemeCommand}"
                                          IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}"
                                          FontSize="15"
@@ -85,17 +82,8 @@
                             </RadioButton>
                         </StackPanel>
 
-                        <!--<TextBlock x:Uid="SettingsPage_TxtModeChangedMessage" Text="You'll see your change the next time you start the app66" Grid.Row="1"  Visibility="{Binding ThemeSelectionHasChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                        <StackPanel Orientation="Vertical" Grid.Row="2">
-                            <RadioButton Content="Light" Tag="True" IsChecked="{Binding UseLightTheme, Mode=TwoWay}"/>
-                            <RadioButton Content="Dark" Tag="True" IsChecked="{Binding UseDarkTheme, Mode=TwoWay}"/>
-                        </StackPanel>-->
-                    </Grid>
-
-                </RelativePanel>
-
+                </StackPanel>
             </ScrollViewer>
-        </RelativePanel>
-    </RelativePanel>
+    </Grid>
 </Page>
 

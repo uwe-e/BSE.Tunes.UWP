@@ -191,7 +191,7 @@ Du kannst Dich nicht über die App registrieren. Die Registrierung kann nur durc
     <value>Du siehst Deine Änderung das nächste Mal, wenn Du die App startest.</value>
   </data>
   <data name="SettingsPage_TxtModeTitle.Text" xml:space="preserve">
-    <value>Modus</value>
+    <value>Farb Modus</value>
   </data>
   <data name="AlbumSection_SectionHeader.Text" xml:space="preserve">
     <value>Alben</value>
@@ -426,5 +426,14 @@ Die Registrierung kann nur durch den Betreiber des Servers erfolgen.</value>
   </data>
   <data name="AlbumsPage_PlayRandom.Text" xml:space="preserve">
     <value>Zufallswiedergabe</value>
+  </data>
+  <data name="SettingsPage_Settings_Theme_Dark.Content" xml:space="preserve">
+    <value>Dunkel</value>
+  </data>
+  <data name="SettingsPage_Settings_Theme_Default.Content" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="SettingsPage_Settings_Theme_Light.Content" xml:space="preserve">
+    <value>Hell</value>
   </data>
 </root>

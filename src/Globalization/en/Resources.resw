@@ -191,7 +191,7 @@ You may not have to register via the app. A registration can only be done by the
     <value>You'll see your change the next time you start the app</value>
   </data>
   <data name="SettingsPage_TxtModeTitle.Text" xml:space="preserve">
-    <value>Mode</value>
+    <value>Color Mode</value>
   </data>
   <data name="AlbumSection_SectionHeader.Text" xml:space="preserve">
     <value>New Albums</value>
@@ -426,5 +426,14 @@ A registration can only be done by the operator of the server.</value>
   </data>
   <data name="Shell_TxtSettings.Text" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SettingsPage_Settings_Theme_Dark.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="SettingsPage_Settings_Theme_Default.Content" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="SettingsPage_Settings_Theme_Light.Content" xml:space="preserve">
+    <value>Light</value>
   </data>
 </root>
