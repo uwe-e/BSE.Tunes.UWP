@@ -63,13 +63,18 @@
         <ItemsWrapGrid MaximumRowsOrColumns="2"/>
     </ItemsPanelTemplate>
 
+    <!-- The default background of a CommandBar is transparent!! We use commandbars only in BottomAppBars -->
+    <Style TargetType="CommandBar">
+        <Setter Property="Background" Value="{ThemeResource CommandBarBackgroundOpen}"/>
+    </Style>
+    
     <!--
         AppBarButtonStyle is used to style a Button (or ToggleButton) for use in an App Bar.  Content will be centered 
         and should fit within the 40 pixel radius glyph provided.  16-point Segoe UI Symbol is used for content text 
         to simplify the use of glyphs from that font.  AutomationProperties.Name is used for the text below the glyph.
     -->
     <Style x:Key="PlayerBarButtonStyle" TargetType="ButtonBase">
-        <Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}"/>
+        <Setter Property="Foreground" Value="{ThemeResource AppBarButtonForeground}"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
         <Setter Property="FontSize" Value="20"/>
@@ -124,21 +129,21 @@
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource AppBarItemPointerOverForegroundThemeBrush}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarButtonForegroundPointerOver}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource AppBarItemPressedForegroundThemeBrush}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarButtonForegroundPressed}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource AppBarItemDisabledForegroundThemeBrush}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarButtonForegroundDisabled}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -307,10 +312,6 @@
         <Setter Property="FontSize" Value="12"/>
         <!--<Setter Property="FontWeight" Value="SemiBold"/>-->
     </Style>
-    
-    
-    <Color x:Key="TitleBarBackground">#FFF2F2F2</Color>
-    <Color x:Key="TitleBarForeground">#FF000000</Color>
 
     <!--  Breakpoints  -->
     <x:Double x:Key="Breakpoint640Plus">641</x:Double>
@@ -323,21 +324,6 @@
     <SolidColorBrush x:Key="ListViewAlternatingRowBrush" Color="{ThemeResource SystemListLowColor}"/>
     <!-- overrides the PointerOverBackground of a listviewitem-->
     <SolidColorBrush x:Key="SystemControlHighlightListLowBrush" Color="{ThemeResource SystemListMediumColor}" />
-
-    <!-- Part Template10 Hamburger Menu-->
-    <SolidColorBrush x:Key="NavAreaBackgroundThemeBrush" Color="{StaticResource NavAreaBackground}"/>
-    <SolidColorBrush x:Key="HamburgerBackgroundThemeBrush" Color="{StaticResource HamburgerBackground}"/>
-    <SolidColorBrush x:Key="HamburgerForegroundThemeBrush" Color="{StaticResource HamburgerForeground}"/>
-    <SolidColorBrush x:Key="NavButtonBackgroundThemeBrush" Color="{StaticResource NavButtonBackground}"/>
-    <SolidColorBrush x:Key="NavButtonForegroundThemeBrush" Color="{StaticResource NavButtonForeground}"/>
-    <SolidColorBrush x:Key="NavButtonHoverBackgroundThemeBrush" Color="{StaticResource NavButtonHoverBackground}"/>
-    <SolidColorBrush x:Key="NavButtonHoverForegroundThemeBrush" Color="{StaticResource NavButtonHoverForeground}"/>
-    <SolidColorBrush x:Key="NavButtonCheckedIndicatorThemeBrush" Color="{ThemeResource SystemAccentColor}"/>
-    <SolidColorBrush x:Key="NavButtonCheckedBackgroundThemeBrush" Color="{StaticResource NavButtonCheckedBackground}"/>
-    <SolidColorBrush x:Key="NavButtonCheckedForegroundThemeBrush" Color="{ThemeResource SystemAccentColor}"/>
-    <SolidColorBrush x:Key="NavButtonPressedBackgroundThemeBrush" Color="{StaticResource NavButtonPressedBackground}"/>
-    <SolidColorBrush x:Key="NavButtonPressedForegroundThemeBrush" Color="{StaticResource NavButtonPressedForeground}"/>
-
 
     <DataTemplate x:Key="PictureSmallTemplate">
         <RelativePanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">

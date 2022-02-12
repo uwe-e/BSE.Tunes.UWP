@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:BSE.Tunes.StoreApp.Controls"
     mc:Ignorable="d" Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     d:DesignHeight="60"
     d:DesignWidth="400">
 
@@ -24,17 +25,14 @@
 
         <Style x:Key="PlayPlayerButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource PlayerBarButtonStyle}">
             <Setter Property="AutomationProperties.AutomationId" Value="PlayAppBarButton"/>
-            <Setter Property="Foreground" Value="{StaticResource ForeGroundColorBrush}"/>
             <Setter Property="Content" Value="&#xE102;"/>
         </Style>
         <Style x:Key="PausePlayerButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource PlayerBarButtonStyle}">
             <Setter Property="AutomationProperties.AutomationId" Value="PauseAppBarButton"/>
-            <Setter Property="Foreground" Value="{StaticResource ForeGroundColorBrush}"/>
             <Setter Property="Content" Value="&#xE103;"/>
         </Style>
         <Style x:Key="NextPlayerButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource PlayerBarButtonStyle}">
             <Setter Property="AutomationProperties.AutomationId" Value="NextAppBarButton"/>
-            <Setter Property="Foreground" Value="{StaticResource ForeGroundColorBrush}"/>
             <Setter Property="Content" Value="&#xE101;"/>
         </Style>
         <Style x:Key="PreviousPlayerButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource PlayerBarButtonStyle}">
@@ -45,7 +43,7 @@
         <converter:PlayerStateToIconConverter x:Key="PlayerStateToIconConverter"/>
     </UserControl.Resources>
 
-    <Grid Background="{StaticResource ControlBackGroundColorBrush}">
+    <Grid>
         <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                     <VisualState x:Name="VisualStateNarrow">
