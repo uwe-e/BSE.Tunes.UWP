@@ -16,10 +16,10 @@ namespace BSE.Tunes.StoreApp.Services
         #endregion
 
         #region FieldsPrivate
-        private SettingsService m_settingsService;
+        private SettingsService _settingsService => SettingsService.Instance;
         private IResourceService m_resourceService;
-        private readonly string m_strUnauthorizedAccessExceptionMessage;
-        private readonly string m_strEncryptedLoginException;
+        private readonly string _strUnauthorizedAccessExceptionMessage;
+        private readonly string _strEncryptedLoginException;
         #endregion
 
         #region Properties
@@ -27,7 +27,7 @@ namespace BSE.Tunes.StoreApp.Services
         {
             get
             {
-                return string.Format("{0}/token", m_settingsService.ServiceUrl);
+                return string.Format("{0}/token", _settingsService.ServiceUrl);
             }
         }
         public TokenResponse TokenResponse
@@ -58,7 +58,7 @@ namespace BSE.Tunes.StoreApp.Services
                     {
                         if (TokenResponse.IsError)
                         {
-                            throw new UnauthorizedAccessException(this.m_strUnauthorizedAccessExceptionMessage);
+                            throw new UnauthorizedAccessException(this._strUnauthorizedAccessExceptionMessage);
                         }
 
                         Windows.Storage.ApplicationData.Current.RoamingSettings.Values["username"] = userName;
@@ -75,13 +75,15 @@ namespace BSE.Tunes.StoreApp.Services
                                 UserName = userName,
                                 UseSecureLogin = useSecureLogin
                             };
-                            m_settingsService.User = user;
+                            _settingsService.User = user;
+
+                            var u = _settingsService.User;
                         }
                     }
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    throw new UnauthorizedAccessException(this.m_strUnauthorizedAccessExceptionMessage);
+                    throw new UnauthorizedAccessException(this._strUnauthorizedAccessExceptionMessage);
                 }
                 catch (Exception exception)
                 {
@@ -89,14 +91,14 @@ namespace BSE.Tunes.StoreApp.Services
                     if (nullReferenceException != null)
                     {
                         //there could be a nullreference exception at account change when the login is encrypted.
-                        throw new UnauthorizedAccessException(this.m_strEncryptedLoginException);
+                        throw new UnauthorizedAccessException(this._strEncryptedLoginException);
                     }
                     throw exception;
                 }
             }
             else
             {
-                throw new UnauthorizedAccessException(this.m_strUnauthorizedAccessExceptionMessage);
+                throw new UnauthorizedAccessException(this._strUnauthorizedAccessExceptionMessage);
             }
             return user;
         }
@@ -108,7 +110,7 @@ namespace BSE.Tunes.StoreApp.Services
                 var credential = vault.RetrieveAll().FirstOrDefault();
                 if (credential != null)
                 {
-                    m_settingsService.User = null;
+                    _settingsService.User = null;
                 }
             });
         }
@@ -120,13 +122,13 @@ namespace BSE.Tunes.StoreApp.Services
         }
         public async Task<User> VerifyUserCredentialsAsync()
         {
-            User user = m_settingsService.User;
+            User user = _settingsService.User;
             PasswordVault vault = new PasswordVault();
             try
             {
                 await Task.Run(() =>
                 {
-                    var userName = m_settingsService.User?.UserName;
+                    var userName = _settingsService.User?.UserName;
                     if (!string.IsNullOrEmpty(userName))
                     {
                         var passwordCredential = vault.Retrieve(PasswordVaultResourceName, userName);
@@ -163,7 +165,7 @@ namespace BSE.Tunes.StoreApp.Services
                 }
                 else
                 {
-                    throw new UnauthorizedAccessException(this.m_strUnauthorizedAccessExceptionMessage);
+                    throw new UnauthorizedAccessException(this._strUnauthorizedAccessExceptionMessage);
                 }
             }
             return user;
@@ -174,11 +176,11 @@ namespace BSE.Tunes.StoreApp.Services
         #region MethodsPrivate
         public AuthenticationService()
         {
-            m_settingsService = SettingsService.Instance;
+            //m_settingsService = SettingsService.Instance;
             m_resourceService = ResourceService.Instance;
-            this.m_strUnauthorizedAccessExceptionMessage = m_resourceService.GetString(
+            this._strUnauthorizedAccessExceptionMessage = m_resourceService.GetString(
                 "UnauthorizedAccessExceptionMessage", "The user name or password is incorrect");
-            this.m_strEncryptedLoginException = m_resourceService.GetString(
+            this._strEncryptedLoginException = m_resourceService.GetString(
                 "EncryptedLoginException", "There is a login error. Please deactivate the encrypted login.");
         }
         private OAuth2Client GetHttpClient(bool useSecureLogin)

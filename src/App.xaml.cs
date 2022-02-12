@@ -52,11 +52,15 @@ namespace BSE.Tunes.StoreApp
                         {
                             IAuthenticationService authenticationService = ViewModelLocator.Current.AuthenticationService;
                             User user = await authenticationService.VerifyUserAuthenticationAsync().ConfigureAwait(true);
-                            if (user != null)
+                            if (user == null)
+                            {
+                                await navigationService.NavigateAsync(typeof(Views.SignInWizzardPage), navitageFullscreen: true);
+                            }
+                            else
                             {
                                 await navigationService.NavigateAsync(typeof(Views.MainPage));
-                                
                             }
+                            
                         }
                         catch(Exception exception)
                         {

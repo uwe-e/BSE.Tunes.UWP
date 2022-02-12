@@ -47,32 +47,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 base.RaisePropertyChanged();
             }
         }
-
-        public bool UseLightTheme
-        {
-            get
-            {
-                return m_settings.UseLightTheme;
-            }
-            set
-            {
-                m_settings.UseLightTheme = value;
-                ThemeSelectionHasChanged = true;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        public bool UseDarkTheme
-        {
-            get
-            {
-                return !UseLightTheme;
-            }
-            set
-            {
-                UseLightTheme = !value;
-            }
-        }
     }
 }
 

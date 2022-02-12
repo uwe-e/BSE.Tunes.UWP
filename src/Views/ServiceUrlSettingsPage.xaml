@@ -8,31 +8,26 @@
         <vm:ServiceUrlSettingsPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-
-        <RelativePanel EntranceNavigationTransitionInfo.IsTargetElement="True"
-                       RelativePanel.AlignTopWithPanel="True"
-                       RelativePanel.AlignBottomWithPanel="True"
-                       RelativePanel.AlignLeftWithPanel="True"
-                       RelativePanel.AlignRightWithPanel="True" Margin="12,14,0,13">
-            <ScrollViewer Margin="0,12,-12,0"
-                              HorizontalContentAlignment="Left"
-                              VerticalScrollBarVisibility="Auto">
-                <RelativePanel>
-                    <TextBlock x:Uid="ServiceUrlSettingsPage_TxtServiceHostDescription"
-                       x:Name="TextBlockServiceURLDescription"
-                       TextAlignment="{Binding Path=HorizontalContentAlignment}" Text="Enter the address of the web that contains the audio service." TextWrapping="Wrap" RelativePanel.AlignTopWithPanel="True"/>
-                    <TextBox x:Name="TextBoxServiceURL"
-                             IsEnabled="False"
-                               Text="{Binding ServiceUrl}"  Margin="0,12,0,0"
-                               RelativePanel.Below="TextBlockServiceURLDescription"/>
-                    <Button x:Uid="ServiceUrlSettingsPage_ButtonRemove"
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer Margin="20">
+            <StackPanel>
+                <TextBlock x:Uid="ServiceUrlSettingsPage_TxtServiceHostDescription"
+                           x:Name="TextBlockServiceURLDescription"
+                           TextAlignment="{Binding Path=HorizontalContentAlignment}"
+                           Text="Enter the address of the web that contains the audio service."
+                           HorizontalAlignment="Left"
+                           Width="300" Margin="0,5" TextWrapping="Wrap"/>
+                <TextBox x:Name="TextBoxServiceURL"
+                         Text="{Binding ServiceUrl}" Margin="0,5"
+                         Width="300"
+                         HorizontalAlignment="Left"
+                         IsEnabled="False"/>
+                <Button x:Uid="ServiceUrlSettingsPage_ButtonRemove"
                             x:Name="ButtonSaveServiceURL"
-                            Command="{x:Bind ViewModel.RemoveUrlCommand}" Content="Speichern" Margin="0,20"
-                            RelativePanel.Below="TextBoxServiceURL" RelativePanel.AlignRightWith="TextBoxServiceURL"/>
-                </RelativePanel>
-            </ScrollViewer>
-        </RelativePanel>
-    </RelativePanel>
+                            Command="{x:Bind ViewModel.RemoveUrlCommand}" Content="Speichern"
+                        HorizontalAlignment="Left"
+                        Margin="0,5"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </Page>

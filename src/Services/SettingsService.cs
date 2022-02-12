@@ -14,28 +14,7 @@ namespace BSE.Tunes.StoreApp.Services
 		private bool m_isStartUp;
 		
 		public static SettingsService Instance { get; } = new SettingsService();
-		public bool UseLightTheme
-        {
-            //get
-            //{
-            //    return m_settingsHelper.Read<bool>(nameof(UseLightTheme), false);
-            //}
-            //set
-            //{
-            //    m_settingsHelper.Write(nameof(UseLightTheme), value);
-            //}
-            get
-            {
-                return false;
-                //return ApplicationData.Current.LocalSettings.ReadAsync<bool>(nameof(UseLightTheme))
-                //    .GetAwaiter()
-                //    .GetResult();
-            }
-            set
-            {
-                ApplicationData.Current.LocalSettings.SaveAsync(nameof(UseLightTheme), value).GetAwaiter();
-            }
-        }
+
         public TimeSpan CacheMaxDuration
         {
             //get
@@ -112,14 +91,6 @@ namespace BSE.Tunes.StoreApp.Services
         }
         public User User
         {
-            //get
-            //{
-            //    return m_settingsHelper.Read<User>(nameof(User), null);
-            //}
-            //set
-            //{
-            //    m_settingsHelper.Write(nameof(User), value);
-            //}
             get
             {
                 return ApplicationData.Current.LocalSettings.Read<User>(nameof(User));
@@ -143,11 +114,6 @@ namespace BSE.Tunes.StoreApp.Services
 		{
 			//m_settingsHelper = new Template10.Services.SettingsService.SettingsHelper();
 		}
-
-        //public async Task<string> GetServiceUrl()
-        //{
-        //    return await ApplicationData.Current.LocalSettings.ReadAsync<string>(nameof(ServiceUrl));
-        //}
 	}
 }
 

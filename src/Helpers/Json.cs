@@ -15,10 +15,7 @@ namespace BSE.Tunes.StoreApp.Helpers
 
         public static async Task<string> StringifyAsync(object value)
         {
-            return await Task.Run<string>(() =>
-            {
-                return JsonConvert.SerializeObject(value);
-            });
+            return await Task.FromResult(JsonConvert.SerializeObject(value));
         }
     }
 }

@@ -13,18 +13,37 @@
     </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-            <TextBlock x:Uid="SignInSettingsPage_Header" TextAlignment="Center" Margin="4" Text="Account Settings" Style="{StaticResource TitleTextBlockStyle}"/>
-            <TextBlock x:Uid="SignInSettingsPage_TxtAccountInfo" Text="Due to copyright of the music..." TextAlignment="Center" TextWrapping="Wrap" Style="{StaticResource BodyTextBlockStyle}"/>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="contentPanel.Width" Value="500"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <StackPanel x:Name="contentPanel" VerticalAlignment="Center">
+            <TextBlock x:Uid="SignInSettingsPage_Header" TextAlignment="Center" Text="Account Settings" Style="{StaticResource TitleTextBlockStyle}"/>
+            <TextBlock x:Uid="SignInSettingsPage_TxtAccountInfo" Text="Due to copyright of the music..." TextAlignment="Center" TextWrapping="WrapWholeWords"/>
             <TextBox x:Uid="SignInSettingsPage_TxtUserName" AutomationProperties.LabeledBy="{Binding ElementName=TxtUserName}" InputScope="EmailSmtpAddress"
                      AutomationProperties.IsRequiredForForm="True"
-                     Text="{Binding UserName, Mode=TwoWay}" Width="300"
-                     Margin="4,10"/>
+                     Text="{Binding UserName, Mode=TwoWay}"
+                     Width="300"
+                     Margin="0,5"/>
             <PasswordBox x:Uid="SignInSettingsPage_TxtPassword" AutomationProperties.LabeledBy="{Binding ElementName=TxtPassword}"
-                     AutomationProperties.IsRequiredForForm="True"
-                     Password="{Binding Password, Mode=TwoWay}" Width="300"
-                         Margin="4"/>
-            <Button x:Uid="SignInSettingsPage_ButtonSave" Content="Speichern" Command="{x:Bind ViewModel.AuthenticateCommand}" Width="80" HorizontalAlignment="Center" Margin="0,20"/>
+                         AutomationProperties.IsRequiredForForm="True"
+                         Password="{Binding Password, Mode=TwoWay}"
+                         Width="300"
+                         Margin="0,5"/>
+            <Button x:Uid="SignInSettingsPage_ButtonSave" Content="Speichern" Command="{x:Bind ViewModel.AuthenticateCommand}" HorizontalAlignment="Center" Margin="0,5"/>
         </StackPanel>
     </Grid>
 </Page>
