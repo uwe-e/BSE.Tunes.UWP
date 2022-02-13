@@ -75,8 +75,7 @@
                        RelativePanel.AlignLeftWithPanel="True"
                        RelativePanel.AlignRightWithPanel="True"
                        RelativePanel.AlignTopWithPanel="True"
-                       RelativePanel.AlignBottomWithPanel="True"
-                       RelativePanel.Below="pageHeader">
+                       RelativePanel.AlignBottomWithPanel="True">
 
             <!-- normal header  -->
             <TextBlock x:Name="normalPageHeader" Text="{x:Bind ViewModel.PageHeaderText}" Style="{StaticResource PageHeaderTextBlockStyle}"

@@ -157,7 +157,7 @@
                         <Setter Target="listview.AlternatingRow" Value="Transparent"/>
                         <Setter Target="listview.(RelativePanel.Below)" Value="narrowPageTitle"/>
                         <Setter Target="pageContent.(RelativePanel.AlignTopWithPanel)" Value="False"/>
-                        <Setter Target="pageContent.(RelativePanel.Below)" Value="pageHeader"/>
+                        <!--<Setter Target="pageContent.(RelativePanel.Below)" Value="pageHeader"/>-->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">

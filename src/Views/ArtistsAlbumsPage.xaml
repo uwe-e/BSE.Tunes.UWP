@@ -33,10 +33,10 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="pageHeader.Visibility" Value="Visible"/>
+                        <!--<Setter Target="pageHeader.Visibility" Value="Visible"/>-->
                         <Setter Target="normalPageHeader.Visibility" Value="Collapsed"/>
                         <Setter Target="pageContent.(RelativePanel.AlignTopWithPanel)" Value="False"/>
-                        <Setter Target="pageContent.(RelativePanel.Below)" Value="pageHeader"/>
+                        <!--<Setter Target="pageContent.(RelativePanel.Below)" Value="pageHeader"/>-->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -44,7 +44,7 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="pageHeader.Visibility" Value="Collapsed"/>
+                        <!--<Setter Target="pageHeader.Visibility" Value="Collapsed"/>-->
                         <Setter Target="normalPageHeader.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -58,37 +58,12 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <!--  header  -->
-        <!--<usercontrols:AutoSuggestionPageHeader x:Name="pageHeader"
-                                               HeaderText="{Binding Artist.Name}"
-                                               PlaceholderText="Search"
-                                               QueryIcon="Find"
-                                               ButtonIcon="Find"
-                                               QueryText="{x:Bind ViewModel.QueryText, Mode=TwoWay}"
-                                               ItemsSource="{x:Bind ViewModel.SearchSuggestions}"
-                                               RelativePanel.AlignLeftWithPanel="True"
-                                               RelativePanel.AlignRightWithPanel="True"
-                                               RelativePanel.AlignTopWithPanel="True"
-                                               Visibility="Collapsed">
-            <interactivity:Interaction.Behaviors>
-                <core:EventTriggerBehavior EventName="TextChanged">
-                    <core:InvokeCommandAction Command="{x:Bind ViewModel.TextChangedCommand}"/>
-                </core:EventTriggerBehavior>
-                <core:EventTriggerBehavior EventName="QuerySubmitted">
-                    <core:InvokeCommandAction Command="{x:Bind ViewModel.QuerySubmittedCommand}" InputConverter="{StaticResource AutoSuggestQueryParameterConverter}" />
-                </core:EventTriggerBehavior>
-                <core:EventTriggerBehavior EventName="SuggestionChosen">
-                    <core:InvokeCommandAction Command="{x:Bind ViewModel.SuggestionChosenCommand}"/>
-                </core:EventTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
-        </usercontrols:AutoSuggestionPageHeader>-->
 
         <RelativePanel x:Name="pageContent" 
                        RelativePanel.AlignLeftWithPanel="True"
                        RelativePanel.AlignRightWithPanel="True"
                        RelativePanel.AlignTopWithPanel="True"
-                       RelativePanel.AlignBottomWithPanel="True"
-                       RelativePanel.Below="pageHeader">
+                       RelativePanel.AlignBottomWithPanel="True">
 
             <!-- normal header  -->
             <TextBlock x:Name="normalPageHeader" Text="{Binding Artist.Name}" Style="{StaticResource PageHeaderTextBlockStyle}"

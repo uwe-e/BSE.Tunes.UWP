@@ -8,7 +8,6 @@
     xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:converters="using:BSE.Tunes.StoreApp.Converters"
     xmlns:controlextensions="using:BSE.Tunes.StoreApp.Controls.Extensions"
     mc:Ignorable="d"
     d:DesignHeight="300"
@@ -49,8 +48,8 @@
         </DataTemplate>
 
     </UserControl.Resources>
-    
-    <RelativePanel Padding="20,10,20,10">
+
+    <StackPanel>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -71,27 +70,39 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <HyperlinkButton x:Name="sectionName" Foreground="{ThemeResource SystemBaseHighColor}" Command="{Binding NavigateToPageCommand}">
-            <HyperlinkButton.Content>
-                <TextBlock TextTrimming="CharacterEllipsis" Style="{StaticResource SectionSubtitleTextBlockStyle}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton x:Name="sectionName"
+                         Foreground="{ThemeResource SystemBaseHighColor}"
+                         Command="{Binding NavigateToPageCommand}"
+                         Grid.Column="0">
+                <HyperlinkButton.Content>
+                    <TextBlock TextTrimming="CharacterEllipsis" Style="{StaticResource SectionSubtitleTextBlockStyle}">
                     <Run x:Uid="ArtistsAlbums_SectionHeader" Text="Albums by"/>
                     <Run Text="{Binding Artist.Name}"/>
-                </TextBlock>
-                
-            </HyperlinkButton.Content>
-        </HyperlinkButton>
-        <HyperlinkButton x:Name="sectionButton" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWith="sectionName" Command="{Binding NavigateToPageCommand}" FontSize="14">
-            <HyperlinkButton.Content>
-                <Grid VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="&#xE8A9;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Grid.Column="0"/>
-                    <TextBlock x:Uid="ArtistsAlbums_ShowAll" Text="Show All" VerticalAlignment="Center" Margin="6,0,0,0" Grid.Column="1" />
-                </Grid>
-            </HyperlinkButton.Content>
-        </HyperlinkButton>
+                    </TextBlock>
+
+                </HyperlinkButton.Content>
+            </HyperlinkButton>
+            <HyperlinkButton x:Name="sectionButton"
+                             Grid.Column="2"
+                             Command="{Binding NavigateToPageCommand}" FontSize="14">
+                <HyperlinkButton.Content>
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="&#xE8A9;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Grid.Column="0"/>
+                        <TextBlock x:Uid="ArtistsAlbums_ShowAll" Text="Show All" VerticalAlignment="Center" Margin="6,0,0,0" Grid.Column="1" />
+                    </Grid>
+                </HyperlinkButton.Content>
+            </HyperlinkButton>
+        </Grid>
         <GridView Margin="0,12,0,0" x:Name="gridview" Padding="0" 
                   SelectionMode="None"
                   IsItemClickEnabled="True"
@@ -103,5 +114,5 @@
                   controlextensions:ListViewExtensions.Command="{Binding SelectItemCommand}"
                   controlextensions:ListViewExtensions.RightTappedCommand="{Binding RightTappedCommand}">
         </GridView>
-    </RelativePanel>
+    </StackPanel>
 </UserControl>

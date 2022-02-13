@@ -60,6 +60,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                     (uint)numberOfAlbums,
                     (uint count) =>
                     {
+                        Console.WriteLine("first");
                         Func<Task<Windows.UI.Xaml.Data.LoadMoreItemsResult>> taskFunc = async () =>
                         {
                             int pageSize = (int)count;
