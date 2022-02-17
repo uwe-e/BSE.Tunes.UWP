@@ -19,6 +19,7 @@
     </Page.DataContext>
 
     <Page.Resources>
+
         <DataTemplate x:Name="narrowListViewItem">
             <Grid x:Name="listViewItem" Height="48">
                 <Grid.ColumnDefinitions>
@@ -154,6 +155,11 @@
                     <Flyout controlextensions:FlyoutExtensions.IsOpen="{Binding IsPlaylistFlyoutOpen, Mode=TwoWay}"
                             controlextensions:FlyoutExtensions.Parent="{Binding ElementName=buttonAddTo}"
                             controlextensions:FlyoutExtensions.ItemsSource="{Binding MenuItemsPlaylist}">
+                        <!--<Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter" BasedOn="{StaticResource DefaultFlyoutPresenterStyle}">
+                                <Setter Property="Background" Value="{ThemeResource FlyoutPresenterBackgroundBrush}"/>
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>-->
                         <controlextensions:FlyoutExtensions.ItemTemplate>
                             <DataTemplate>
                                 <Grid>

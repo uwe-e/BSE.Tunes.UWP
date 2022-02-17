@@ -4,7 +4,8 @@
                     xmlns:services="using:BSE.Tunes.StoreApp.Services"
                     xmlns:controls="using:BSE.Tunes.StoreApp.Controls"
                     xmlns:views="using:BSE.Tunes.StoreApp.Views">
-    
+
+
     <!-- The global converters --> 
     <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <converter:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
