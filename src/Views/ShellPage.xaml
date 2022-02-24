@@ -39,6 +39,8 @@
                               IsBackEnabled="True"
                               IsSettingsVisible="True"
                               IsTitleBarAutoPaddingEnabled="False"
+                              ItemInvoked="NavigationView_ItemInvoked"
+                              BackRequested="NavigationView_BackRequested"
                               SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
             <winui:NavigationView.AutoSuggestBox>
                 <AutoSuggestBox QueryIcon="Find"
@@ -91,14 +93,20 @@
                 </winui:NavigationViewItem>
                 
             </winui:NavigationView.MenuItems>
-            <i:Interaction.Behaviors>
+            <!--
+            
+            WinUI:NavigationView does not navigate in Release Mode
+            https://github.com/microsoft/TemplateStudio/issues/2774
+            
+            -->
+            <!--<i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="BackRequested">
                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.BackRequestedCommand}" />
                 </ic:EventTriggerBehavior>
                 <ic:EventTriggerBehavior EventName="ItemInvoked">
                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemInvokedCommand}" />
                 </ic:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
+            </i:Interaction.Behaviors>-->
             <Grid>
                 <Frame x:Name="shellFrame" />
             </Grid>

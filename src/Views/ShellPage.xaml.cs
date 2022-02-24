@@ -25,7 +25,7 @@ namespace BSE.Tunes.StoreApp.Views
 
         public ShellPage()
         {
-            
+
             this.InitializeComponent();
             //Instance = this;
             ViewModel.Initialize(shellFrame, navigationView, KeyboardAccelerators);
@@ -59,5 +59,27 @@ namespace BSE.Tunes.StoreApp.Views
             //coreTitleBar.ButtonBackgroundColor = Colors.Transparent;
             //coreTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
+
+        private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        {
+            /*
+             * WinUI:NavigationView does not navigate in Release Mode
+             * https://github.com/microsoft/TemplateStudio/issues/2774
+             */
+
+            ViewModel.ItemInvokedCommand.Execute(args);
+        }
+
+        private void NavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        {
+            /*
+             * WinUI:NavigationView does not navigate in Release Mode
+             * https://github.com/microsoft/TemplateStudio/issues/2774
+             * 
+             */
+
+            ViewModel.BackRequestedCommand.Execute(args);
+        }
+
     }
 }
