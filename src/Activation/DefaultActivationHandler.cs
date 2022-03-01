@@ -1,7 +1,6 @@
 ﻿using BSE.Tunes.StoreApp.Services;
 using BSE.Tunes.StoreApp.ViewModels;
 using System;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
 namespace BSE.Tunes.StoreApp.Activation

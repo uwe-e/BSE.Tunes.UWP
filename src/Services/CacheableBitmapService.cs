@@ -53,7 +53,7 @@ namespace BSE.Tunes.StoreApp.Services
                     int index = 0;
 
                     writeableBitmap = new WriteableBitmap(width, height);
-
+                    writeableBitmap.FillRectangle(0,0,width,height, Windows.UI.Color.FromArgb(0,100,100,100));
                     foreach (var file in storageFiles)
                     {
                         var randomAccessStreamReference = RandomAccessStreamReference.CreateFromFile(file);
