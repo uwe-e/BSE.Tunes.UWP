@@ -17,55 +17,9 @@
         <vm:PlaylistsPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <Page.BottomAppBar>
-        <CommandBar x:Uid="BottomAppBar" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
-            <AppBarSeparator/>
-            <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Command="{Binding PlaySelectedItemsCommand}"/>
-            <AppBarButton x:Uid="ButtonDeleteSelection" Icon="Delete" Command="{Binding DeleteSelectedItemsCommand}"/>
-            <AppBarButton x:Uid="ButtonSelectAll" Icon="SelectAll" Command="{Binding SelectAllItemsCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true, Mode=TwoWay}"/>
-            <AppBarButton x:Uid="ButtonUnSelectAll" Icon="ClearSelection" Command="{Binding ClearSelectionCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false, Mode=TwoWay}"/>
-        </CommandBar>
-    </Page.BottomAppBar>
+    <Grid>
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
-                <VisualState x:Name="VisualStateNarrow">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="normalPageHeader.Visibility" Value="Collapsed"/>
-                        <Setter Target="gridView.(RelativePanel.Below)" Value="narrowPageTitle"/>
-                        <Setter Target="pageContent.(RelativePanel.AlignTopWithPanel)" Value="False"/>
-                        <!--<Setter Target="pageContent.(RelativePanel.Below)" Value="pageHeader"/>-->
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="VisualStateNormal">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="normalPageHeader.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="VisualStateWide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="normalPageHeader.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-        <RelativePanel x:Name="pageContent" 
-                       RelativePanel.AlignLeftWithPanel="True"
-                       RelativePanel.AlignRightWithPanel="True"
-                       RelativePanel.AlignTopWithPanel="True"
-                       RelativePanel.AlignBottomWithPanel="True">
+        <RelativePanel x:Name="pageContent">
 
             <!-- normal header  -->
             <TextBlock x:Name="normalPageHeader" x:Uid="PlaylistsPage_PageHeader" Text="Albums" Style="{StaticResource PageHeaderTextBlockStyle}"
@@ -73,17 +27,26 @@
                        RelativePanel.AlignLeftWithPanel="True"
                        RelativePanel.AlignRightWithPanel="True"/>
 
-            <TextBlock x:Name="narrowPageTitle" x:Uid="PlaylistsPage_PageTitle" Text="Song" Style="{StaticResource PageTitleTextBlockStyle}"
-                       Visibility="Collapsed"
-                       RelativePanel.AlignTopWithPanel="True"
-                       RelativePanel.AlignLeftWithPanel="True"
-                       RelativePanel.AlignRightWithPanel="True"/>
+            <Grid x:Name="filterPanel" Height="50"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True" 
+                  RelativePanel.Below="normalPageHeader">
+                
+                <CommandBar x:Uid="BottomAppBar" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
+                    <AppBarSeparator/>
+                    <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Command="{Binding PlaySelectedItemsCommand}"/>
+                    <AppBarButton x:Uid="ButtonDeleteSelection" Icon="Delete" Command="{Binding DeleteSelectedItemsCommand}"/>
+                    <AppBarButton x:Uid="ButtonSelectAll" Icon="SelectAll" Command="{Binding SelectAllItemsCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true, Mode=TwoWay}"/>
+                    <AppBarButton x:Uid="ButtonUnSelectAll" Icon="ClearSelection" Command="{Binding ClearSelectionCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false, Mode=TwoWay}"/>
+                </CommandBar>
+            </Grid>
 
             <GridView x:Name="gridView" Padding="20,10,20,0"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True"
-                      RelativePanel.Below="normalPageHeader"
-                      ItemsSource="{Binding Items}" ItemContainerStyle="{StaticResource NormalGridViewItem}"
+                      RelativePanel.Below="filterPanel"
+                      ItemsSource="{Binding Items}" ItemContainerStyle="{StaticResource ExpandedGridViewItemContainer}"
                       SelectionMode="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"
                       IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
                       controlextensions:ListViewExtensions.Command="{Binding SelectItemCommand}"
@@ -130,5 +93,5 @@
             </GridView>
 
         </RelativePanel>
-    </RelativePanel>
+    </Grid>
 </Page>

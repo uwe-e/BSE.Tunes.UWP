@@ -84,13 +84,11 @@
                 </Grid>
             </StackPanel>
 
-
-
             <GridView x:Name="gridView" Padding="20,10,20,0"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True"
                       RelativePanel.Below="filterPanel"
-                      ItemsSource="{Binding Albums}" DataFetchSize="1" ItemContainerStyle="{StaticResource ExpandedGridViewItem}"
+                      ItemsSource="{Binding Albums}" DataFetchSize="1" ItemContainerStyle="{StaticResource ExpandedGridViewItemContainer}"
                       SelectionMode="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"
                       IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
                       controlextensions:ListViewExtensions.Command="{Binding SelectItemCommand}"
