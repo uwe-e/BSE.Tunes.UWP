@@ -2,14 +2,11 @@
     x:Class="BSE.Tunes.StoreApp.Views.SearchResultTracksPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BSE.Tunes.StoreApp.Views"
     xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"
     xmlns:usercontrols="using:BSE.Tunes.StoreApp.Controls"
     xmlns:controlextensions="using:BSE.Tunes.StoreApp.Controls.Extensions"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:mvvm="http://www.galasoft.ch/mvvmlight"
-    xmlns:converters="using:BSE.Tunes.StoreApp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -134,15 +131,7 @@
         </DataTemplate>
     </Page.Resources>
 
-    <Page.BottomAppBar>
-        <CommandBar x:Uid="BottomAppBar" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
-            <AppBarSeparator/>
-            <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Command="{Binding PlaySelectedItemsCommand}"/>
-        </CommandBar>
-    </Page.BottomAppBar>
-
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -150,14 +139,9 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="narrowPageTitle.Visibility" Value="Visible"/>
-                        <Setter Target="normalPageHeader.Visibility" Value="Collapsed"/>
-                        <Setter Target="listview.ItemContainerStyle" Value="{StaticResource narrowListViewItemStyle}"/>
                         <Setter Target="listview.ItemTemplate" Value="{StaticResource narrowListViewItem}"/>
                         <Setter Target="listview.AlternatingRow" Value="Transparent"/>
-                        <Setter Target="listview.(RelativePanel.Below)" Value="narrowPageTitle"/>
                         <Setter Target="pageContent.(RelativePanel.AlignTopWithPanel)" Value="False"/>
-                        <!--<Setter Target="pageContent.(RelativePanel.Below)" Value="pageHeader"/>-->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -165,9 +149,6 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="narrowPageTitle.Visibility" Value="Collapsed"/>
-                        <Setter Target="normalPageHeader.Visibility" Value="Visible"/>
-                        <Setter Target="listview.ItemContainerStyle" Value="{StaticResource normalListViewItemStyle}"/>
                         <Setter Target="listview.ItemTemplate" Value="{StaticResource normalListViewItem}"/>
                         <Setter Target="listview.AlternatingRow" Value="{StaticResource ListViewAlternatingRowBrush}"/>
                     </VisualState.Setters>
@@ -177,9 +158,6 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="normalPageHeader.Visibility" Value="Visible"/>
-                        <Setter Target="narrowPageTitle.Visibility" Value="Collapsed"/>
-                        <Setter Target="listview.ItemContainerStyle" Value="{StaticResource normalListViewItemStyle}"/>
                         <Setter Target="listview.ItemTemplate" Value="{StaticResource normalListViewItem}"/>
                         <Setter Target="listview.AlternatingRow" Value="{StaticResource ListViewAlternatingRowBrush}"/>
                     </VisualState.Setters>
@@ -199,17 +177,22 @@
                        RelativePanel.AlignLeftWithPanel="True"
                        RelativePanel.AlignRightWithPanel="True"/>
 
-            <TextBlock x:Name="narrowPageTitle" x:Uid="SearchResultTracksPage_PageTitle" Text="Song" Style="{StaticResource PageTitleTextBlockStyle}"
-                       Visibility="Collapsed"
-                       RelativePanel.AlignTopWithPanel="True"
-                       RelativePanel.AlignLeftWithPanel="True"
-                       RelativePanel.AlignRightWithPanel="True"/>
+            <Grid x:Name="filterPanel" Height="50"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True" 
+                  RelativePanel.Below="normalPageHeader">
+                <CommandBar x:Uid="BottomAppBar" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
+                    <AppBarSeparator/>
+                    <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Command="{Binding PlaySelectedItemsCommand}"/>
+                </CommandBar>
+            </Grid>
 
             <usercontrols:ListView x:Name="listview" Padding="0,10,0,0"  ItemTemplate="{StaticResource normalListViewItem}"
-                                   ItemContainerStyle="{StaticResource normalListViewItemStyle}"
+                                   ItemContainerStyle="{StaticResource ExpandedListViewItemContainer}"
                                    RelativePanel.AlignLeftWithPanel="True"
                                    RelativePanel.AlignRightWithPanel="True"
-                                   RelativePanel.Below="normalPageHeader"
+                                   RelativePanel.Below="filterPanel"
                                    ItemsSource="{Binding Tracks}" DataFetchSize="1"
                                    SelectionMode="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"
                                    IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
@@ -217,8 +200,8 @@
                                    controlextensions:ListViewExtensions.SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
                                    AlternatingRow="{StaticResource ListViewAlternatingRowBrush}">
             </usercontrols:ListView>
-        
+
         </RelativePanel>
-    
-    </RelativePanel>
+
+    </Grid>
 </Page>

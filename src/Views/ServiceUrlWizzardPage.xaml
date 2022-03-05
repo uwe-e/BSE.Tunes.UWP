@@ -20,11 +20,12 @@
             <TextBlock x:Uid="HostSettingsPage_TxtServiceHostDescription" TextAlignment="Center" Text="Enter the address of the web that contains the audio service." TextWrapping="Wrap" />
             <TextBox AutomationProperties.IsRequiredForForm="True"
                      x:Uid="HostSettingsPage_TxtServiceUrl"
+                     x:Name="TxtServiceUrl"
                      Text="{Binding ServiceUrl, Mode=TwoWay}" Margin="4" Width="300">
-<!--  enable submit on enter key  -->
+                <!--  enable submit on enter key  -->
                 <i:Interaction.Behaviors>
                     <uibehaviours:KeyDownTriggerBehavior Key="Enter">
-                        <ic:CallMethodAction MethodName="SaveUrl" TargetObject="{Binding}" />
+                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.SaveServiceUrlCommand}" CommandParameter="{Binding Text, ElementName=TxtServiceUrl}"/>
                     </uibehaviours:KeyDownTriggerBehavior>
                 </i:Interaction.Behaviors>
             </TextBox>

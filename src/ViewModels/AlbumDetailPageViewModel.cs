@@ -64,8 +64,10 @@ namespace BSE.Tunes.StoreApp.ViewModels
             Album album = parameter as Album;
             if (album != null)
             {
+                Album = album;
                 Album = await DataService.GetAlbumById(album.Id);
-
+                this.CoverSource = DataService.GetImage(album.AlbumId);
+                
                 foreach (Track track in Album.Tracks)
                 {
                     if (track != null)
@@ -73,7 +75,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                         this.Items.Add(new ListViewItemViewModel { Data = track });
                     }
                 }
-                this.CoverSource = DataService.GetImage(Album.AlbumId);
+                
                 ArtistsAlbums = new ArtistsAlbumsUserControlViewModel(Album.Artist);
                 this.PlayAllCommand.RaiseCanExecuteChanged();
             }
