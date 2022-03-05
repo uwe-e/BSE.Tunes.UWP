@@ -68,7 +68,7 @@ namespace BSE.Tunes.StoreApp
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     await navigationService.NavigateAsync(typeof(Views.ServiceUrlWizzardPage), navitageFullscreen:true);
                 }

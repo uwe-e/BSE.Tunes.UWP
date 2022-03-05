@@ -49,7 +49,7 @@ namespace BSE.Tunes.StoreApp.Services
             {
                 UnregisterFrameEvents();
                 _frame = value;
-                _frame?.BackStack.Clear();
+                //_frame?.BackStack.Clear();
                 RegisterFrameEvents();
             }
         }
@@ -75,6 +75,7 @@ namespace BSE.Tunes.StoreApp.Services
         {
             if (navitageFullscreen && _navigateFullscreen != navitageFullscreen)
             {
+                ResetNavigation();
                 // the default frame should be the shell frame. This frame was created at startup
                 _shell = _shell ?? Window.Current.Content;
 
@@ -83,8 +84,10 @@ namespace BSE.Tunes.StoreApp.Services
                     _frames.Add(FrameKeyMain, new Frame());
                 }
 
-                Window.Current.Content = Frame = _frames.GetValueOrDefault(FrameKeyMain);
+                Frame = _frames.GetValueOrDefault(FrameKeyMain);
+                Frame.RequestedTheme = ThemeSelectorService.Theme;
 
+                Window.Current.Content = Frame;
             }
             //if (!navitageFullscreen && _navigateFullscreen != navitageFullscreen)
             if (!navitageFullscreen)
@@ -92,6 +95,7 @@ namespace BSE.Tunes.StoreApp.Services
                 // if the call comes from a fullscreen page
                 if (_navigateFullscreen != navitageFullscreen)
                 {
+                    ResetNavigation();
                     Window.Current.Content = _shell;
                     Frame = _frames.GetValueOrDefault(FrameKeyShell);
                 }
@@ -150,6 +154,14 @@ namespace BSE.Tunes.StoreApp.Services
                     //throw new ArgumentException(string.Format("The page '{0}' is unknown by the NavigationService", page.Name));
                     return "";
                 }
+            }
+        }
+
+        private void ResetNavigation()
+        {
+            foreach (var pair in _frames)
+            {
+                pair.Value?.BackStack?.Clear();
             }
         }
 

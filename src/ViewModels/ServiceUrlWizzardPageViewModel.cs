@@ -3,6 +3,7 @@ using BSE.Tunes.StoreApp.Mvvm;
 using BSE.Tunes.StoreApp.Services;
 using GalaSoft.MvvmLight.Command;
 using System;
+using System.Windows.Input;
 
 namespace BSE.Tunes.StoreApp.ViewModels
 {
@@ -11,18 +12,23 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private SettingsService _settingsService => SettingsService.Instance;
         private IDialogService _dialogSService => DialogService.Instance;
         private IAuthenticationService _authenticationHandler => ViewModelLocator.Current.AuthenticationService;
-        private RelayCommand m_saveHostCommand;
-        private string m_strServiceUrl;
+        private RelayCommand _saveHostCommand;
+        private ICommand _saveServiceUrlCommand;
+        private string _strServiceUrl;
+        
+        public RelayCommand SaveHostCommand => _saveHostCommand ?? (_saveHostCommand = new RelayCommand(SaveUrl));
+
+        public ICommand SaveServiceUrlCommand => _saveServiceUrlCommand ?? (_saveServiceUrlCommand = new RelayCommand<string>(SaveServiceUrl));
 
         public string ServiceUrl
         {
             get
             {
-                return this.m_strServiceUrl;
+                return this._strServiceUrl;
             }
             set
             {
-                this.m_strServiceUrl = value;
+                this._strServiceUrl = value;
                 this.RaisePropertyChanged("ServiceUrl");
                 this.SaveHostCommand.RaiseCanExecuteChanged();
             }
@@ -30,19 +36,15 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
         public ServiceUrlWizzardPageViewModel()
         {
-            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                //_settingsService = SettingsService.Instance;
-                //m_dialogSService = DialogService.Instance;
-                //m_authenticationHandler = AuthenticationService.Instance;
-                //ServiceUrl = m_settingsService.GetServiceUrl.ServiceUrl;
-            }
         }
-        public RelayCommand SaveHostCommand => m_saveHostCommand ?? (m_saveHostCommand = new RelayCommand(SaveUrl));
 
-        public async void SaveUrl()
+        public void SaveUrl()
         {
-            var serviceUrl = ServiceUrl;
+            SaveServiceUrl(ServiceUrl);
+        }
+
+        private async void SaveServiceUrl(string serviceUrl)
+        {
             try
             {
                 if (!string.IsNullOrEmpty(serviceUrl))
@@ -77,5 +79,5 @@ namespace BSE.Tunes.StoreApp.ViewModels
                     ResourceService.GetString("ExceptionMessageDialogHeader", "Error"));
             }
         }
-        }
+    }
 }
