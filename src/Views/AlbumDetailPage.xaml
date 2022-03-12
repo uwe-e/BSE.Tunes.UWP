@@ -17,8 +17,6 @@
     </Page.DataContext>
 
     <Page.Resources>
-
-        
         <DataTemplate x:Name="normalListViewItem">
             <UserControl>
                 <Grid  x:Name="listViewItem" Height="48">
@@ -91,7 +89,7 @@
             </UserControl>
         </DataTemplate>
     </Page.Resources>
-    
+
     <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -205,36 +203,35 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Height="45">
-                    <CommandBar x:Uid="BottomAppBar" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
-                        <AppBarSeparator/>
-                        <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play"
-                            Command="{Binding PlaySelectedItemsCommand}"/>
+                    <CommandBar DefaultLabelPosition="Right" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                       <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
+                        <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Command="{Binding PlaySelectedItemsCommand}"
+                                      Background="{ThemeResource SystemAccentColor}"/>
                         <AppBarButton x:Name="buttonAddTo" x:Uid="ButtonAddToPlaylist" Icon="Add"
                             Command="{Binding OpenPlaylistFlyoutCommand}">
                             <AppBarButton.ContextFlyout>
                                 <Flyout controlextensions:FlyoutExtensions.IsOpen="{Binding IsPlaylistFlyoutOpen, Mode=TwoWay}"
-                            controlextensions:FlyoutExtensions.Parent="{Binding ElementName=buttonAddTo}"
-                            controlextensions:FlyoutExtensions.ItemsSource="{Binding MenuItemsPlaylist}">
-                        <controlextensions:FlyoutExtensions.ItemTemplate> 
-                            <DataTemplate>
-                                <Grid>
-                                    <MenuFlyoutItem Command="{Binding MenuItemClickedCommand}"
+                                        controlextensions:FlyoutExtensions.Parent="{Binding ElementName=buttonAddTo}"
+                                        controlextensions:FlyoutExtensions.ItemsSource="{Binding MenuItemsPlaylist}">
+                                    <controlextensions:FlyoutExtensions.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <MenuFlyoutItem Command="{Binding MenuItemClickedCommand}"
                                                     CommandParameter="{Binding}"
                                                     Text="{Binding Text}"
                                                     controlextensions:MenuFlyoutItem.UpdateTagTarget="True"
                                                     Tag="{Binding InsertMode, ConverterParameter=Selected, Converter={StaticResource InsertModeConverter}, Mode=TwoWay}"
                                                     Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"/>
-                                    <MenuFlyoutSeparator Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </controlextensions:FlyoutExtensions.ItemTemplate>
-                    </Flyout>
-                </AppBarButton.ContextFlyout>
-            </AppBarButton>
-            <AppBarButton x:Uid="ButtonSelectAll" Icon="SelectAll" Command="{Binding SelectAllItemsCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true, Mode=TwoWay}"/>
-            <AppBarButton x:Uid="ButtonUnSelectAll" Icon="ClearSelection" Command="{Binding ClearSelectionCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false, Mode=TwoWay}"/>
-        </CommandBar>
+                                                <MenuFlyoutSeparator Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </controlextensions:FlyoutExtensions.ItemTemplate>
+                                </Flyout>
+                            </AppBarButton.ContextFlyout>
+                        </AppBarButton>
+                        <AppBarButton x:Uid="ButtonSelectAll" Icon="SelectAll" Command="{Binding SelectAllItemsCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true, Mode=TwoWay}"/>
+                        <AppBarButton x:Uid="ButtonUnSelectAll" Icon="ClearSelection" Command="{Binding ClearSelectionCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false, Mode=TwoWay}"/>
+                    </CommandBar>
                 </StackPanel>
                 <StackPanel x:Name="tracksPart">
                     <usercontrols:ListView x:Name="listview" Margin="0,12,0,0"

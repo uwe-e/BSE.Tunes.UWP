@@ -31,11 +31,12 @@
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.AlignRightWithPanel="True" 
                   RelativePanel.Below="normalPageHeader">
-                
-                <CommandBar x:Uid="BottomAppBar" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                <CommandBar DefaultLabelPosition="Right"
+                            Background="{ThemeResource CommandBarBackgroundOpen}"
+                            Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
-                    <AppBarSeparator/>
-                    <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Command="{Binding PlaySelectedItemsCommand}"/>
+                    <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Background="{ThemeResource SystemAccentColor}" Command="{Binding PlaySelectedItemsCommand}"/>
                     <AppBarButton x:Uid="ButtonDeleteSelection" Icon="Delete" Command="{Binding DeleteSelectedItemsCommand}"/>
                     <AppBarButton x:Uid="ButtonSelectAll" Icon="SelectAll" Command="{Binding SelectAllItemsCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true, Mode=TwoWay}"/>
                     <AppBarButton x:Uid="ButtonUnSelectAll" Icon="ClearSelection" Command="{Binding ClearSelectionCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false, Mode=TwoWay}"/>

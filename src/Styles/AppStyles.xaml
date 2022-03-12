@@ -63,11 +63,6 @@
         <ItemsWrapGrid MaximumRowsOrColumns="2"/>
     </ItemsPanelTemplate>
 
-    <!-- The default background of a CommandBar is transparent!! We use commandbars only in BottomAppBars -->
-    <Style TargetType="CommandBar">
-        <Setter Property="Background" Value="{ThemeResource CommandBarBackgroundOpen}"/>
-    </Style>
-    
     <!--
         AppBarButtonStyle is used to style a Button (or ToggleButton) for use in an App Bar.  Content will be centered 
         and should fit within the 40 pixel radius glyph provided.  16-point Segoe UI Symbol is used for content text 

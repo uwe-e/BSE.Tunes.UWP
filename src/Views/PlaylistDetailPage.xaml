@@ -212,10 +212,9 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Height="45">
-                <CommandBar x:Uid="BottomAppBar" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <CommandBar DefaultLabelPosition="Right" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
-            <AppBarSeparator/>
-            <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play"
+            <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Background="{ThemeResource SystemAccentColor}"
                             Command="{Binding PlaySelectedItemsCommand}"/>
             <AppBarButton x:Name="buttonAddTo" x:Uid="ButtonAddToPlaylist" Icon="Add"
                             Command="{Binding OpenPlaylistFlyoutCommand}">
