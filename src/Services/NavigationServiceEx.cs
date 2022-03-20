@@ -62,6 +62,16 @@ namespace BSE.Tunes.StoreApp.Services
         {
             if (CanGoBack)
             {
+                var count = Frame.BackStack?.Count ?? 0;
+
+                IList<PageStackEntry> entries = Frame.BackStack;
+                if (entries != null)
+                {
+                    foreach (PageStackEntry entry in entries)
+                    {
+                        var t = entry;
+                    }
+                }
                 Frame.GoBack();
                 return true;
             }
@@ -71,7 +81,7 @@ namespace BSE.Tunes.StoreApp.Services
 
         public void GoForward() => Frame.GoForward();
 
-        public async Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null, bool navitageFullscreen = false)
+        public async Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null, bool navitageFullscreen = false, bool removeLastBackStackEntry = false)
         {
             if (navitageFullscreen && _navigateFullscreen != navitageFullscreen)
             {
@@ -105,6 +115,7 @@ namespace BSE.Tunes.StoreApp.Services
             }
             _navigateFullscreen = navitageFullscreen;
 
+            
 
             var navigationHandled = new TaskCompletionSource<bool>();
 
@@ -112,6 +123,22 @@ namespace BSE.Tunes.StoreApp.Services
             {
                 navigationHandled.SetResult(Frame.Navigate(page, parameter, infoOverride));
             });
+            
+            if (removeLastBackStackEntry)
+            {
+                var count = Frame.BackStack?.Count ?? 0;
+                var backstackEntry = Frame.BackStack.LastOrDefault();
+                if (backstackEntry != null)
+                {
+                    Frame.BackStack.Remove(backstackEntry);
+                    //.BackStack.RemoveAt(Frame.BackStack.Count - 1);
+                }
+
+            }
+            
+            
+            
+            
             return await navigationHandled.Task;
         }
 

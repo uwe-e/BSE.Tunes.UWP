@@ -16,7 +16,7 @@ namespace BSE.Tunes.StoreApp.Services
     public class CacheableBitmapService : ICacheableBitmapService
     {
         private const string ThumbnailPart = "_thumb";
-        public static string ImageExtension => ".jpg";
+        public static string ImageExtension => ".png";
 
         public static ICacheableBitmapService Instance
         {

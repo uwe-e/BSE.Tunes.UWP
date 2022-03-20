@@ -232,7 +232,7 @@ You may not have to register via the app. A registration can only be done by the
   <data name="Shell_TxtPlaylists.Text" xml:space="preserve">
     <value>Playlists</value>
   </data>
-  <data name="PlaylistDetailPage_PlayAll.Text" xml:space="preserve">
+  <data name="PlaylistDetailPage_PlayAll.Label" xml:space="preserve">
     <value>Play all</value>
   </data>
   <data name="ButtonPlaySelection.Label" xml:space="preserve">
@@ -305,7 +305,7 @@ Please choose a different name for your playlist!</value>
   <data name="DeletePlaylistContentDialog_TxtDeleteSelectedInformation" xml:space="preserve">
     <value>If you delete this playlists from your library, you can't play it anymore from other devices.</value>
   </data>
-  <data name="PlaylistDetailPage_AddTo.Text" xml:space="preserve">
+  <data name="PlaylistDetailPage_AddTo.Label" xml:space="preserve">
     <value>Add to</value>
   </data>
   <data name="ButtonDeleteItems.Label" xml:space="preserve">
@@ -374,7 +374,7 @@ Please choose a different name for your playlist!</value>
   <data name="PlaylistDetailPage_Header.PlaceholderText" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="PlaylistDetailPage_PlayRandom.Text" xml:space="preserve">
+  <data name="PlaylistDetailPage_PlayRandom.Label" xml:space="preserve">
     <value>Play random</value>
   </data>
   <data name="AboutPage-PageHeader.Content" xml:space="preserve">
@@ -435,5 +435,8 @@ A registration can only be done by the operator of the server.</value>
   </data>
   <data name="SettingsPage_Settings_Theme_Light.Content" xml:space="preserve">
     <value>Light</value>
+  </data>
+  <data name="PlaylistDetailPage_Delete.Label" xml:space="preserve">
+    <value>Delete</value>
   </data>
 </root>

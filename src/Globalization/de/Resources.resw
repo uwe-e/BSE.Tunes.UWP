@@ -232,9 +232,6 @@ Du kannst Dich nicht über die App registrieren. Die Registrierung kann nur durc
   <data name="Shell_TxtPlaylists.Text" xml:space="preserve">
     <value>Wiedergabelisten</value>
   </data>
-  <data name="PlaylistDetailPage_PlayAll.Text" xml:space="preserve">
-    <value>Alle wiedergeben</value>
-  </data>
   <data name="ButtonPlaySelection.Label" xml:space="preserve">
     <value>Wiedergeben</value>
   </data>
@@ -305,9 +302,6 @@ Bitte wähle einen neuen Namen.</value>
   <data name="DeletePlaylistContentDialog_TxtDeleteSelectedInformation" xml:space="preserve">
     <value>Wenn Du diese Wiedergabelisten löscht, kannst Du sie nicht auf Ihren anderen Geräten wiedergeben.</value>
   </data>
-  <data name="PlaylistDetailPage_AddTo.Text" xml:space="preserve">
-    <value>Hinzufügen zu</value>
-  </data>
   <data name="ButtonDeleteItems.Label" xml:space="preserve">
     <value>Aus Wiedergabeliste löschen</value>
   </data>
@@ -374,9 +368,6 @@ Bitte wähle einen neuen Namen.</value>
   <data name="PlaylistDetailPage_Header.PlaceholderText" xml:space="preserve">
     <value>Suche</value>
   </data>
-  <data name="PlaylistDetailPage_PlayRandom.Text" xml:space="preserve">
-    <value>Zufallswiedergabe</value>
-  </data>
   <data name="SignInSettingsPage_Header.Text" xml:space="preserve">
     <value>Dein Konto bei BSEtunes</value>
   </data>
@@ -435,5 +426,17 @@ Die Registrierung kann nur durch den Betreiber des Servers erfolgen.</value>
   </data>
   <data name="SettingsPage_Settings_Theme_Light.Content" xml:space="preserve">
     <value>Hell</value>
+  </data>
+  <data name="PlaylistDetailPage_AddTo.Label" xml:space="preserve">
+    <value>Hinzufügen zu</value>
+  </data>
+  <data name="PlaylistDetailPage_Delete.Label" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="PlaylistDetailPage_PlayAll.Label" xml:space="preserve">
+    <value>Alle wiedergeben</value>
+  </data>
+  <data name="PlaylistDetailPage_PlayRandom.Label" xml:space="preserve">
+    <value>Zufallswiedergabe</value>
   </data>
 </root>

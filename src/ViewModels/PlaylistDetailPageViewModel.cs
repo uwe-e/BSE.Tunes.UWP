@@ -27,6 +27,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private ICommand m_showAlbumCommand;
         private RelayCommand m_playRandomCommand;
         private ICommand m_updatePlaylistCommand;
+        private ICommand _removePlaylistCommand;
 
         public Playlist Playlist
         {
@@ -70,6 +71,12 @@ namespace BSE.Tunes.StoreApp.ViewModels
             await UpdatePlaylistEntries();
         }));
         public RelayCommand PlayRandomCommand => m_playRandomCommand ?? (m_playRandomCommand = new RelayCommand(PlayRandom, CanPlayRandom));
+
+        public ICommand RemovePlaylistCommand => _removePlaylistCommand ?? (_removePlaylistCommand = new RelayCommand(async () =>
+        {
+            await RemovePlaylist();
+        }));
+        
 
         public PlaylistDetailPageViewModel()
         {
@@ -191,7 +198,20 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
             await DataService.UpdatePlaylistEntries(Playlist);
         }
-
+        
+        private async Task RemovePlaylist()
+        {
+            DeletePlaylistContentDialogViewModel deletePlaylistDialog = new DeletePlaylistContentDialogViewModel();
+            deletePlaylistDialog.Playlists.Add(Playlist as Playlist);
+            deletePlaylistDialog.DeleteInformation = string.Format(CultureInfo.InvariantCulture, ResourceService.GetString("DeletePlaylistContentDialog_TxtDeleteInformation"), Playlist.Name);
+            IDialogService dialogService = DialogService.Instance;
+            var dialogResult = await dialogService.ShowContentDialogAsync(deletePlaylistDialog);
+            if (dialogResult == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
+            {
+                await NavigationService.NavigateAsync(typeof(Views.PlaylistsPage), removeLastBackStackEntry:true);
+            }
+        }
+        
         private string FormatNumberOfEntriesString(Playlist playlist)
         {
             int numberOfEntries = 0;

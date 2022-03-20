@@ -14,44 +14,76 @@
     <UserControl.DataContext>
         <vm:FeaturedItemsUserControlViewModel x:Name="ViewModel"/>
     </UserControl.DataContext>
-    <StackPanel>
-        <uwpcontrols:Carousel x:Name="carousel" ItemsSource="{Binding Items}" AspectRatio="1.6" MinHeight="160"
-                MaxHeight="340"  GradientOpacity="0.5" ItemClickCommand="{Binding SelectItemCommand}">
-            <uwpcontrols:Carousel.ContentTemplate>
-                <DataTemplate>
-                    <RelativePanel>
-                        <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Path=ImageSource}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" Stretch="UniformToFill" />
-                        <RelativePanel Padding="10" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                            <RelativePanel.Background>
-                                <SolidColorBrush Color="Black" Opacity="0.4" />
-                            </RelativePanel.Background>
-                            <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextBlockStyle}" FontWeight="SemiLight" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Above="subtitle"  />
-                            <TextBlock MaxLines="2" x:Name="subtitle" FontSize="16" Text="{Binding Subtitle}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="SemiLight" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" />
-                        </RelativePanel>
-                    </RelativePanel>
-                </DataTemplate>
-            </uwpcontrols:Carousel.ContentTemplate>
-        </uwpcontrols:Carousel>
-        <uwpcontrols:Indicator x:Name="indicator" Margin="0,9"
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="CarouselItemTemplate">
+            <UserControl>
+                <Grid>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                            <VisualState x:Name="VisualStateNarrow">
+                                <VisualState.StateTriggers>
+                                    <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <Setter Target="title.FontSize" Value="20"/>
+                                    <Setter Target="subTitle.FontSize" Value="16"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="VisualStateNormal">
+                                <VisualState.StateTriggers>
+                                    <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <Setter Target="title.FontSize" Value="24"/>
+                                    <Setter Target="subTitle.FontSize" Value="18"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="VisualStateWide">
+                                <VisualState.StateTriggers>
+                                    <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <Setter Target="title.FontSize" Value="28"/>
+                                    <Setter Target="subTitle.FontSize" Value="20"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Path=ImageSource}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" Stretch="UniformToFill" />
+                    <StackPanel Padding="10" VerticalAlignment="Bottom">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.4" />
+                        </StackPanel.Background>
+                        <TextBlock x:Name="title" Text="{Binding Title}" Style="{StaticResource TitleTextBlockStyle}" 
+                                   Foreground="White" HorizontalAlignment="Center"
+                                   TextTrimming="WordEllipsis" TextWrapping="NoWrap"/>
+                        <TextBlock x:Name="subTitle" Text="{Binding Subtitle}"
+                                   Style="{StaticResource SubtitleTextBlockStyle}"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White" 
+                                   TextTrimming="WordEllipsis" TextWrapping="NoWrap"/>
+                    </StackPanel>
+                </Grid>
+            </UserControl>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+            <uwpcontrols:Carousel x:Name="carousel" Grid.Row="0" ItemsSource="{Binding Items}"
+                                  AspectRatio="1.6" MinHeight="160"
+                                  MaxHeight="340"  GradientOpacity="0.5"
+                                  ItemClickCommand="{Binding SelectItemCommand}"
+                                  ContentTemplate="{StaticResource CarouselItemTemplate}">
+            </uwpcontrols:Carousel>
+            <uwpcontrols:Indicator x:Name="indicator" Grid.Row="1" Margin="0,9"
                                ItemsSource="{Binding ItemsSource, ElementName=carousel, Mode=TwoWay}"
                                SelectedIndex="{Binding SelectedIndex, ElementName=carousel, Mode=TwoWay}"
                                ShapeMode="Ellipse" />
-    </StackPanel>
-    <!--<FlipView ScrollViewer.IsHorizontalRailEnabled="True" ItemsSource="{Binding ItemsGroup.Items}">
-        <FlipView.ItemTemplate>
-            <DataTemplate>
-                <RelativePanel>
-                    <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Path=ImageSource}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True" Stretch="UniformToFill" />
-                    <RelativePanel Padding="10" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
-                        <RelativePanel.Background>
-                            <SolidColorBrush Color="Black" Opacity="0.4" />
-                        </RelativePanel.Background>
-                        <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextBlockStyle}" FontWeight="SemiLight" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Above="subtitle"  />
-                        <TextBlock MaxLines="2" x:Name="subtitle" FontSize="16" Text="{Binding Subtitle}" Style="{StaticResource SubtitleTextBlockStyle}" FontWeight="SemiLight" Foreground="White" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="True" />
-                    </RelativePanel>
-                </RelativePanel>
-            </DataTemplate>
-        </FlipView.ItemTemplate>
-    </FlipView>-->
+    </Grid>
 
 </UserControl>

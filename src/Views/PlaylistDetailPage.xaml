@@ -156,7 +156,38 @@
                             <TextBlock x:Name="infoTitle" Text="{Binding Playlist.Name}" TextTrimming="WordEllipsis" Style="{StaticResource TitleTextBlockStyle}" Grid.Row="0"/>
                             <TextBlock x:Name="infoSubTitle" Text="{Binding InfoSubTitle}" Style="{StaticResource SubtitleTextBlockStyle}" TextTrimming="WordEllipsis" Grid.Row="1"/>
                             <StackPanel x:Name="infoAction" Orientation="Horizontal" Grid.Row="3" VerticalAlignment="Bottom">
-                                <HyperlinkButton Command="{Binding PlayAllCommand}" VerticalContentAlignment="Center" Foreground="{ThemeResource SystemBaseHighColor}">
+                                <CommandBar DefaultLabelPosition="Right">
+                                    <AppBarButton x:Uid="PlaylistDetailPage_PlayAll" Background="{ThemeResource SystemAccentColor}" Command="{Binding PlayAllCommand}">
+                                        <FontIcon Glyph="&#xE102;"/>
+                                    </AppBarButton>
+                                    <AppBarButton x:Uid="PlaylistDetailPage_PlayRandom" Command="{Binding PlayRandomCommand}">
+                                        <FontIcon Glyph="&#xE8B1;"/>
+                                    </AppBarButton>
+                                    <AppBarButton x:Name="infoButtonAddTo" x:Uid="PlaylistDetailPage_AddTo" Command="{Binding OpenAllToPlaylistCommand}">
+                                        <FontIcon Glyph="&#xE710;"/>
+                                        <AppBarButton.ContextFlyout>
+                                            <Flyout controlextensions:FlyoutExtensions.IsOpen="{Binding IsAllToPlaylistFlyoutOpen, Mode=TwoWay}"
+                                                controlextensions:FlyoutExtensions.Parent="{Binding ElementName=infoButtonAddTo}"
+                                                controlextensions:FlyoutExtensions.ItemsSource="{Binding MenuItemsPlaylist}">
+                                                <controlextensions:FlyoutExtensions.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <MenuFlyoutItem Command="{Binding MenuItemClickedCommand}"
+                                                                        CommandParameter="{Binding}"
+                                                                        controlextensions:MenuFlyoutItem.UpdateTagTarget="True"
+                                                                        Tag="{Binding InsertMode, ConverterParameter=All, Converter={StaticResource InsertModeConverter}, Mode=TwoWay}"
+                                                                        Text="{Binding Text}"
+                                                                        Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"/>
+                                                            <MenuFlyoutSeparator Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false}"/>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </controlextensions:FlyoutExtensions.ItemTemplate>
+                                            </Flyout>
+                                        </AppBarButton.ContextFlyout>
+                                    </AppBarButton>
+                                    <AppBarButton x:Uid="PlaylistDetailPage_Delete" Icon="Delete" Command="{Binding RemovePlaylistCommand}"/>
+                                </CommandBar>
+                                <!--<HyperlinkButton Command="{Binding PlayAllCommand}" VerticalContentAlignment="Center" Foreground="{ThemeResource SystemBaseHighColor}">
                                     <Grid VerticalAlignment="Center">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -206,7 +237,7 @@
                                             </controlextensions:FlyoutExtensions.ItemTemplate>
                                         </Flyout>
                                     </HyperlinkButton.ContextFlyout>
-                                </HyperlinkButton>
+                                </HyperlinkButton>-->
                             </StackPanel>
                         </Grid>
                     </StackPanel>

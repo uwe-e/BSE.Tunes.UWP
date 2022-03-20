@@ -52,9 +52,9 @@
                     </VisualStateManager.VisualStateGroups>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
-                        <ColumnDefinition MinWidth="300" MaxWidth="400"/>
-                        <ColumnDefinition MinWidth="300" MaxWidth="400"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout controlextensions:FlyoutExtensions.IsOpen="{Binding IsOpen, Mode=TwoWay}" 
@@ -77,7 +77,7 @@
                     <TextBlock Text="{Binding DataContext.Album.Artist.Name, ElementName=listview}" 
                                        Margin="10,0,0,0" TextTrimming="WordEllipsis" VerticalAlignment="Center" Grid.Column="2"/>
                     <TextBlock Text="{Binding Data.Duration}" 
-                                       Margin="10,0,0,0" VerticalAlignment="Center" TextAlignment="Right" Grid.Column="3"/>
+                                       Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right" Grid.Column="3"/>
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="RightTapped">
                             <core:InvokeCommandAction Command="{Binding DataContext.ShowFlyoutCommand, ElementName=listview}"
