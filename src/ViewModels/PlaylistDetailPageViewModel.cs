@@ -109,6 +109,21 @@ namespace BSE.Tunes.StoreApp.ViewModels
                     PlayerMode.Playlist);
             }
         }
+
+        protected override void PlaySelectedItems()
+        {
+            var selectedItems = this.SelectedItems;
+            if (selectedItems != null)
+            {
+                //var entries = selectedItems.Cast<ListViewItemViewModel>().Select(itm => itm.Data).Cast<PlaylistEntry>();
+                var entryIds = new System.Collections.ObjectModel.ObservableCollection<int>(selectedItems.Cast<ListViewItemViewModel>().Select(itm => itm.Data).Cast<PlaylistEntry>().Select(p => p.TrackId));
+                if (entryIds?.Count() > 0)
+                {
+                    PlayerManager.PlayTracks(entryIds, PlayerMode.Playlist);
+                }
+                this.SelectedItems.Clear();
+            }
+        }
         public override void PlayTrack(ListViewItemViewModel item)
         {
             PlayerManager.PlayTrack(((PlaylistEntry)item.Data).TrackId, PlayerMode.Song);
