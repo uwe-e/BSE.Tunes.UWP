@@ -69,7 +69,7 @@
             -->
                 <winui:NavigationViewItem x:Uid="Shell_Main" helpers:NavHelper.PageType="views:MainPage">
                     <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xE7F6;"/>
+                        <FontIcon Glyph="&#xEA8A;"/>
                         <TextBlock x:Uid="Shell_TxtHome" Margin="12,0,0,0"
                                VerticalAlignment="Center"
                                Text="Explore" />
@@ -91,7 +91,16 @@
                                Text="Playlists" />
                     </StackPanel>
                 </winui:NavigationViewItem>
-                
+
+                <winui:NavigationViewItem x:Uid="Shell_WaitList" helpers:NavHelper.PageType="views:QueuePage">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xF5ED;"/>
+                        <TextBlock x:Uid="Shell_TxtQueue" Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Queue" />
+                    </StackPanel>
+                </winui:NavigationViewItem>
+
             </winui:NavigationView.MenuItems>
             <!--
             

@@ -136,7 +136,9 @@
     <Compile Include="Controls\Extensions\FlyoutExtensions.cs" />
     <Compile Include="Controls\Extensions\ListViewExtensions.cs" />
     <Compile Include="Collections\IncrementalObservableCollection.cs" />
+    <Compile Include="Controls\ListView\ItemPreSelectionClickEventArgs.cs" />
     <Compile Include="Controls\ListView\ListView.cs" />
+    <Compile Include="Controls\ListView\ListViewItemEx.cs" />
     <Compile Include="Converters\AutoSuggestQueryParameterConverter.cs" />
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Extensions\DynamicExtension.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="ViewModels\ArtistsAlbumsPageViewModel.cs" />
     <Compile Include="ViewModels\ArtistsAlbumsUserControlViewModel.cs" />
     <Compile Include="ViewModels\DeletePlaylistContentDialogViewModel.cs" />
+    <Compile Include="ViewModels\QueuePageViewModel.cs" />
     <Compile Include="ViewModels\SearchResultAlbumsPageViewModel.cs" />
     <Compile Include="ViewModels\SearchResultAlbumsUserControlViewModel.cs" />
     <Compile Include="ViewModels\SearchResultPageViewModel.cs" />
@@ -183,6 +186,9 @@
     </Compile>
     <Compile Include="Views\DeletePlaylistContentDialog.xaml.cs">
       <DependentUpon>DeletePlaylistContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QueuePage.xaml.cs">
+      <DependentUpon>QueuePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SearchResultAlbumsPage.xaml.cs">
       <DependentUpon>SearchResultAlbumsPage.xaml</DependentUpon>
@@ -373,6 +379,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\ListView\ListViewItemEx.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\_Thickness.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -390,6 +400,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DeletePlaylistContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QueuePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -533,6 +547,9 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Behaviors">
+      <Version>7.1.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.8.1</Version>
     </PackageReference>
@@ -560,9 +577,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\PageHeader\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

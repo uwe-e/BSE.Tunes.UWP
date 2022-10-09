@@ -439,4 +439,7 @@ A registration can only be done by the operator of the server.</value>
   <data name="PlaylistDetailPage_Delete.Label" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Shell_TxtQueue.Text" xml:space="preserve">
+    <value>Queue</value>
+  </data>
 </root>

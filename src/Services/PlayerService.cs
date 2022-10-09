@@ -381,7 +381,7 @@ namespace BSE.Tunes.StoreApp.Services
 
                 MediaStreamSourceSampleRequestDeferral deferal = request.GetDeferral();
 
-                var inputStream = m_mediaStream.GetInputStreamAt(this.m_byteOffset);
+                IInputStream inputStream = m_mediaStream?.GetInputStreamAt(this.m_byteOffset);
                 if (inputStream != null)
                 {
                     // create the MediaStreamSample and assign to the request object. 

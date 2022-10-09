@@ -6,6 +6,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using BSE.Tunes.StoreApp.Extensions;
 using System.Reflection;
+using Windows.System;
+using Windows.UI.Core;
 
 namespace BSE.Tunes.StoreApp.Controls.Extensions
 {
@@ -64,11 +66,20 @@ namespace BSE.Tunes.StoreApp.Controls.Extensions
             var control = sender as ListViewBase;
             if (control != null)
             {
-                var command = GetCommand(control);
+                if (!IsCtrlKeyPressed())
+                {
+                    var command = GetCommand(control);
 
-                if (command != null && command.CanExecute(e.ClickedItem))
-                    command.Execute(e.ClickedItem);
+                    if (command != null && command.CanExecute(e.ClickedItem))
+                        command.Execute(e.ClickedItem);
+                }
             }
+        }
+
+        private static bool IsCtrlKeyPressed()
+        {
+            var ctrlState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control);
+            return (ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
         #endregion
 
@@ -323,6 +334,12 @@ namespace BSE.Tunes.StoreApp.Controls.Extensions
 
         private void OnListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            /*
+             * All selection modes except ListViewSelectionMode.Multiple should be filtered out
+             * to prevent a System.InvalidOperationExceptio exception.
+             * 
+             * System.InvalidOperationException: Cannot change ObservableCollection during a CollectionChanged event.
+             */
             if (((ListViewBase)sender).SelectionMode == ListViewSelectionMode.Multiple)
             {
                 foreach (dynamic item in e.RemovedItems)

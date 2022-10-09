@@ -233,14 +233,17 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public virtual void DeleteSelectedItems()
         {
         }
+        
         public virtual void SelectAll()
         {
             var notSelectedItems = Items.Except(SelectedItems);
-            foreach (var item in notSelectedItems)
+            foreach (ListViewItemViewModel item in notSelectedItems)
             {
+                //item.IsSelected = true;
                 SelectedItems.Add(item);
             }
         }
+        
         public virtual void SelectItems(ListViewItemViewModel item)
         {
             HasSelectedItems = true;

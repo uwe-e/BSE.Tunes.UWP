@@ -38,7 +38,7 @@ namespace BSE.Tunes.StoreApp.IO
 		{
 			get
 			{
-				return this.m_responseStream.AsRandomAccessStream();
+				return this.m_responseStream?.AsRandomAccessStream();
 			}
 		}
 		public long TotalBytesToReceive

@@ -5,6 +5,7 @@
         <ResourceDictionary Source="ms-appx:///Controls/Carousel/Carousel.xaml"/>
         <ResourceDictionary Source="ms-appx:///Controls/Indicator/Indicator.xaml"/>
         <ResourceDictionary Source="ms-appx:///Controls/CrossfadingImage/CrossfadingImage.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Controls/ListView/ListViewItemEx.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

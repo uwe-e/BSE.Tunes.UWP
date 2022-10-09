@@ -439,4 +439,7 @@ Die Registrierung kann nur durch den Betreiber des Servers erfolgen.</value>
   <data name="PlaylistDetailPage_PlayRandom.Label" xml:space="preserve">
     <value>Zufallswiedergabe</value>
   </data>
+  <data name="Shell_TxtQueue.Text" xml:space="preserve">
+    <value>Warteschlange</value>
+  </data>
 </root>
