@@ -203,7 +203,7 @@
                                AlternatingRow="{StaticResource ListViewAlternatingRowBrush}"
                                controlextensions:ListViewExtensions.Command="{Binding PlayTrackCommand}"
                                controlextensions:ListViewExtensions.SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
-                               PreSelectionCommand="{Binding PlayTrackCommand1}">
+                               PreSelectionCommand="{Binding SelectItemsCommand}">
             <interactivity:Interaction.Behaviors>
                 <behaviors:StickyHeaderBehavior /> 
             </interactivity:Interaction.Behaviors>

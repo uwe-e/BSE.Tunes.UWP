@@ -19,30 +19,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private Uri m_coverSource;
         private ArtistsAlbumsUserControlViewModel m_artistsAlbums;
 
-        private RelayCommand<object> m_playTrackCommand1;
-
-        public RelayCommand<object> PlayTrackCommand1 => m_playTrackCommand1 ?? (m_playTrackCommand1 = new RelayCommand<object>( (o) =>
-        {
-            if (o is ListViewItemViewModel item)
-            {
-                SelectedItems.Add(item as ListViewItemViewModel);
-            }
-            //IList<object> items = o as IList<object>;
-            //if (items == null)
-            //{
-            //    SelectedItems.Clear();
-            //}
-            //else
-            //{
-            //    foreach (var item in items)
-            //    {
-            //        SelectedItems.Add(item as ListViewItemViewModel);
-            //    }
-            //    //SelectedItems = items;
-            //}
-            //var t = o;
-        }));
-
         public Album Album
         {
             get

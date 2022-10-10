@@ -320,6 +320,9 @@
                         </Grid>
                         <TextBlock x:Name="PlaceholderTextBlock" AutomationProperties.AccessibilityView="Raw" Foreground="{x:Null}" IsHitTestVisible="False" Margin="{TemplateBinding Padding}" Opacity="0" Text="Xg"/>
                         <Rectangle x:Name="PlaceholderRect" Fill="{ThemeResource ListViewItemPlaceholderBackground}" Visibility="Collapsed"/>
+                        <Button Width="30" Background="Transparent" BorderBrush="{x:Null}">
+                            <!--<Button.Content></Button.Content>-->
+                        </Button>
                         <Border x:Name="PreSelectionSquare" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Left" Height="20" Margin="12,0,0,0" VerticalAlignment="Center" Visibility="Collapsed" Width="20">
                             <Border.Clip>
                                 <RectangleGeometry Rect="0,0,20,20">
@@ -330,6 +333,7 @@
                             </Border.Clip>
                             <FontIcon x:Name="PreSelectCheck" Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE73E;" Opacity="0" Visibility="Visible"/>
                         </Border>
+                        
                         <Border x:Name="MultiSelectSquare" Background="Green" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Left" Height="20" Margin="12,0,0,0" VerticalAlignment="Center" Visibility="Collapsed" Width="20">
                             <Border.Clip>
                                 <RectangleGeometry Rect="0,0,20,20">
@@ -341,17 +345,6 @@
                             <Border.RenderTransform>
                                 <TranslateTransform x:Name="MultiSelectCheckBoxTransform"/>
                             </Border.RenderTransform>
-                            <!--<VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>-->
                             <FontIcon x:Name="MultiSelectCheck" Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE73E;" Opacity="0" Visibility="Collapsed"/>
                         </Border>
                         <Border x:Name="MultiArrangeOverlayTextBorder" Background="{ThemeResource SystemControlBackgroundAccentBrush}" BorderBrush="{ThemeResource SystemControlBackgroundChromeWhiteBrush}" BorderThickness="2" HorizontalAlignment="Left" Height="20" IsHitTestVisible="False" Margin="12,0,0,0" MinWidth="20" Opacity="0" VerticalAlignment="Center">

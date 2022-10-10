@@ -34,11 +34,6 @@ namespace BSE.Tunes.StoreApp.Controls
                 _preSelectCheck.Tapped += PreSelectCheckTapped;
                 _preSelectCheck.PointerPressed += PreSelectCheckPointerPressed;
             }
-            //__preSelectionSquare = this.GetTemplateChild(_preSelectionSquareName) as Border;
-            //if (__preSelectionSquare != null)
-            //{
-            //    __preSelectionSquare.pointer
-            //}
         }
 
         private void PreSelectCheckPointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)

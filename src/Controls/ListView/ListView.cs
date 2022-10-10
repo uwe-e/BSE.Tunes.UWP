@@ -130,7 +130,6 @@ namespace BSE.Tunes.StoreApp.Controls
             object selectedItem = SelectedItem;
             if (selectedItem != null)
             {
-                //this.SelectedItems.Add(selectedItem);
                 OnItemPreSelectionClick(new ItemPreSelectionClickEventArgs
                 {
                     Source = this,
