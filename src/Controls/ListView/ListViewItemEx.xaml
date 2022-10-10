@@ -320,7 +320,7 @@
                         </Grid>
                         <TextBlock x:Name="PlaceholderTextBlock" AutomationProperties.AccessibilityView="Raw" Foreground="{x:Null}" IsHitTestVisible="False" Margin="{TemplateBinding Padding}" Opacity="0" Text="Xg"/>
                         <Rectangle x:Name="PlaceholderRect" Fill="{ThemeResource ListViewItemPlaceholderBackground}" Visibility="Collapsed"/>
-                        <Button Opacity="0" Width="30" BorderBrush="{x:Null}">
+                        <Button Opacity="0" Width="30" VerticalAlignment="Stretch" BorderBrush="{x:Null}">
                             <!-- The PreSelectionSquare isnt visible when pointerover on rows with an alternating color.
                             this fake button as the parent element prevents this-->
                         </Button>
