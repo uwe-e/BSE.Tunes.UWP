@@ -27,14 +27,16 @@ namespace BSE.Tunes.StoreApp.Controls
         }
 
         /// <summary>
-        /// Attached Command Property
+        /// Attached <see cref="nameof(PreSelectionCommandProperty)"/>
         /// </summary>
         public static readonly DependencyProperty PreSelectionCommandProperty =
             DependencyProperty.RegisterAttached(nameof(PreSelectionCommand),
             typeof(ICommand),
-            typeof(ListView),
-            new PropertyMetadata(null, OnCommandChanged));
+            typeof(ListView), null);
 
+        /// <summary>
+        /// Gets or sets the <see cref="nameof(PreSelectionCommand)"/> command
+        /// </summary>
         public ICommand PreSelectionCommand
         {
             get
@@ -45,43 +47,6 @@ namespace BSE.Tunes.StoreApp.Controls
             {
                 SetValue(PreSelectionCommandProperty, value);
             }
-        }
-
-        ///// <summary>
-        ///// Gets the command to invoke when an item is clicked.
-        ///// </summary>
-        ///// <param name="obj"></param>
-        ///// <returns>The invoked command.</returns>
-        //public static ICommand GetPreSelectionCommand(DependencyObject obj)
-        //{
-        //    return (ICommand)obj.GetValue(PreSelectionCommandProperty);
-        //}
-        ///// <summary>
-        ///// Sets the command to invoke when an item is clicked.
-        ///// </summary>
-        ///// <param name="obj"></param>
-        ///// <param name="value">The command.</param>
-        //public static void SetPreSelectionCommand(DependencyObject obj, ICommand value)
-        //{
-        //    obj.SetValue(PreSelectionCommandProperty, value);
-        //}
-        /// <summary>
-        /// Handles changes to the Command property.
-        /// </summary>
-        /// <param name="d">The <see cref="DependencyObject"/> on which the property has changed value.</param>
-        /// <param name="e">Event data that is issued by any event that tracks changes to the effective value of this property.</param>
-        private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as ListView;
-            if (control != null)
-            {
-                control.ItemPreSelectionClick += OnItemPreSelectionClick;
-            }
-        }
-
-        private static void OnItemPreSelectionClick(object sender, ItemPreSelectionClickEventArgs e)
-        {
-            //throw new NotImplementedException();
         }
 
         protected override void OnDrop(DragEventArgs e)

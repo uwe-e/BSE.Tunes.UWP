@@ -118,7 +118,7 @@
                     <TextBlock Text="{Binding DataContext.Album.Artist.Name, ElementName=listview}" 
                                        Margin="10,0,0,0" TextTrimming="WordEllipsis" VerticalAlignment="Center" Grid.Column="2"/>
                     <TextBlock Text="{Binding Data.Duration}" 
-                                       Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right" Grid.Column="3"/>
+                                       Margin="10,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right" Grid.Column="3"/>
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="RightTapped">
                             <core:InvokeCommandAction Command="{Binding DataContext.ShowFlyoutCommand, ElementName=listview}"

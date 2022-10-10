@@ -320,21 +320,19 @@
                         </Grid>
                         <TextBlock x:Name="PlaceholderTextBlock" AutomationProperties.AccessibilityView="Raw" Foreground="{x:Null}" IsHitTestVisible="False" Margin="{TemplateBinding Padding}" Opacity="0" Text="Xg"/>
                         <Rectangle x:Name="PlaceholderRect" Fill="{ThemeResource ListViewItemPlaceholderBackground}" Visibility="Collapsed"/>
-                        <Button Width="30" Background="Transparent" BorderBrush="{x:Null}">
-                            <!--<Button.Content></Button.Content>-->
+                        <Button Opacity="0" Width="30" BorderBrush="{x:Null}">
+                            <!-- The PreSelectionSquare isnt visible when pointerover on rows with an alternating color.
+                            this fake button as the parent element prevents this-->
                         </Button>
                         <Border x:Name="PreSelectionSquare" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Left" Height="20" Margin="12,0,0,0" VerticalAlignment="Center" Visibility="Collapsed" Width="20">
                             <Border.Clip>
                                 <RectangleGeometry Rect="0,0,20,20">
-                                    <!--<RectangleGeometry.Transform>
-                                        <TranslateTransform x:Name="PreSelectionClipTransform"/>
-                                    </RectangleGeometry.Transform>-->
                                 </RectangleGeometry>
                             </Border.Clip>
                             <FontIcon x:Name="PreSelectCheck" Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="16" Glyph="&#xE73E;" Opacity="0" Visibility="Visible"/>
                         </Border>
                         
-                        <Border x:Name="MultiSelectSquare" Background="Green" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Left" Height="20" Margin="12,0,0,0" VerticalAlignment="Center" Visibility="Collapsed" Width="20">
+                        <Border x:Name="MultiSelectSquare" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" BorderThickness="1" CornerRadius="2" HorizontalAlignment="Left" Height="20" Margin="12,0,0,0" VerticalAlignment="Center" Visibility="Collapsed" Width="20">
                             <Border.Clip>
                                 <RectangleGeometry Rect="0,0,20,20">
                                     <RectangleGeometry.Transform>
@@ -352,32 +350,6 @@
                         </Border>
                     </Grid>
                 </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="PreSelectionSquare" TargetType="Button">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Border">
-                    <Grid>
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                            </VisualState>
-                        
-                        <VisualState x:Name="PointerOver">
-                            <Storyboard>
-                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Brown"/>
-                                </ObjectAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                    </Grid>
-                </ControlTemplate>
-                
             </Setter.Value>
         </Setter>
     </Style>
