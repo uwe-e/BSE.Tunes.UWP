@@ -27,6 +27,47 @@ namespace BSE.Tunes.StoreApp.Controls
         }
 
         /// <summary>
+        /// Attached <see cref="nameof(EnablePreSelectionProperty)"/>
+        /// </summary>
+        public static readonly DependencyProperty EnablePreSelectionProperty =
+            DependencyProperty.RegisterAttached(nameof(EnablePreSelection),
+            typeof(bool),
+            typeof(ListView), new PropertyMetadata(false, OnEnablePreSelectionChanged));
+
+        private static void OnEnablePreSelectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ListView listView = d as ListView;
+            if (listView != null)
+            {
+                listView.ContainerContentChanging += OnListContainerContentChanging;
+            }
+        }
+
+        private static void OnListContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            var itemContainer = args.ItemContainer as ListViewItemEx;
+            if (itemContainer != null)
+            {
+                itemContainer.EnablePreSelection = ((ListView)sender).EnablePreSelection;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="nameof(EnablePreSelection)"/> command
+        /// </summary>
+        public bool EnablePreSelection
+        {
+            get
+            {
+                return (bool)GetValue(EnablePreSelectionProperty);
+            }
+            set
+            {
+                SetValue(EnablePreSelectionProperty, value);
+            }
+        }
+
+        /// <summary>
         /// Attached <see cref="nameof(PreSelectionCommandProperty)"/>
         /// </summary>
         public static readonly DependencyProperty PreSelectionCommandProperty =

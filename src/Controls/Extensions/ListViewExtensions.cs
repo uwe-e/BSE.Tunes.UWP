@@ -1,13 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using BSE.Tunes.StoreApp.Extensions;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using BSE.Tunes.StoreApp.Extensions;
-using System.Reflection;
-using Windows.System;
-using Windows.UI.Core;
 
 namespace BSE.Tunes.StoreApp.Controls.Extensions
 {
@@ -356,6 +355,13 @@ namespace BSE.Tunes.StoreApp.Controls.Extensions
                     {
                         m_boundSelection.Add(item);
                     }
+                }
+            }
+            else if (((ListViewBase)sender).SelectionMode == ListViewSelectionMode.Extended)
+            {
+                if (m_listView?.SelectedItems.Count > 0)
+                {
+                    m_listView.SelectedItems.Clear();
                 }
             }
         }

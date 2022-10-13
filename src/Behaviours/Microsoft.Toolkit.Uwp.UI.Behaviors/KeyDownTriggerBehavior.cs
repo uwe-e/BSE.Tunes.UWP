@@ -3,13 +3,13 @@ using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 
-namespace Microsoft.Toolkit.Uwp.UI.Behaviors
+namespace Microsoft.Toolkit.Uwp.UI.Behaviors12
 {
     /// <summary>
     /// This behavior listens to a key down event on the associated <see cref="UIElement"/> when it is loaded and executes an action.
     /// </summary>
     [TypeConstraint(typeof(FrameworkElement))]
-    public class KeyDownTriggerBehavior : Trigger<FrameworkElement>
+    public class KeyDownTriggerBehavior1 : Trigger<FrameworkElement>
     {
         /// <summary>
         /// Identifies the <see cref="Key"/> property.
@@ -17,7 +17,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Behaviors
         public static readonly DependencyProperty KeyProperty = DependencyProperty.Register(
             nameof(Key),
             typeof(VirtualKey),
-            typeof(KeyDownTriggerBehavior),
+            typeof(KeyDownTriggerBehavior1),
             new PropertyMetadata(null));
 
         /// <summary>

@@ -50,20 +50,6 @@
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Target="listViewItem.Background" Value="Blue"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="PointerOver">
-                                         <VisualState.Setters>
-                                    <Setter Target="fontIcon.Visibility"  Value="Hidden"/>
-                                    <Setter Target="listViewItem.Background" Value="Lime"/>
-                                    <Setter Target="Test.Background" Value="Pink"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
                     </VisualStateManager.VisualStateGroups>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
@@ -85,33 +71,45 @@
                             </MenuFlyout.Items>
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
-                    <Grid x:Name="Test">
-                        <FontIcon x:Name="fontIcon" Glyph="&#xF5B0;" Visibility="Collapsed">
-                            <interactivity:Interaction.Behaviors>
-                                <core:EventTriggerBehavior EventName="PointerEntered" SourceObject="{Binding ElementName=listViewItem}">
-                                    <core:ChangePropertyAction PropertyName="Visibility"
-                                                               TargetObject="{Binding ElementName=fontIcon}"
-                                                               Value="Visible" />
-                                </core:EventTriggerBehavior>
-                                <core:EventTriggerBehavior EventName="PointerExited" SourceObject="{Binding ElementName=listViewItem}">
-                                    <core:ChangePropertyAction PropertyName="Visibility"
-                                                               TargetObject="{Binding ElementName=fontIcon}"
-                                                               Value="Collapsed" />
-                                </core:EventTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </FontIcon>
-                        <TextBlock Text="{Binding Data.TrackNumber}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
-                         <!--<VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Target="fontIcon.Visibility"  Value="Hidden"/>
-                                        <Setter Target="Test.Background" Value="Red"/>
-                                    </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>-->
-                    </Grid>
+<!--
+                    Command="{Binding DataContext.PlayTrackCommand, ElementName=listview}" CommandParameter="{Binding}" 
+                    -->
+                    <Button x:Name="PlayTrackButton"
+                            Grid.Column="0"
+                            Style="{StaticResource ListViewItemPointerOverButtonStyle}"
+                            >
+                        <Grid HorizontalAlignment="Stretch">
+                            <TextBlock x:Name="TrackNumber" Text="{Binding Data.TrackNumber}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <FontIcon x:Name="FontIcon" Glyph="&#xE768;" Foreground="{ThemeResource SystemAccentColor}" FontSize="18" Visibility="Collapsed">
+                                <interactivity:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="PointerEntered" SourceObject="{Binding ElementName=listViewItem}">
+                                        <core:ChangePropertyAction PropertyName="Visibility"
+                                                                   TargetObject="{Binding ElementName=FontIcon}"
+                                                                   Value="Visible" />
+                                        <core:ChangePropertyAction PropertyName="Visibility"
+                                                                   TargetObject="{Binding ElementName=TrackNumber}"
+                                                                   Value="Collapsed" />
+                                        <core:ChangePropertyAction PropertyName="Background"
+                                                                   TargetObject="{Binding ElementName=PlayTrackButton}"
+                                                                   Value="{ThemeResource HyperlinkButtonBackgroundPointerOver}" />
+                                    </core:EventTriggerBehavior>
+                                    <core:EventTriggerBehavior EventName="PointerExited" SourceObject="{Binding ElementName=listViewItem}">
+                                        <core:ChangePropertyAction PropertyName="Visibility"
+                                                                   TargetObject="{Binding ElementName=FontIcon}"
+                                                                   Value="Collapsed" />
+                                        <core:ChangePropertyAction PropertyName="Visibility"
+                                                                   TargetObject="{Binding ElementName=TrackNumber}"
+                                                                   Value="Visible" />
+                                        <core:ChangePropertyAction PropertyName="Background"
+                                                                   TargetObject="{Binding ElementName=PlayTrackButton}"
+                                                                   Value="{x:Null}" />
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </FontIcon>
+                        </Grid>
+                        
+                    </Button>
+                    
                     <TextBlock Text="{Binding Data.Name}"
                                        Margin="10,0,0,0" TextTrimming="WordEllipsis" 
                                        VerticalAlignment="Center" Grid.Column="1"/>
@@ -155,7 +153,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="listview.ItemTemplate" Value="{StaticResource normalListViewItem}"/>
-                        <!--<Setter Target="listview.AlternatingRow" Value="{StaticResource ListViewAlternatingRowBrush}"/>-->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateWide">
@@ -164,48 +161,23 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="listview.ItemTemplate" Value="{StaticResource normalListViewItem}"/>
-                        <!--<Setter Target="listview.AlternatingRow" Value="{StaticResource ListViewAlternatingRowBrush}"/>-->
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <!--<ScrollViewer>-->
-        <!--<StackPanel>
-                
-                
-                <StackPanel x:Name="tracksPart">-->
-        <!--
-        
-                                        controlextensions:ListViewExtensions.Command="{Binding PlayTrackCommand}" 
-                               controlextensions:ListViewExtensions.SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
-                                           {Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}
-        IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
-        SelectionMode="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"
-                                   
-                                                   ItemContainerStyle="{StaticResource ExpandedListViewItemContainer}"
-        
-        -->
-        <TextBlock Text="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"/>
-        <!--<ListView x:Name="listview" Margin="0,12,0,0"
-                               ItemTemplate="{StaticResource normalListViewItem}"
-                                           ItemContainerStyle="{StaticResource ExpandedListViewItemContainer}"
-                                           ItemsSource="{Binding Items}"
-                                           SelectionMode="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"
-                                           IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
-                                           controlextensions:ListViewExtensions.Command="{Binding PlayTrackCommand}" 
-                                           controlextensions:ListViewExtensions.SelectedItems="{Binding SelectedItems, Mode=TwoWay}">-->
         <usercontrols:ListView x:Name="listview" Margin="0,12,0,0"
                                ItemTemplate="{StaticResource normalListViewItem}"
                                ItemsSource="{Binding Items}"
+                               EnablePreSelection="True"
                                SelectionMode="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"
-                               IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
                                AlternatingRow="{StaticResource ListViewAlternatingRowBrush}"
+                               IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
                                controlextensions:ListViewExtensions.Command="{Binding PlayTrackCommand}"
                                controlextensions:ListViewExtensions.SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
                                PreSelectionCommand="{Binding SelectItemsCommand}">
             <interactivity:Interaction.Behaviors>
-                <behaviors:StickyHeaderBehavior /> 
+                <behaviors:StickyHeaderBehavior />
             </interactivity:Interaction.Behaviors>
             <ListView.Header>
                 <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -321,9 +293,5 @@
             </ListView.Footer>
         </usercontrols:ListView>
 
-        <!--</StackPanel>
-               
-            </StackPanel>-->
-        <!--</ScrollViewer>-->
     </Grid>
 </Page>
