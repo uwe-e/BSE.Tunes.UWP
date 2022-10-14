@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controlextensions="using:BSE.Tunes.StoreApp.Controls.Extensions"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Behaviors"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:vm="using:BSE.Tunes.StoreApp.ViewModels"
     xmlns:usercontrols="using:BSE.Tunes.StoreApp.Controls"
@@ -83,7 +84,7 @@
                     <TextBlock Text="{Binding Data.Track.Album.Artist.Name}" TextTrimming="WordEllipsis" VerticalAlignment="Center" Grid.Column="1"/>
                     <TextBlock Text="{Binding Data.Track.Album.Title}" TextTrimming="WordEllipsis" VerticalAlignment="Center" Grid.Column="2"/>
                     <TextBlock Text="{Binding Data.Track.Album.Year}" VerticalAlignment="Center" TextAlignment="Right" Grid.Column="3"/>
-                    <TextBlock Text="{Binding Data.Track.Duration}" Margin="10,0,0,0" VerticalAlignment="Center" TextAlignment="Right" Grid.Column="4"/>
+                    <TextBlock Text="{Binding Data.Track.Duration}" Margin="10,0,52,0" VerticalAlignment="Center" TextAlignment="Right" Grid.Column="4"/>
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="RightTapped">
                             <core:InvokeCommandAction Command="{Binding DataContext.ShowFlyoutCommand, ElementName=listview}"
@@ -95,7 +96,7 @@
             </UserControl>
         </DataTemplate>
     </Page.Resources>
-    
+
     <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -134,60 +135,73 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-
-        <ScrollViewer>
-            
-            <StackPanel>
-
-                <StackPanel x:Name="infoPart">
-                    <StackPanel x:Name="infoHeader" Orientation="Horizontal">
-                        <StackPanel.Background>
-                            <ImageBrush ImageSource="{Binding CoverSource}" Stretch="UniformToFill" Opacity="0.2"/>
-                        </StackPanel.Background>
-                        <Image x:Name="infoCover" Source="{Binding CoverSource}" Width="240" Height="{Binding Path=Width, RelativeSource={RelativeSource Mode=Self}}" Margin="10" Stretch="UniformToFill"/>
-                        <Grid x:Name="infoProperties" Margin="10" Height="240">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition x:Name="actionRow" Height="*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock x:Name="infoTitle" Text="{Binding Playlist.Name}" TextTrimming="WordEllipsis" Style="{StaticResource TitleTextBlockStyle}" Grid.Row="0"/>
-                            <TextBlock x:Name="infoSubTitle" Text="{Binding InfoSubTitle}" Style="{StaticResource SubtitleTextBlockStyle}" TextTrimming="WordEllipsis" Grid.Row="1"/>
-                            <StackPanel x:Name="infoAction" Orientation="Horizontal" Grid.Row="3" VerticalAlignment="Bottom">
-                                <CommandBar DefaultLabelPosition="Right">
-                                    <AppBarButton x:Uid="PlaylistDetailPage_PlayAll" Background="{ThemeResource SystemAccentColor}" Command="{Binding PlayAllCommand}">
-                                        <FontIcon Glyph="&#xE102;"/>
-                                    </AppBarButton>
-                                    <AppBarButton x:Uid="PlaylistDetailPage_PlayRandom" Command="{Binding PlayRandomCommand}">
-                                        <FontIcon Glyph="&#xE8B1;"/>
-                                    </AppBarButton>
-                                    <AppBarButton x:Name="infoButtonAddTo" x:Uid="PlaylistDetailPage_AddTo" Command="{Binding OpenAllToPlaylistCommand}">
-                                        <FontIcon Glyph="&#xE710;"/>
-                                        <AppBarButton.ContextFlyout>
-                                            <Flyout controlextensions:FlyoutExtensions.IsOpen="{Binding IsAllToPlaylistFlyoutOpen, Mode=TwoWay}"
+        <usercontrols:ListView x:Name="listview" Margin="20,20,20,0"
+                                           AllowDrop="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
+                                           CanDragItems="True" CanReorderItems="True"
+                                           ItemTemplate="{StaticResource normalListViewItem}"
+                                           EnablePreSelection="True"
+                                           PreSelectionCommand="{Binding SelectItemsCommand}"
+                                           AlternatingRow="{StaticResource ListViewAlternatingRowBrush}"
+                                           ItemsSource="{Binding Items}" SelectionMode="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"
+                                           IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
+                                           controlextensions:ListViewExtensions.Command="{Binding PlayTrackCommand}" 
+                                           controlextensions:ListViewExtensions.SelectedItems="{Binding SelectedItems, Mode=TwoWay}">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:StickyHeaderBehavior />
+                <core:EventTriggerBehavior EventName="DragItemsCompleted">
+                    <core:InvokeCommandAction Command="{x:Bind ViewModel.UpdatePlaylistCommand}"/>
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <ListView.Header>
+                <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <StackPanel x:Name="infoPart">
+                        <StackPanel x:Name="infoHeader" Orientation="Horizontal">
+                            <StackPanel.Background>
+                                <ImageBrush ImageSource="{Binding CoverSource}" Stretch="UniformToFill" Opacity="0.2"/>
+                            </StackPanel.Background>
+                            <Image x:Name="infoCover" Source="{Binding CoverSource}" Width="240" Height="{Binding Path=Width, RelativeSource={RelativeSource Mode=Self}}" Margin="10" Stretch="UniformToFill"/>
+                            <Grid x:Name="infoProperties" Margin="10" Height="240">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition x:Name="actionRow" Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock x:Name="infoTitle" Text="{Binding Playlist.Name}" TextTrimming="WordEllipsis" Style="{StaticResource TitleTextBlockStyle}" Grid.Row="0"/>
+                                <TextBlock x:Name="infoSubTitle" Text="{Binding InfoSubTitle}" Style="{StaticResource SubtitleTextBlockStyle}" TextTrimming="WordEllipsis" Grid.Row="1"/>
+                                <StackPanel x:Name="infoAction" Orientation="Horizontal" Grid.Row="3" VerticalAlignment="Bottom">
+                                    <CommandBar DefaultLabelPosition="Right">
+                                        <AppBarButton x:Uid="PlaylistDetailPage_PlayAll" Background="{ThemeResource SystemAccentColor}" Command="{Binding PlayAllCommand}">
+                                            <FontIcon Glyph="&#xE102;"/>
+                                        </AppBarButton>
+                                        <AppBarButton x:Uid="PlaylistDetailPage_PlayRandom" Command="{Binding PlayRandomCommand}">
+                                            <FontIcon Glyph="&#xE8B1;"/>
+                                        </AppBarButton>
+                                        <AppBarButton x:Name="infoButtonAddTo" x:Uid="PlaylistDetailPage_AddTo" Command="{Binding OpenAllToPlaylistCommand}">
+                                            <FontIcon Glyph="&#xE710;"/>
+                                            <AppBarButton.ContextFlyout>
+                                                <Flyout controlextensions:FlyoutExtensions.IsOpen="{Binding IsAllToPlaylistFlyoutOpen, Mode=TwoWay}"
                                                 controlextensions:FlyoutExtensions.Parent="{Binding ElementName=infoButtonAddTo}"
                                                 controlextensions:FlyoutExtensions.ItemsSource="{Binding MenuItemsPlaylist}">
-                                                <controlextensions:FlyoutExtensions.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <Grid>
-                                                            <MenuFlyoutItem Command="{Binding MenuItemClickedCommand}"
+                                                    <controlextensions:FlyoutExtensions.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <MenuFlyoutItem Command="{Binding MenuItemClickedCommand}"
                                                                         CommandParameter="{Binding}"
                                                                         controlextensions:MenuFlyoutItem.UpdateTagTarget="True"
                                                                         Tag="{Binding InsertMode, ConverterParameter=All, Converter={StaticResource InsertModeConverter}, Mode=TwoWay}"
                                                                         Text="{Binding Text}"
                                                                         Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"/>
-                                                            <MenuFlyoutSeparator Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false}"/>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </controlextensions:FlyoutExtensions.ItemTemplate>
-                                            </Flyout>
-                                        </AppBarButton.ContextFlyout>
-                                    </AppBarButton>
-                                    <AppBarButton x:Uid="PlaylistDetailPage_Delete" Icon="Delete" Command="{Binding RemovePlaylistCommand}"/>
-                                </CommandBar>
-                                <!--<HyperlinkButton Command="{Binding PlayAllCommand}" VerticalContentAlignment="Center" Foreground="{ThemeResource SystemBaseHighColor}">
+                                                                <MenuFlyoutSeparator Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false}"/>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </controlextensions:FlyoutExtensions.ItemTemplate>
+                                                </Flyout>
+                                            </AppBarButton.ContextFlyout>
+                                        </AppBarButton>
+                                        <AppBarButton x:Uid="PlaylistDetailPage_Delete" Icon="Delete" Command="{Binding RemovePlaylistCommand}"/>
+                                    </CommandBar>
+                                    <!--<HyperlinkButton Command="{Binding PlayAllCommand}" VerticalContentAlignment="Center" Foreground="{ThemeResource SystemBaseHighColor}">
                                     <Grid VerticalAlignment="Center">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -238,62 +252,44 @@
                                         </Flyout>
                                     </HyperlinkButton.ContextFlyout>
                                 </HyperlinkButton>-->
-                            </StackPanel>
-                        </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel Height="45">
-                    <CommandBar DefaultLabelPosition="Right" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
-            <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Background="{ThemeResource SystemAccentColor}"
+                    <StackPanel Height="45">
+                        <CommandBar DefaultLabelPosition="Right" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
+                            <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Background="{ThemeResource SystemAccentColor}"
                             Command="{Binding PlaySelectedItemsCommand}"/>
-            <AppBarButton x:Name="buttonAddTo" x:Uid="ButtonAddToPlaylist" Icon="Add"
+                            <AppBarButton x:Name="buttonAddTo" x:Uid="ButtonAddToPlaylist" Icon="Add"
                             Command="{Binding OpenPlaylistFlyoutCommand}">
-                <AppBarButton.ContextFlyout>
-                    <Flyout controlextensions:FlyoutExtensions.IsOpen="{Binding IsPlaylistFlyoutOpen, Mode=TwoWay}"
+                                <AppBarButton.ContextFlyout>
+                                    <Flyout controlextensions:FlyoutExtensions.IsOpen="{Binding IsPlaylistFlyoutOpen, Mode=TwoWay}"
                             controlextensions:FlyoutExtensions.Parent="{Binding ElementName=buttonAddTo}"
                             controlextensions:FlyoutExtensions.ItemsSource="{Binding MenuItemsPlaylist}">
-                        <controlextensions:FlyoutExtensions.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <MenuFlyoutItem Command="{Binding MenuItemClickedCommand}"
+                                        <controlextensions:FlyoutExtensions.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <MenuFlyoutItem Command="{Binding MenuItemClickedCommand}"
                                                     CommandParameter="{Binding}"
                                                     Text="{Binding Text}"
                                                     controlextensions:MenuFlyoutItem.UpdateTagTarget="True"
                                                     Tag="{Binding InsertMode, ConverterParameter=Selected, Converter={StaticResource InsertModeConverter}, Mode=TwoWay}"
                                                     Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"/>
-                                    <MenuFlyoutSeparator Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </controlextensions:FlyoutExtensions.ItemTemplate>
-                    </Flyout>
-                </AppBarButton.ContextFlyout>
-            </AppBarButton>
-            <AppBarButton x:Uid="ButtonDeleteItems" Icon="Delete" Command="{Binding DeleteSelectedItemsCommand}"/>
-            <AppBarButton x:Uid="ButtonSelectAll" Icon="SelectAll" Command="{Binding SelectAllItemsCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true, Mode=TwoWay}"/>
-            <AppBarButton x:Uid="ButtonUnSelectAll" Icon="ClearSelection" Command="{Binding ClearSelectionCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false, Mode=TwoWay}"/>
-        </CommandBar>
+                                                    <MenuFlyoutSeparator Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </controlextensions:FlyoutExtensions.ItemTemplate>
+                                    </Flyout>
+                                </AppBarButton.ContextFlyout>
+                            </AppBarButton>
+                            <AppBarButton x:Uid="ButtonDeleteItems" Icon="Delete" Command="{Binding DeleteSelectedItemsCommand}"/>
+                            <AppBarButton x:Uid="ButtonSelectAll" Icon="SelectAll" Command="{Binding SelectAllItemsCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true, Mode=TwoWay}"/>
+                            <AppBarButton x:Uid="ButtonUnSelectAll" Icon="ClearSelection" Command="{Binding ClearSelectionCommand}" Visibility="{Binding AllItemsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false, Mode=TwoWay}"/>
+                        </CommandBar>
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel x:Name="tracksPart">
-                    <usercontrols:ListView x:Name="listview" Margin="0,12,0,0"
-                                           AllowDrop="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
-                                           CanDragItems="True" CanReorderItems="True"
-                                           ItemTemplate="{StaticResource normalListViewItem}"
-                                           ItemContainerStyle="{StaticResource ExpandedListViewItemContainer}"
-                                           AlternatingRow="{StaticResource ListViewAlternatingRowBrush}"
-                                           ItemsSource="{Binding Items}" SelectionMode="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"
-                                           IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
-                                           controlextensions:ListViewExtensions.Command="{Binding PlayTrackCommand}" 
-                                           controlextensions:ListViewExtensions.SelectedItems="{Binding SelectedItems, Mode=TwoWay}">
-                        <interactivity:Interaction.Behaviors>
-                            <core:EventTriggerBehavior EventName="DragItemsCompleted">
-                                <core:InvokeCommandAction Command="{x:Bind ViewModel.UpdatePlaylistCommand}"/>
-                            </core:EventTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
-                    </usercontrols:ListView>
-                </StackPanel>
-            </StackPanel>
-        </ScrollViewer>
-
+            </ListView.Header>
+        </usercontrols:ListView>
     </Grid>
 </Page>

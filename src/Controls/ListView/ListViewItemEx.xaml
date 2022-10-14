@@ -267,6 +267,9 @@
                                     <Storyboard>
                                         <DoubleAnimation Duration="0" Storyboard.TargetName="ContentBorder" To="{ThemeResource ListViewItemDragThemeOpacity}" Storyboard.TargetProperty="Opacity"/>
                                         <DragItemThemeAnimation TargetName="ContentBorder"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PreSelectionSquare" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="DraggingTarget"/>
