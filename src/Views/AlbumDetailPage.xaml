@@ -74,7 +74,7 @@
 <!--
                     Command="{Binding DataContext.PlayTrackCommand, ElementName=listview}" CommandParameter="{Binding}" 
                     -->
-                    <Button x:Name="PlayTrackButton"
+                    <!--<Button x:Name="PlayTrackButton"
                             Grid.Column="0"
                             Style="{StaticResource ListViewItemPointerOverButtonStyle}"
                             >
@@ -108,8 +108,8 @@
                             </FontIcon>
                         </Grid>
                         
-                    </Button>
-                    
+                    </Button>-->
+                    <TextBlock x:Name="TrackNumber" Text="{Binding Data.TrackNumber}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <TextBlock Text="{Binding Data.Name}"
                                        Margin="10,0,0,0" TextTrimming="WordEllipsis" 
                                        VerticalAlignment="Center" Grid.Column="1"/>
@@ -254,7 +254,7 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Height="45">
-                        <CommandBar DefaultLabelPosition="Right" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <CommandBar Background="Transparent" DefaultLabelPosition="Right" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
                             <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Command="{Binding PlaySelectedItemsCommand}"
                                       Background="{ThemeResource SystemAccentColor}"/>
