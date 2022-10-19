@@ -108,6 +108,35 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 this.SelectedItems.Clear();
             }
         }
+
+        protected override void PlayNextItems()
+        {
+            var selectedItems = this.SelectedItems;
+            if (selectedItems != null)
+            {
+                var selectedTracks = new System.Collections.ObjectModel.ObservableCollection<Track>(selectedItems.Cast<ListViewItemViewModel>().Select(itm => itm.Data).Cast<Track>());
+                if (selectedTracks?.Count() > 0)
+                {
+                    PlayNextItemsToWaitingList(selectedTracks);
+                }
+                this.SelectedItems.Clear();
+            }
+        }
+
+        private void PlayNextItemsToWaitingList(ObservableCollection<Track> tracks)
+        {
+            if (tracks != null)
+            {
+                var trackIds = tracks.Select(track => track.Id);
+                if (trackIds != null)
+                {
+                    PlayerManager.InsertTracksToWaitingList(
+                        new System.Collections.ObjectModel.ObservableCollection<int>(trackIds),
+                        PlayerMode.CD);
+                }
+            }
+        }
+
         protected override void AddAllToPlaylist(Playlist playlist)
         {
             if (playlist != null)

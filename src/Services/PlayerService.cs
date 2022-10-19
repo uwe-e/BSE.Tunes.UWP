@@ -49,8 +49,7 @@ namespace BSE.Tunes.StoreApp.Services
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                MediaPlayerElement mediaElement = d as MediaPlayerElement;
-                if (mediaElement != null)
+                if (d is MediaPlayerElement mediaElement)
                 {
                     bool newValue = (bool)e.NewValue;
                     bool oldValue = (bool)e.OldValue;
@@ -67,8 +66,8 @@ namespace BSE.Tunes.StoreApp.Services
             }
         }
 
-        private IDataService m_dataService;
-        private IAuthenticationService m_accountService;
+        private readonly IDataService m_dataService;
+        private readonly IAuthenticationService m_accountService;
         private MediaPlayerElement m_mediaElement;
         private MediaPlayer m_mediaPlayer;
         private Track m_currentTrack;
@@ -80,7 +79,7 @@ namespace BSE.Tunes.StoreApp.Services
         private SystemMediaTransportControls m_systemMediaControls;
 
         private AudioStreamDownloader m_audioStreamDownloader;
-        private AudioStreamDownloader m_audioStreamPreloader;
+        //private AudioStreamDownloader m_audioStreamPreloader;
         private MediaStreamSource m_mediaStreamSource;
         private UInt64 m_byteOffset;
         private TimeSpan m_timeOffset;
@@ -215,7 +214,7 @@ namespace BSE.Tunes.StoreApp.Services
                         this.m_audioStreamDownloader = new AudioStreamDownloader(this.m_dataService);
                         this.m_audioStreamDownloader.DownloadProgessStarted += OnDownloadProgessStarted;
                         m_audioStreamDownloader.DownloadComplete += OnDownloadComplete;
-                        m_audioStreamPreloader?.Cancel();
+                        //m_audioStreamPreloader?.Cancel();
                         await m_audioStreamDownloader.DownloadAsync(new Uri(strUrl), guid);
                     }
                 }
@@ -225,24 +224,24 @@ namespace BSE.Tunes.StoreApp.Services
                 throw;
             }
         }
-        public async Task PrepareTrack(Track track)
-        {
-            try
-            {
-                Guid guid = track.Guid;
-                if (guid != null && !guid.Equals(Guid.Empty))
-                {
-                    string strUrl = string.Format("{0}/api/files/audio/{1}", m_dataService.ServiceUrl, guid.ToString());
-                    m_audioStreamPreloader = new AudioStreamDownloader(this.m_dataService);
-                    m_audioStreamPreloader.PreloadComplete += OnPreloadComplete;
-                    await m_audioStreamPreloader.PreloadAsync(new Uri(strUrl), guid);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //public async Task PrepareTrack(Track track)
+        //{
+        //    try
+        //    {
+        //        Guid guid = track.Guid;
+        //        if (guid != null && !guid.Equals(Guid.Empty))
+        //        {
+        //            string strUrl = string.Format("{0}/api/files/audio/{1}", m_dataService.ServiceUrl, guid.ToString());
+        //            m_audioStreamPreloader = new AudioStreamDownloader(this.m_dataService);
+        //            m_audioStreamPreloader.PreloadComplete += OnPreloadComplete;
+        //            await m_audioStreamPreloader.PreloadAsync(new Uri(strUrl), guid);
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
         public async void Play()
         {
             await this.m_mediaElement.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -268,6 +267,7 @@ namespace BSE.Tunes.StoreApp.Services
                 });
             }
         }
+
         public async void PreviousTrack()
         {
             if (this.CanExecutePreviousTrack)
@@ -296,9 +296,11 @@ namespace BSE.Tunes.StoreApp.Services
                 //close the MediaStreamSource and remove the MediaStreamSource event handlers
                 CloseMediaStreamSource(this.m_mediaStreamSource);
 
-                this.m_mediaStreamSource = new Windows.Media.Core.MediaStreamSource(audioDescriptor);
-                this.m_mediaStreamSource.CanSeek = true;
-                this.m_mediaStreamSource.Duration = this.m_currentTrack.Duration;
+                this.m_mediaStreamSource = new Windows.Media.Core.MediaStreamSource(audioDescriptor)
+                {
+                    CanSeek = true,
+                    Duration = this.m_currentTrack.Duration
+                };
 
                 // hooking up the MediaStreamSource event handlers 
                 this.m_mediaStreamSource.Starting += OnStreamSourceStarting;
@@ -311,21 +313,11 @@ namespace BSE.Tunes.StoreApp.Services
         }
         private void OnDownloadComplete(object sender, EventArgs e)
         {
-            AudioStreamDownloader downloader = sender as AudioStreamDownloader;
-            if (downloader != null)
+            if (sender is AudioStreamDownloader downloader)
             {
                 downloader.DownloadComplete -= OnDownloadComplete;
             }
             Messenger.Default.Send(new MediaStateChangedArgs(MediaState.DownloadCompleted));
-        }
-        private void OnPreloadComplete(object sender, EventArgs e)
-        {
-            AudioStreamDownloader downloader = sender as AudioStreamDownloader;
-            if (downloader != null)
-            {
-                downloader.PreloadComplete -= OnPreloadComplete;
-                downloader.Dispose();
-            }
         }
         /// <summary>
         /// Occurs when the MediaStreamSource is ready to start requesting MediaStreamSample objects.

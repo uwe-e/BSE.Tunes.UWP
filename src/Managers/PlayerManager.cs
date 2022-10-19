@@ -91,9 +91,9 @@ namespace BSE.Tunes.StoreApp.Managers
                     case MediaState.PreviousRequested:
                         ExecutePreviousTrack();
                         break;
-                    case MediaState.DownloadCompleted:
-                        PrepareNextTrack();
-                        break;
+                    //case MediaState.DownloadCompleted:
+                    //    PrepareNextTrack();
+                    //    break;
                 }
             });
         }
@@ -190,22 +190,33 @@ namespace BSE.Tunes.StoreApp.Managers
             }
         }
 
-        public async void PrepareNextTrack()
+        //public async void PrepareNextTrack()
+        //{
+        //    if (this.CanExecuteNextTrack())
+        //    {
+        //        var trackId = this.Playlist[Playlist.Index + 1];
+        //        if (trackId > 0)
+        //        {
+        //            var track = await this.m_dataService.GetTrackById(trackId);
+        //            if (track != null)
+        //            {
+        //                await PlayerService.PrepareTrack(track);
+        //                //await this.SetTrackAsync(track);
+        //            }
+        //        }
+        //    }
+        //}
+        
+        public void InsertTracksToWaitingList(ObservableCollection<int> trackIds, PlayerMode playerMode)
         {
-            if (this.CanExecuteNextTrack())
+            var trackId = this.Playlist.Current;
+            int index =  this.Playlist.IndexOf(trackId);
+            foreach(int id in trackIds.Reverse())
             {
-                var trackId = this.Playlist[Playlist.Index + 1];
-                if (trackId > 0)
-                {
-                    var track = await this.m_dataService.GetTrackById(trackId);
-                    if (track != null)
-                    {
-                        await PlayerService.PrepareTrack(track);
-                        //await this.SetTrackAsync(track);
-                    }
-                }
+                this.Playlist.Insert(index += 1, id);
             }
         }
+
         public bool CanExecutePlay()
         {
             return this.Playlist?.Count > 0;
@@ -221,7 +232,8 @@ namespace BSE.Tunes.StoreApp.Managers
 
         private void OnMediaEnded()
         {
-            if (this.PlayerMode != PlayerMode.None && this.PlayerMode != PlayerMode.Song)
+            //if (this.PlayerMode != PlayerMode.None && this.PlayerMode != PlayerMode.Song)
+            if (this.PlayerMode != PlayerMode.None)
             {
                 this.ExecuteNextTrack();
             }
@@ -251,5 +263,7 @@ namespace BSE.Tunes.StoreApp.Managers
             }
             catch { }
         }
+
+        
     }
 }

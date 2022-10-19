@@ -12,7 +12,7 @@ namespace BSE.Tunes.StoreApp
     [Bindable]
     sealed partial class App : Application
     {
-        private Lazy<ActivationService> _activationService;
+        private readonly Lazy<ActivationService> _activationService;
 
         private ActivationService ActivationService
         {
@@ -62,9 +62,9 @@ namespace BSE.Tunes.StoreApp
                             }
                             
                         }
-                        catch(Exception exception)
+                        catch(Exception)
                         {
-                            
+                            throw;
                         }
                     }
                 }

@@ -12,8 +12,8 @@ namespace BSE.Tunes.StoreApp.Services
     public class DataService : IDataService
     {
         #region FieldsPrivate
-        private SettingsService m_settingsService;
-        private IAuthenticationService m_authenticationHandler;
+        private readonly SettingsService m_settingsService;
+        private readonly IAuthenticationService m_authenticationHandler;
 
         #endregion
 
@@ -283,7 +283,7 @@ namespace BSE.Tunes.StoreApp.Services
         #region MethodsPrivate
         private async Task<T> GetHttpResponseFromPost<T, U>(Uri uri, U from)
         {
-            T result = default(T);
+            T result = default;
             using (var client = await GetHttpClient())
             {
                 try
@@ -301,7 +301,7 @@ namespace BSE.Tunes.StoreApp.Services
         }
         private async Task<T> GetHttpResponse<T>(Uri uri)
         {
-            T result = default(T);
+            T result = default;
             using (var client = await GetHttpClient())
             {
                 try
@@ -311,7 +311,7 @@ namespace BSE.Tunes.StoreApp.Services
                     result = responseMessage.Content.ReadAsAsync<T>().Result;
                 }
                 //catch(Authori)
-                catch (Exception e)
+                catch (Exception)
                 {
                     throw;
                 }

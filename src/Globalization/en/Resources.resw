@@ -442,4 +442,7 @@ A registration can only be done by the operator of the server.</value>
   <data name="Shell_TxtQueue.Text" xml:space="preserve">
     <value>Queue</value>
   </data>
+  <data name="ButtonPlayNext.Label" xml:space="preserve">
+    <value>Play next</value>
+  </data>
 </root>

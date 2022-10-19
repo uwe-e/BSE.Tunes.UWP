@@ -257,7 +257,8 @@
                         <CommandBar Background="Transparent" DefaultLabelPosition="Right" Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
                             <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Command="{Binding PlaySelectedItemsCommand}"
-                                      Background="{ThemeResource SystemAccentColor}"/>
+                                          Background="{ThemeResource SystemAccentColor}"/>
+                            <AppBarButton x:Uid="ButtonPlayNext" Icon="MusicInfo" Command="{Binding PlayNextItemsCommand}"/>
                             <AppBarButton x:Name="buttonAddTo" x:Uid="ButtonAddToPlaylist" Icon="Add"
                             Command="{Binding OpenPlaylistFlyoutCommand}">
                                 <AppBarButton.ContextFlyout>

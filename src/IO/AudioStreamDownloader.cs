@@ -159,6 +159,7 @@ namespace BSE.Tunes.StoreApp.IO
 			}
 			catch (Exception)
 			{
+				throw;
 			}
 		}
         public async Task PreloadAsync(Uri source, Guid trackId)
@@ -267,7 +268,7 @@ namespace BSE.Tunes.StoreApp.IO
 		#endregion
 
 		#region MethodsPrivate
-		private async Task<Stream> CreateStream(Guid trackId, CreationCollisionOption creationCollisionOption = CreationCollisionOption.OpenIfExists)
+		private async Task<Stream> CreateStream(Guid trackId, CreationCollisionOption creationCollisionOption = CreationCollisionOption.ReplaceExisting)
 		{
 			Stream stream = null;
 			bool isUnauthorizedAccess = false;

@@ -190,9 +190,9 @@ namespace BSE.Tunes.StoreApp.ViewModels
                             this.InfoSubTitle = FormatNumberOfEntriesString(Playlist);
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-
+                        throw;
                     }
                     finally
                     {

@@ -30,6 +30,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private ICommand m_clearSelectionCommand;
         private ICommand m_showFlyoutCommand;
         private ICommand m_selectItemsCommand;
+        private RelayCommand m_playNextItemsCommand;
         private ICommand m_selectAllItemsCommand;
         private RelayCommand m_deleteSelectedItemsCommand;
         private bool m_isPlaylistFlyoutOpen;
@@ -151,6 +152,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public ICommand SelectItemsCommand => m_selectItemsCommand ?? (m_selectItemsCommand = new RelayCommand<ListViewItemViewModel>(SelectItems));
         public ICommand SelectAllItemsCommand => m_selectAllItemsCommand ?? (m_selectAllItemsCommand = new RelayCommand(SelectAll));
         public RelayCommand DeleteSelectedItemsCommand => m_deleteSelectedItemsCommand ?? (m_deleteSelectedItemsCommand = new RelayCommand(DeleteSelectedItems, CanDeleteSelectedItems));
+        public RelayCommand PlayNextItemsCommand => m_playNextItemsCommand ?? (m_playNextItemsCommand = new RelayCommand(PlayNextItems, CanPlayNextItems));
 
         public PlaylistBaseViewModel()
         {
@@ -187,6 +189,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             CreatePlaylistMenu();
             return Task.CompletedTask;
         }
+
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
             if (SelectedItems != null)
@@ -206,25 +209,31 @@ namespace BSE.Tunes.StoreApp.ViewModels
             IsCommandBarVisible = false;
             return base.OnNavigatedFromAsync(state, suspending);
         }
+
         public virtual bool CanPlayAll()
         {
             return false;
         }
+
         public virtual void PlayAll()
         {
         }
+
         public virtual bool CanPlayTrack(ListViewItemViewModel item)
         {
             return !HasSelectedItems;
         }
+
         public virtual void PlayTrack(ListViewItemViewModel item)
         {
             PlayerManager.PlayTrack(((Track)item.Data).Id, PlayerMode.Song);
         }
+
         public virtual void ClearSelection()
         {
             SelectedItems?.Clear();
         }
+        
         public virtual bool CanDeleteSelectedItems()
         {
             return HasSelectedItems;
@@ -249,6 +258,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             HasSelectedItems = true;
             SelectedItems.Add(item);
         }
+
         public virtual void ShowFlyout(ListViewItemViewModel item)
         {
             //if there are selections, clear it before open the flyout.
@@ -297,6 +307,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
             MenuItemsPlaylist.Insert(0, menuItem);
         }
+
         protected virtual void CreateMenuItems(ObservableCollection<Playlist> playlists)
         {
             if (playlists != null)
@@ -316,15 +327,19 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
             }
         }
+
         protected virtual void PlaySelectedItems()
         {
         }
+
         protected virtual void AddSelectedToPlaylist(Playlist playlist)
         {
         }
+
         protected virtual void AddAllToPlaylist(Playlist playlist)
         {
         }
+
         protected virtual async void AppendToPlaylist(Playlist playlist)
         {
             if (playlist != null)
@@ -353,6 +368,15 @@ namespace BSE.Tunes.StoreApp.ViewModels
             return SelectedItems?.Count > 0;
         }
 
+        private bool CanPlayNextItems()
+        {
+            return SelectedItems?.Count > 0;
+        }
+
+        protected virtual void PlayNextItems()
+        {
+        }
+
         private void OpenPlaylistFlyout()
         {
             IsPlaylistFlyoutOpen = true;
@@ -362,6 +386,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         {
             IsAllToPlaylistFlyoutOpen = true;
         }
+
         private void OnMenuItemViewModelClicked(object sender, EventArgs e)
         {
             IsPlaylistFlyoutOpen = false;
@@ -392,6 +417,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 AddToPlaylist(viewModel.Playlist, viewModel.InsertMode);
             }
         }
+
         private void AddToPlaylist(Playlist playlist, InsertMode insertMode)
         {
             if (playlist != null)

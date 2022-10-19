@@ -23,9 +23,11 @@ namespace BSE.Tunes.StoreApp.Managers
         void ExecuteNextTrack();
         void ExecutePreviousTrack();
         Task SetTrackAsync(Track track);
-        void PrepareNextTrack();
+        //void PrepareNextTrack();
         void Play();
         void PlayTracks(ObservableCollection<int> trackIds, PlayerMode playerMode);
         void Pause();
+
+        void InsertTracksToWaitingList(ObservableCollection<int> trackIds, PlayerMode playerMode);
     }
 }
