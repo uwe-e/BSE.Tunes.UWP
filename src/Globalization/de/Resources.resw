@@ -445,4 +445,7 @@ Die Registrierung kann nur durch den Betreiber des Servers erfolgen.</value>
   <data name="ButtonPlayNext.Label" xml:space="preserve">
     <value>Als Nächstes wiedergeben</value>
   </data>
+  <data name="MenuFlyoutPlayNextItems.Text" xml:space="preserve">
+    <value>Als Nächstes wiedergeben</value>
+  </data>
 </root>

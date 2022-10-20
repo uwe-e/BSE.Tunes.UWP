@@ -261,6 +261,7 @@
                             <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
                             <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Background="{ThemeResource SystemAccentColor}"
                             Command="{Binding PlaySelectedItemsCommand}"/>
+                            <AppBarButton x:Uid="ButtonPlayNext" Icon="MusicInfo" Command="{Binding PlayNextItemsCommand}"/>
                             <AppBarButton x:Name="buttonAddTo" x:Uid="ButtonAddToPlaylist" Icon="Add"
                             Command="{Binding OpenPlaylistFlyoutCommand}">
                                 <AppBarButton.ContextFlyout>

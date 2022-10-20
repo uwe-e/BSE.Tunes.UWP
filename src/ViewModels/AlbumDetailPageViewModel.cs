@@ -1,14 +1,12 @@
 ﻿using BSE.Tunes.StoreApp.Managers;
 using BSE.Tunes.StoreApp.Models;
 using BSE.Tunes.StoreApp.Models.Contract;
-using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace BSE.Tunes.StoreApp.ViewModels
@@ -132,7 +130,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 {
                     PlayerManager.InsertTracksToWaitingList(
                         new System.Collections.ObjectModel.ObservableCollection<int>(trackIds),
-                        PlayerMode.CD);
+                        PlayerMode.Song);
                 }
             }
         }

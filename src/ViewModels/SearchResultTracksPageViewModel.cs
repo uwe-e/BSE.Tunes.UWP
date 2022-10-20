@@ -14,12 +14,11 @@ namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class SearchResultTracksPageViewModel : SelectableItemsBaseViewModel
     {
-        #region FieldsPrivate
         private IncrementalObservableCollection<ListViewItemViewModel> m_tracks;
         private string m_headerText;
         private string m_pageHeaderText;
         private ICommand m_showAlbumCommand;
-        #endregion
+        private RelayCommand m_playNextItemsCommand;
 
         #region Properties
         public string HeaderText
@@ -60,6 +59,9 @@ namespace BSE.Tunes.StoreApp.ViewModels
         }
         public ICommand ShowAlbumCommand => m_showAlbumCommand ?? (m_showAlbumCommand = new RelayCommand<GridPanelItemViewModel>(ShowAlbum));
 
+        public RelayCommand PlayNextItemsCommand => m_playNextItemsCommand ?? (m_playNextItemsCommand = new RelayCommand(PlayNextItems, CanPlayNextItems));
+
+        
 
         #endregion
 
@@ -67,12 +69,14 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public async override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             await base.OnNavigatedToAsync(parameter, mode, state);
-            var query = parameter as Query;
-            if (query != null && !string.IsNullOrEmpty(query.SearchPhrase))
+            if (parameter is Query query)
             {
-                HeaderText = string.Format(CultureInfo.InvariantCulture, "\"{0}\"", query.SearchPhrase);
-                PageHeaderText = string.Format(CultureInfo.CurrentUICulture, ResourceService.GetString("SearchResultTracksPage_PageHeaderText"), query.SearchPhrase);
-                LoadQueryResult(query);
+                if (!string.IsNullOrEmpty(query.SearchPhrase))
+                {
+                    HeaderText = string.Format(CultureInfo.InvariantCulture, "\"{0}\"", query.SearchPhrase);
+                    PageHeaderText = string.Format(CultureInfo.CurrentUICulture, ResourceService.GetString("SearchResultTracksPage_PageHeaderText"), query.SearchPhrase);
+                    LoadQueryResult(query);
+                }
             }
         }
         public override void SelectItem(GridPanelItemViewModel item)
@@ -145,6 +149,23 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private async void ShowAlbum(GridPanelItemViewModel item)
         {
             await NavigationService.NavigateAsync(typeof(Views.AlbumDetailPage), (Album)((Track)item.Data).Album);
+        }
+        
+        private bool CanPlayNextItems()
+        {
+            return SelectedItems?.Count > 0;
+        }
+
+        private void PlayNextItems()
+        {
+            var trackIds = SelectedItems.Cast<GridPanelItemViewModel>().Select(itm => (Track)itm.Data).Select(itm => itm.Id).ToList();
+            if (trackIds != null)
+            {
+                PlayerManager.InsertTracksToWaitingList(
+                    new System.Collections.ObjectModel.ObservableCollection<int>(trackIds),
+                    PlayerMode.Song);
+            }
+            ClearSelection();
         }
         #endregion
     }

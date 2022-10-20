@@ -96,10 +96,10 @@
                     </VisualStateManager.VisualStateGroups>
                     <Grid x:Name="listViewItem" Height="48">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition MinWidth="300" MaxWidth="400"/>
-                            <ColumnDefinition MinWidth="300" MaxWidth="400"/>
-                            <ColumnDefinition MinWidth="300" MaxWidth="400"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout controlextensions:FlyoutExtensions.IsOpen="{Binding IsOpen, Mode=TwoWay}"
@@ -117,7 +117,7 @@
                         <TextBlock Text="{Binding Data.Name}" TextTrimming="WordEllipsis" VerticalAlignment="Center" Margin="12,0,0,0" Grid.Column="0"/>
                         <TextBlock Text="{Binding Data.Album.Artist.Name}" TextTrimming="WordEllipsis" VerticalAlignment="Center" Grid.Column="1"/>
                         <TextBlock Text="{Binding Data.Album.Title}" TextTrimming="WordEllipsis" VerticalAlignment="Center" Grid.Column="2"/>
-                        <TextBlock Text="{Binding Data.Duration}" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,52,0" Grid.Column="3" />
+                        <TextBlock Text="{Binding Data.Duration}" TextAlignment="Right" VerticalAlignment="Center" Margin="10,0,20,0" Grid.Column="3" />
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="RightTapped">
                                 <core:InvokeCommandAction Command="{Binding DataContext.OpenFlyoutCommand, ElementName=listview}"
@@ -185,6 +185,7 @@
                             Visibility="{Binding IsCommandBarVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <AppBarButton x:Uid="ButtonClearSelection" Icon="Bullets" Command="{Binding ClearSelectionCommand}"/>
                     <AppBarButton x:Uid="ButtonPlaySelection" Icon="Play" Background="{ThemeResource SystemAccentColor}" Command="{Binding PlaySelectedItemsCommand}"/>
+                    <AppBarButton x:Uid="ButtonPlayNext" Icon="MusicInfo" Command="{Binding PlayNextItemsCommand}"/>
                 </CommandBar>
             </Grid>
 
@@ -192,12 +193,14 @@
                                    RelativePanel.AlignLeftWithPanel="True"
                                    RelativePanel.AlignRightWithPanel="True"
                                    RelativePanel.Below="filterPanel"
+                                   EnablePreSelection="True"
                                    ItemsSource="{Binding Tracks}" DataFetchSize="1"
                                    SelectionMode="{Binding HasSelectedItems, Converter={StaticResource BooleanToSelectionModeConverter}}"
                                    IsItemClickEnabled="{Binding HasSelectedItems, Converter={StaticResource InverseBooleanConverter}}"
                                    controlextensions:ListViewExtensions.Command="{Binding SelectItemCommand}"
                                    controlextensions:ListViewExtensions.SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
-                                   AlternatingRow="{StaticResource ListViewAlternatingRowBrush}">
+                                   AlternatingRow="{StaticResource ListViewAlternatingRowBrush}"
+                                   PreSelectionCommand="{Binding SelectItemsCommand}">
             </usercontrols:ListView>
 
         </RelativePanel>

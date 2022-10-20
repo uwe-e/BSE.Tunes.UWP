@@ -109,6 +109,7 @@
                                         controlextensions:FlyoutExtensions.OffsetPoint="{Binding OffsetPoint, Mode=TwoWay}">
                                 <MenuFlyout.Items>
                                     <MenuFlyoutItem x:Uid="MenuFlyoutPlay" Text="Play" Command="{Binding DataContext.SelectItemCommand, ElementName=listview}" CommandParameter="{Binding}"/>
+                                    <MenuFlyoutItem x:Uid="MenuFlyoutPlayNextItems" Text="Show Album" Command="{Binding DataContext.PlayNextItemsCommand, ElementName=listview}" CommandParameter="{Binding}"/>
                                     <MenuFlyoutItem x:Uid="MenuFlyoutShowAlbum" Text="Show Album" Command="{Binding DataContext.ShowAlbumCommand, ElementName=listview}" CommandParameter="{Binding}"/>
                                 </MenuFlyout.Items>
                             </MenuFlyout>

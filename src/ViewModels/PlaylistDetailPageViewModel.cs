@@ -124,6 +124,21 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 this.SelectedItems.Clear();
             }
         }
+
+        protected override void PlayNextItems()
+        {
+            var selectedItems = this.SelectedItems;
+            if (selectedItems != null)
+            {
+                var entryIds = new System.Collections.ObjectModel.ObservableCollection<int>(selectedItems.Cast<ListViewItemViewModel>().Select(itm => itm.Data).Cast<PlaylistEntry>().Select(p => p.TrackId));
+                if (entryIds?.Count() > 0)
+                {
+                    PlayerManager.InsertTracksToWaitingList(entryIds, PlayerMode.Song);
+                }
+                this.SelectedItems.Clear();
+            }
+        }
+
         public override void PlayTrack(ListViewItemViewModel item)
         {
             PlayerManager.PlayTrack(((PlaylistEntry)item.Data).TrackId, PlayerMode.Song);

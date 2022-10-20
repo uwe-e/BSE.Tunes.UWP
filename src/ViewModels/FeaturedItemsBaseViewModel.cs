@@ -1,6 +1,7 @@
 ﻿using BSE.Tunes.StoreApp.Managers;
 using BSE.Tunes.StoreApp.Models.Contract;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Input;
@@ -22,11 +23,11 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public ICommand PlayAllCommand => m_playAllCommand ?? (m_playAllCommand = new RelayCommand<GridPanelItemViewModel>(PlayAll));
         public ICommand ShowAddToPlaylistDialogCommand => m_showAddToPlaylistDialogCommand ?? (m_showAddToPlaylistDialogCommand = new RelayCommand<GridPanelItemViewModel>(ShowAddToPlaylistDialog));
         public ICommand OpenFlyoutCommand => m_openFlyoutCommand ?? (m_openFlyoutCommand = new RelayCommand<GridPanelItemViewModel>(OpenFlyout));
+
         public PlayerManager PlayerManager
         {
             get;
         } = PlayerManager.Instance;
-
 
         public FeaturedItemsBaseViewModel()
         {
@@ -35,6 +36,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 LoadData();
             }
         }
+
         public virtual void NavigateTo()
         {
         }
@@ -42,16 +44,20 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public virtual void LoadData()
         {
         }
+
         public virtual void SelectItem(GridPanelItemViewModel item)
         {
         }
+
         public virtual void PlayAll(GridPanelItemViewModel item)
         {
         }
+        
         public virtual void ShowAddToPlaylistDialog(GridPanelItemViewModel item)
         {
             item.IsContextOpen = true;
         }
+
         public virtual void OpenFlyout(GridPanelItemViewModel item)
         {
             item.IsOpen = true;
