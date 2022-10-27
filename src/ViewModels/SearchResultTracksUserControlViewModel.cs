@@ -71,7 +71,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         {
             if (item?.Data is Track track)
             {
-                PlayerManager.InsertTracksToWaitingList(
+                PlayerManager.InsertTracksToPlayQueue(
                     new ObservableCollection<int> { track.Id }, PlayerMode.Song);
             }
         }

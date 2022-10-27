@@ -165,6 +165,7 @@
     <Compile Include="ViewModels\ArtistsAlbumsPageViewModel.cs" />
     <Compile Include="ViewModels\ArtistsAlbumsUserControlViewModel.cs" />
     <Compile Include="ViewModels\DeletePlaylistContentDialogViewModel.cs" />
+    <Compile Include="ViewModels\PlayQueueFlyoutItemViewModel.cs" />
     <Compile Include="ViewModels\QueuePageViewModel.cs" />
     <Compile Include="ViewModels\SearchResultAlbumsPageViewModel.cs" />
     <Compile Include="ViewModels\SearchResultAlbumsUserControlViewModel.cs" />

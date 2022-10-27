@@ -207,13 +207,24 @@ namespace BSE.Tunes.StoreApp.Managers
         //    }
         //}
         
-        public void InsertTracksToWaitingList(ObservableCollection<int> trackIds, PlayerMode playerMode)
+        public void InsertTracksToPlayQueue(ObservableCollection<int> trackIds, PlayerMode playerMode)
         {
             var trackId = this.Playlist.Current;
             int index =  this.Playlist.IndexOf(trackId);
-            foreach(int id in trackIds.Reverse())
+            foreach (int id in trackIds)
             {
                 this.Playlist.Insert(index += 1, id);
+            }
+        }
+
+        public void AppendTracksToPlayQueue(ObservableCollection<int> trackIds, PlayerMode playerMode)
+        {
+            if (trackIds is ObservableCollection<int> ids)
+            {
+                foreach (int id in ids)
+                {
+                    this.Playlist.Append(id);
+                }
             }
         }
 

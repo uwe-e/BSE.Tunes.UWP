@@ -28,6 +28,8 @@ namespace BSE.Tunes.StoreApp.Managers
         void PlayTracks(ObservableCollection<int> trackIds, PlayerMode playerMode);
         void Pause();
 
-        void InsertTracksToWaitingList(ObservableCollection<int> trackIds, PlayerMode playerMode);
+        void InsertTracksToPlayQueue(ObservableCollection<int> trackIds, PlayerMode playerMode);
+
+        void AppendTracksToPlayQueue(ObservableCollection<int> trackIds, PlayerMode playerMode);
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
@@ -115,20 +116,20 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 var selectedTracks = new System.Collections.ObjectModel.ObservableCollection<Track>(selectedItems.Cast<ListViewItemViewModel>().Select(itm => itm.Data).Cast<Track>());
                 if (selectedTracks?.Count() > 0)
                 {
-                    PlayNextItemsToWaitingList(selectedTracks);
+                    InsertTracksToPlayQueue(selectedTracks);
                 }
                 this.SelectedItems.Clear();
             }
         }
 
-        private void PlayNextItemsToWaitingList(ObservableCollection<Track> tracks)
+        private void InsertTracksToPlayQueue(ObservableCollection<Track> tracks)
         {
             if (tracks != null)
             {
                 var trackIds = tracks.Select(track => track.Id);
                 if (trackIds != null)
                 {
-                    PlayerManager.InsertTracksToWaitingList(
+                    PlayerManager.InsertTracksToPlayQueue(
                         new System.Collections.ObjectModel.ObservableCollection<int>(trackIds),
                         PlayerMode.Song);
                 }
@@ -163,6 +164,41 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
             this.SelectedItems?.Clear();
         }
+
+        protected override void AppendAllToPlayQueue()
+        {
+            var tracks = new ObservableCollection<Track>(this.Album.Tracks);
+            if (tracks != null)
+            {
+                var trackIds = tracks.Select(track => track.Id);
+                if (trackIds != null)
+                {
+                    PlayerManager.AppendTracksToPlayQueue(
+                        new System.Collections.ObjectModel.ObservableCollection<int>(trackIds),
+                        PlayerMode.Song);
+                }
+            }
+        }
+
+        protected override void AppendSelectedToPlayQueue()
+        {
+            if (this.SelectedItems is ObservableCollection<object> selectedItems)
+            {
+                var selectedTracks = new System.Collections.ObjectModel.ObservableCollection<Track>(selectedItems.Cast<ListViewItemViewModel>().Select(itm => itm.Data).Cast<Track>());
+                if (selectedTracks?.Count() > 0)
+                {
+                    var trackIds = selectedTracks.Select(track => track.Id);
+                    if (trackIds != null)
+                    {
+                        PlayerManager.AppendTracksToPlayQueue(
+                            new System.Collections.ObjectModel.ObservableCollection<int>(trackIds),
+                            PlayerMode.Song);
+                    }
+                }
+                this.SelectedItems.Clear();
+            }
+        }
+
         protected override void OnSelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             base.OnSelectedItemsCollectionChanged(sender, e);

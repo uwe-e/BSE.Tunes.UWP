@@ -237,11 +237,11 @@
                                                     <DataTemplate>
                                                         <Grid>
                                                             <MenuFlyoutItem Command="{Binding MenuItemClickedCommand}"
-                                                                        CommandParameter="{Binding}"
-                                                                        controlextensions:MenuFlyoutItem.UpdateTagTarget="True"
-                                                                        Tag="{Binding InsertMode, ConverterParameter=All, Converter={StaticResource InsertModeConverter}, Mode=TwoWay}"
-                                                                        Text="{Binding Text}"
-                                                                        Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"/>
+                                                                            CommandParameter="{Binding}"
+                                                                            controlextensions:MenuFlyoutItem.UpdateTagTarget="True"
+                                                                            Tag="{Binding InsertMode, ConverterParameter=All, Converter={StaticResource InsertModeConverter}, Mode=TwoWay}"
+                                                                            Text="{Binding Text}"
+                                                                            Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}" />
                                                             <MenuFlyoutSeparator Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false}"/>
                                                         </Grid>
                                                     </DataTemplate>
@@ -269,11 +269,11 @@
                                             <DataTemplate>
                                                 <Grid>
                                                     <MenuFlyoutItem Command="{Binding MenuItemClickedCommand}"
-                                                    CommandParameter="{Binding}"
-                                                    Text="{Binding Text}"
-                                                    controlextensions:MenuFlyoutItem.UpdateTagTarget="True"
-                                                    Tag="{Binding InsertMode, ConverterParameter=Selected, Converter={StaticResource InsertModeConverter}, Mode=TwoWay}"
-                                                    Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"/>
+                                                                    CommandParameter="{Binding}"
+                                                                    Text="{Binding Text}"
+                                                                    controlextensions:MenuFlyoutItem.UpdateTagTarget="True"
+                                                                    Tag="{Binding InsertMode, ConverterParameter=Selected, Converter={StaticResource InsertModeConverter}, Mode=TwoWay}"
+                                                                    Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=true}"/>
                                                     <MenuFlyoutSeparator Visibility="{Binding IsSeparator, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=false}"/>
                                                 </Grid>
                                             </DataTemplate>

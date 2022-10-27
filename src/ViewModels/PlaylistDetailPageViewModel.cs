@@ -133,7 +133,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 var entryIds = new System.Collections.ObjectModel.ObservableCollection<int>(selectedItems.Cast<ListViewItemViewModel>().Select(itm => itm.Data).Cast<PlaylistEntry>().Select(p => p.TrackId));
                 if (entryIds?.Count() > 0)
                 {
-                    PlayerManager.InsertTracksToWaitingList(entryIds, PlayerMode.Song);
+                    PlayerManager.InsertTracksToPlayQueue(entryIds, PlayerMode.Song);
                 }
                 this.SelectedItems.Clear();
             }

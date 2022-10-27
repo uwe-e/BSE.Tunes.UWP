@@ -306,6 +306,20 @@ namespace BSE.Tunes.StoreApp.ViewModels
             menuItem.ItemClicked += OnMenuItemViewModelClicked;
 
             MenuItemsPlaylist.Insert(0, menuItem);
+
+            MenuItemsPlaylist.Insert(0, new MenuFlyoutItemViewModel
+            {
+                IsSeparator = true
+            });
+
+            PlayQueueFlyoutItemViewModel playQueueMenuItem = new PlayQueueFlyoutItemViewModel
+            {
+                Text = ResourceService.GetString("FlyoutMenuItem_AddToPlayQueue", "Play queue")
+            };
+            playQueueMenuItem.ItemClicked += OnMenuItemViewModelClicked;
+
+            MenuItemsPlaylist.Insert(0, playQueueMenuItem);
+            
         }
 
         protected virtual void CreateMenuItems(ObservableCollection<Playlist> playlists)
@@ -340,6 +354,16 @@ namespace BSE.Tunes.StoreApp.ViewModels
         {
         }
 
+        protected virtual void AppendSelectedToPlayQueue()
+        {
+
+        }
+
+        protected virtual void AppendAllToPlayQueue()
+        {
+
+        }
+        
         protected virtual async void AppendToPlaylist(Playlist playlist)
         {
             if (playlist != null)
@@ -397,14 +421,25 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private async void SelectedToPlaylist(MenuFlyoutItemViewModel menuItemViewModel)
         {
             //Necessary because NewPlaylistFlyoutItemViewModel is a own viewmodel.
-            NewPlaylistFlyoutItemViewModel viewModel = menuItemViewModel as NewPlaylistFlyoutItemViewModel;
-            if (viewModel != null)
+            if (menuItemViewModel is NewPlaylistFlyoutItemViewModel viewModel)
             {
                 IDialogService dialogService = DialogService.Instance;
                 await dialogService.ShowContentDialogAsync(new NewPlaylistContentDialogViewModel
                 {
                     InsertMode = menuItemViewModel.InsertMode
                 });
+            }
+            if (menuItemViewModel is PlayQueueFlyoutItemViewModel playQueueViewModel)
+            {
+                if (playQueueViewModel.InsertMode == InsertMode.All)
+                {
+                    AppendAllToPlayQueue();
+                }
+                else if(playQueueViewModel.InsertMode == InsertMode.Selected)
+                {
+                    AppendSelectedToPlayQueue();
+                }
+                return;
             }
             ChoosePlaylist(menuItemViewModel);
         }

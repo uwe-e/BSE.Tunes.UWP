@@ -448,4 +448,7 @@ A registration can only be done by the operator of the server.</value>
   <data name="MenuFlyoutPlayNextItems.Text" xml:space="preserve">
     <value>Play next</value>
   </data>
+  <data name="FlyoutMenuItem_AddToPlayQueue" xml:space="preserve">
+    <value>Play queue</value>
+  </data>
 </root>

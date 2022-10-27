@@ -161,7 +161,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             var trackIds = SelectedItems.Cast<GridPanelItemViewModel>().Select(itm => (Track)itm.Data).Select(itm => itm.Id).ToList();
             if (trackIds != null)
             {
-                PlayerManager.InsertTracksToWaitingList(
+                PlayerManager.InsertTracksToPlayQueue(
                     new System.Collections.ObjectModel.ObservableCollection<int>(trackIds),
                     PlayerMode.Song);
             }
