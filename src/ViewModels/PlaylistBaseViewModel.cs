@@ -158,8 +158,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         {
             Messenger.Default.Register<PlaylistChangedArgs>(this, args =>
             {
-                PlaylistCreatedArgs playlistCreated = args as PlaylistCreatedArgs;
-                if (playlistCreated != null)
+                if (args is PlaylistCreatedArgs playlistCreated)
                 {
                     switch (playlistCreated.InsertMode)
                     {
@@ -171,8 +170,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                             break;
                     }
                 }
-                PlaylistEntriesChangedArgs playlistEntriesChanged = args as PlaylistEntriesChangedArgs;
-                if (playlistEntriesChanged != null)
+                if (args is PlaylistEntriesChangedArgs playlistEntriesChanged)
                 {
                     CreatePlaylistMenu();
                 }
@@ -226,7 +224,8 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
         public virtual void PlayTrack(ListViewItemViewModel item)
         {
-            PlayerManager.PlayTrack(((Track)item.Data).Id, PlayerMode.Song);
+            //PlayerManager.PlayTrack(((Track)item.Data).Id, PlayerMode.Song);
+            PlayerManager.PlayTracks(new ObservableCollection<int> { ((Track)item.Data).Id }, PlayerMode.Song);
         }
 
         public virtual void ClearSelection()
@@ -246,7 +245,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public virtual void SelectAll()
         {
             var notSelectedItems = Items.Except(SelectedItems);
-            foreach (ListViewItemViewModel item in notSelectedItems)
+            foreach (ListViewItemViewModel item in notSelectedItems.Cast<ListViewItemViewModel>())
             {
                 //item.IsSelected = true;
                 SelectedItems.Add(item);
@@ -356,7 +355,6 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
         protected virtual void AppendSelectedToPlayQueue()
         {
-
         }
 
         protected virtual void AppendAllToPlayQueue()
@@ -446,8 +444,8 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
         private void ChoosePlaylist(MenuFlyoutItemViewModel menuItemViewModel)
         {
-            PlaylistFlyoutItemViewModel viewModel = menuItemViewModel as PlaylistFlyoutItemViewModel;
-            if (viewModel != null && viewModel.Playlist != null)
+            if (menuItemViewModel is PlaylistFlyoutItemViewModel viewModel)
+            if (viewModel.Playlist != null)
             {
                 AddToPlaylist(viewModel.Playlist, viewModel.InsertMode);
             }

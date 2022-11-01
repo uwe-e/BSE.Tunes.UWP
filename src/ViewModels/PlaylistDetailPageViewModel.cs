@@ -82,8 +82,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         {
             Messenger.Default.Register<PlaylistChangedArgs>(this, args =>
             {
-                PlaylistEntriesChangedArgs playlistEntriesChanged = args as PlaylistEntriesChangedArgs;
-                if (playlistEntriesChanged != null)
+                if (args is PlaylistEntriesChangedArgs playlistEntriesChanged)
                 {
                     LoadData(args.Playlist);
                 }
@@ -141,8 +140,10 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
         public override void PlayTrack(ListViewItemViewModel item)
         {
-            PlayerManager.PlayTrack(((PlaylistEntry)item.Data).TrackId, PlayerMode.Song);
+            //PlayerManager.PlayTrack(((PlaylistEntry)item.Data).TrackId, PlayerMode.Song);
+            PlayerManager.PlayTracks(new ObservableCollection<int> { ((PlaylistEntry)item.Data).TrackId }, PlayerMode.Song);
         }
+
         public async override void DeleteSelectedItems()
         {
             if (SelectedItems?.Count > 0)
@@ -160,6 +161,72 @@ namespace BSE.Tunes.StoreApp.ViewModels
             }
         }
 
+        protected override void AddAllToPlaylist(Playlist playlist)
+        {
+            if (playlist != null)
+            {
+                var entries = new ObservableCollection<PlaylistEntry>(Playlist.Entries);
+                if (entries?.Count() > 0)
+                {
+                    foreach (var entry in entries)
+                    {
+                        playlist.Entries.Add(entry);
+                    }
+                    AppendToPlaylist(playlist);
+                }
+            }
+        }
+
+        protected override void AddSelectedToPlaylist(Playlist playlist)
+        {
+            if (playlist != null)
+            {
+                if (this.SelectedItems is ObservableCollection<object> selectedItems)
+                {
+                    var entries = selectedItems.Cast<ListViewItemViewModel>().Select(itm => itm.Data).Cast<PlaylistEntry>();
+                    if (entries?.Count() > 0)
+                    {
+                        foreach (var entry in entries)
+                        {
+                            playlist.Entries.Add(entry);
+                        }
+                        AppendToPlaylist(playlist);
+                    }
+                    selectedItems.Clear();
+                }
+            }
+        }
+
+        protected override void AppendAllToPlayQueue()
+        {
+            if (Playlist?.Entries is IList<PlaylistEntry> entries)
+            {
+                var trackIds = new ObservableCollection<int>(entries.Select(p => p.TrackId));
+                if (trackIds?.Count() > 0)
+                {
+                    PlayerManager.AppendTracksToPlayQueue(
+                            new ObservableCollection<int>(trackIds),
+                            PlayerMode.Song);
+
+                }
+            }
+        }
+
+        protected override void AppendSelectedToPlayQueue()
+        {
+            if (this.SelectedItems is ObservableCollection<object> selectedItems)
+            {
+                var trackIds = new ObservableCollection<int>(selectedItems.Cast<ListViewItemViewModel>().Select(itm => itm.Data).Cast<PlaylistEntry>().Select(p => p.TrackId));
+                if (trackIds?.Count() > 0)
+                {
+                    PlayerManager.AppendTracksToPlayQueue(
+                            new ObservableCollection<int>(trackIds),
+                            PlayerMode.Song);
+
+                }
+            }
+            base.AppendSelectedToPlayQueue();
+        }
         protected override void OnSelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             base.OnSelectedItemsCollectionChanged(sender, e);

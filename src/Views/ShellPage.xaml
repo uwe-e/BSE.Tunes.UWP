@@ -92,14 +92,14 @@
                     </StackPanel>
                 </winui:NavigationViewItem>
 
-                <winui:NavigationViewItem x:Uid="Shell_WaitList" helpers:NavHelper.PageType="views:QueuePage">
+                <!--<winui:NavigationViewItem x:Uid="Shell_WaitList" helpers:NavHelper.PageType="views:QueuePage">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon Glyph="&#xF5ED;"/>
                         <TextBlock x:Uid="Shell_TxtQueue" Margin="12,0,0,0"
                                VerticalAlignment="Center"
                                Text="Queue" />
                     </StackPanel>
-                </winui:NavigationViewItem>
+                </winui:NavigationViewItem>-->
 
             </winui:NavigationView.MenuItems>
             <!--

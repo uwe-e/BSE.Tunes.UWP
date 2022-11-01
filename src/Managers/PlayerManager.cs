@@ -7,6 +7,7 @@ using CommonServiceLocator;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,10 +15,11 @@ namespace BSE.Tunes.StoreApp.Managers
 {
     public class PlayerManager : IPlayerManager
     {
-        private IDataService m_dataService;
-        private IAuthenticationService m_accountService;
-        private IDialogService m_dialogService;
-        private IResourceService m_resourceService;
+        private readonly IDataService m_dataService;
+        private readonly IDialogService m_dialogService;
+        private NavigableCollection<int> _playlist;
+
+        public event NotifyCollectionChangedEventHandler PlaylistCollectionChanged;
 
         public IPlayerService PlayerService
         {
@@ -27,7 +29,27 @@ namespace BSE.Tunes.StoreApp.Managers
 
         public NavigableCollection<int> Playlist
         {
-            get; set;
+            get
+            {
+                return _playlist;
+            }
+            set
+            {
+                if(_playlist != null)
+                {
+                    _playlist.CollectionChanged -= OnPlaylistCollectionChanged;
+                }
+                
+                _playlist = value;
+                _playlist.CollectionChanged += OnPlaylistCollectionChanged;
+            }
+        }
+
+        private void OnPlaylistCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            //throw new NotImplementedException();
+            NotifyCollectionChangedEventHandler handler = PlaylistCollectionChanged;
+            handler?.Invoke(this, e);
         }
 
         public Track CurrentTrack
@@ -71,10 +93,8 @@ namespace BSE.Tunes.StoreApp.Managers
         public PlayerManager(IDataService dataService, IAuthenticationService accountService, IPlayerService playerService, IDialogService dialogservice, IResourceService resourceService)
         {
             this.m_dataService = dataService;
-            this.m_accountService = accountService;
             this.PlayerService = playerService;
             this.m_dialogService = dialogservice;
-            this.m_resourceService = resourceService;
             Messenger.Default.Register<MediaStateChangedArgs>(this, args =>
             {
                 switch (args.MediaState)
@@ -223,7 +243,7 @@ namespace BSE.Tunes.StoreApp.Managers
             {
                 foreach (int id in ids)
                 {
-                    this.Playlist.Append(id);
+                    this.Playlist.Add(id);
                 }
             }
         }

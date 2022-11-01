@@ -62,8 +62,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         public async override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             await base.OnNavigatedToAsync(parameter, mode, state);
-            Album album = parameter as Album;
-            if (album != null)
+            if (parameter is Album album)
             {
                 Album = album;
                 Album = await DataService.GetAlbumById(album.Id);
@@ -197,6 +196,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                 }
                 this.SelectedItems.Clear();
             }
+            base.AppendSelectedToPlayQueue();
         }
 
         protected override void OnSelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

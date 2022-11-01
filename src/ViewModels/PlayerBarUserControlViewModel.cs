@@ -14,8 +14,8 @@ namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class PlayerBarUserControlViewModel : ViewModelBase
     {
-        private PlayerManager m_playerManager;
-        private IDialogService m_dialogService;
+        private readonly PlayerManager m_playerManager;
+        private readonly IDialogService m_dialogService;
         private ICommand m_playCommand;
         private RelayCommand m_previousTrackCommand;
         private RelayCommand m_nextTrackCommand;
@@ -67,7 +67,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             set
             {
                 this.m_bIsPlaying = value;
-                RaisePropertyChanged("IsPlaying");
+                RaisePropertyChanged(nameof(IsPlaying));
             }
         }
         public bool IsVisible
@@ -79,7 +79,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             set
             {
                 m_isVisible = value;
-                RaisePropertyChanged("IsVisible");
+                RaisePropertyChanged(nameof(IsVisible));
             }
         }
         public PlayerState PlayerState
@@ -91,7 +91,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             set
             {
                 this.m_playerState = value;
-                RaisePropertyChanged("PlayerState");
+                RaisePropertyChanged(nameof(PlayerState));
             }
         }
         public double ProgressValue
@@ -103,7 +103,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             set
             {
                 this.m_iProgressValue = value;
-                RaisePropertyChanged("ProgressValue");
+                RaisePropertyChanged(nameof(ProgressValue));
             }
         }
         public double ProgressMaximumValue
@@ -115,7 +115,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             set
             {
                 this.m_iProgressMaximumValue = value;
-                RaisePropertyChanged("ProgressMaximumValue");
+                RaisePropertyChanged(nameof(ProgressMaximumValue));
             }
         }
         public double StepFrequency
@@ -127,7 +127,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             set
             {
                 this.m_stepFrequency = value;
-                RaisePropertyChanged("StepFrequency");
+                RaisePropertyChanged(nameof(StepFrequency));
             }
         }
         public string CurrentProgressTime
@@ -139,7 +139,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             set
             {
                 this.m_currentProgressTime = value;
-                RaisePropertyChanged("CurrentProgressTime");
+                RaisePropertyChanged(nameof(CurrentProgressTime));
             }
         }
         public string CurrentTrackDuration
@@ -151,7 +151,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
             set
             {
                 this.m_currentTrackDuration = value;
-                RaisePropertyChanged("CurrentTrackDuration");
+                RaisePropertyChanged(nameof(CurrentTrackDuration));
             }
         }
         public ICommand PlayCommand => m_playCommand ?? (m_playCommand = new RelayCommand<object>(vm => Play()));
@@ -164,6 +164,8 @@ namespace BSE.Tunes.StoreApp.ViewModels
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 m_playerManager = PlayerManager.Instance;
+                m_playerManager.PlaylistCollectionChanged += OnPlayerManagerPlaylistCollectionChanged;
+                
                 m_dialogService = DialogService.Instance;
 
                 //This prevents the alignment right of the slider´s thumb at start-up.
@@ -255,6 +257,12 @@ namespace BSE.Tunes.StoreApp.ViewModels
             this.m_playerManager.ExecuteNextTrack();
         }
 
+        private void OnPlayerManagerPlaylistCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            PreviousTrackCommand.RaiseCanExecuteChanged();
+            NextTrackCommand.RaiseCanExecuteChanged();
+        }
+
         private void OnPlayerStateChanged(PlayerState playerState)
         {
             this.PlayerState = playerState;
@@ -284,8 +292,10 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
             LoadCoverSource(this.CurrentTrack);
 
-            this.m_progressTimer = new DispatcherTimer();
-            this.m_progressTimer.Interval = TimeSpan.FromSeconds(this.StepFrequency);
+            this.m_progressTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(this.StepFrequency)
+            };
             this.m_progressTimer.Tick += OnProgressTimerTick;
             this.m_progressTimer.Start();
         }
