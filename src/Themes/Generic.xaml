@@ -6,6 +6,7 @@
         <ResourceDictionary Source="ms-appx:///Controls/Indicator/Indicator.xaml"/>
         <ResourceDictionary Source="ms-appx:///Controls/CrossfadingImage/CrossfadingImage.xaml"/>
         <ResourceDictionary Source="ms-appx:///Controls/ListView/ListViewItemEx.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Controls/MenuFlyoutItem/MenuFlyoutItem.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

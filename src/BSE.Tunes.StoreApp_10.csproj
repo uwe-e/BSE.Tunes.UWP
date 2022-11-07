@@ -139,6 +139,7 @@
     <Compile Include="Controls\ListView\ItemPreSelectionClickEventArgs.cs" />
     <Compile Include="Controls\ListView\ListView.cs" />
     <Compile Include="Controls\ListView\ListViewItemEx.cs" />
+    <Compile Include="Controls\MenuFlyoutItem\MenuFlyoutItem.cs" />
     <Compile Include="Converters\AutoSuggestQueryParameterConverter.cs" />
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Extensions\DynamicExtension.cs" />
@@ -381,6 +382,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\ListView\ListViewItemEx.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MenuFlyoutItem\MenuFlyoutItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

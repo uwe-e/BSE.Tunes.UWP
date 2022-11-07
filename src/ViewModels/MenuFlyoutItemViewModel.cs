@@ -7,71 +7,90 @@ namespace BSE.Tunes.StoreApp.ViewModels
 {
     public class MenuFlyoutItemViewModel : GalaSoft.MvvmLight.ViewModelBase
     {
-        #region Events
         public event EventHandler<EventArgs> ItemClicked;
-        #endregion
 
-        #region FieldsPrivate
-        private string m_text;
-        private bool m_isSeparator;
-        private ICommand m_menuItemClickedCommand;
-        private InsertMode m_insertMode;
-        #endregion
+        private string _text;
+        private string _icon;
+        private bool _isSeparator;
+        private ICommand _menuItemClickedCommand;
+        private InsertMode _insertMode;
+        private string _glyph;
 
-        #region Properties
         public bool IsSeparator
         {
             get
             {
-                return m_isSeparator;
+                return _isSeparator;
             }
             set
             {
-                m_isSeparator = value;
-                RaisePropertyChanged("IsSeparator");
+                _isSeparator = value;
+                RaisePropertyChanged(nameof(IsSeparator));
             }
         }
         public InsertMode InsertMode
         {
             get
             {
-                return m_insertMode;
+                return _insertMode;
             }
             set
             {
-                m_insertMode = value;
-                RaisePropertyChanged("InsertMode");
+                _insertMode = value;
+                RaisePropertyChanged(nameof(InsertMode));
             }
         }
+
         public string Text
         {
             get
             {
-                return this.m_text;
+                return _text;
             }
             set
             {
-                this.m_text = value;
-                RaisePropertyChanged("Text");
+                _text = value;
+                RaisePropertyChanged(nameof(Text));
             }
         }
 
-		public dynamic Data
-		{
-			get;
-			set;
-		}
-		public ICommand MenuItemClickedCommand => m_menuItemClickedCommand ?? (m_menuItemClickedCommand = new RelayCommand<MenuFlyoutItemViewModel>(MenuItemClicked));
-        #endregion
+        public string Icon
+        {
+            get
+            {
+                return _icon;
+            }
+            set
+            {
+                _icon = value;
+                RaisePropertyChanged(nameof(Icon));
+            }
+        }
 
-        #region MethodsPrivate
+        public string Glyph
+        {
+            get
+            {
+                return _glyph;
+            }
+            set
+            {
+                _glyph = value;
+                RaisePropertyChanged(nameof(Glyph));
+            }
+        }
+
+        public dynamic Data
+        {
+            get;
+            set;
+        }
+
+        public ICommand MenuItemClickedCommand => _menuItemClickedCommand ?? (_menuItemClickedCommand = new RelayCommand<MenuFlyoutItemViewModel>(MenuItemClicked));
+
         private void MenuItemClicked(MenuFlyoutItemViewModel obj)
         {
-            if (ItemClicked != null)
-            {
-                ItemClicked(obj, EventArgs.Empty);
-            }
+            ItemClicked?.Invoke(obj, EventArgs.Empty);
         }
-        #endregion
     }
 }

@@ -300,7 +300,8 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
             var menuItem = new NewPlaylistFlyoutItemViewModel
             {
-                Text = ResourceService.GetString("FlyoutMenuItem_AddNewPlaylist", "New Playlist")
+                Text = ResourceService.GetString("FlyoutMenuItem_AddNewPlaylist", "New Playlist"),
+                Glyph = "\xE948"
             };
             menuItem.ItemClicked += OnMenuItemViewModelClicked;
 
@@ -313,7 +314,8 @@ namespace BSE.Tunes.StoreApp.ViewModels
 
             PlayQueueFlyoutItemViewModel playQueueMenuItem = new PlayQueueFlyoutItemViewModel
             {
-                Text = ResourceService.GetString("FlyoutMenuItem_AddToPlayQueue", "Play queue")
+                Text = ResourceService.GetString("FlyoutMenuItem_AddToPlayQueue", "Play queue"),
+                Glyph = "\xE728;"
             };
             playQueueMenuItem.ItemClicked += OnMenuItemViewModelClicked;
 
@@ -419,7 +421,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
         private async void SelectedToPlaylist(MenuFlyoutItemViewModel menuItemViewModel)
         {
             //Necessary because NewPlaylistFlyoutItemViewModel is a own viewmodel.
-            if (menuItemViewModel is NewPlaylistFlyoutItemViewModel viewModel)
+            if (menuItemViewModel is NewPlaylistFlyoutItemViewModel)
             {
                 IDialogService dialogService = DialogService.Instance;
                 await dialogService.ShowContentDialogAsync(new NewPlaylistContentDialogViewModel
@@ -427,6 +429,7 @@ namespace BSE.Tunes.StoreApp.ViewModels
                     InsertMode = menuItemViewModel.InsertMode
                 });
             }
+            
             if (menuItemViewModel is PlayQueueFlyoutItemViewModel playQueueViewModel)
             {
                 if (playQueueViewModel.InsertMode == InsertMode.All)
