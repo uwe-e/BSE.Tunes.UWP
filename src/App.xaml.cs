@@ -4,6 +4,7 @@ using BSE.Tunes.StoreApp.ViewModels;
 using CommonServiceLocator;
 using System;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
@@ -20,6 +21,8 @@ namespace BSE.Tunes.StoreApp
         }
         private SettingsService m_settingsService;
 
+        private IDialogService _dialogService;
+
         public App()
         {
             InitializeComponent();
@@ -28,6 +31,8 @@ namespace BSE.Tunes.StoreApp
 
             // some settings must be set in app.constructor
             m_settingsService = SettingsService.Instance;
+
+            _dialogService = DialogService.Instance;
 
             // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
             _activationService = new Lazy<ActivationService>(CreateActivationService);
@@ -83,10 +88,15 @@ namespace BSE.Tunes.StoreApp
             await ActivationService.ActivateAsync(args);
         }
 
-        private void OnAppUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        private async void OnAppUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             // TODO WTS: Please log and handle the exception as appropriate to your scenario
             // For more info see https://docs.microsoft.com/uwp/api/windows.ui.xaml.application.unhandledexception
+
+            e.Handled = true;
+
+            //await new MessageDialog(e.Exception.Message + e.Exception.StackTrace, "Unknown Error").ShowAsync();
+            await _dialogService.ShowMessageDialogAsync(e.Exception.Message + e.Exception.StackTrace, "Unknown Error", null, null, null, MessageDialogOptions.None);
         }
 
         private ActivationService CreateActivationService()
