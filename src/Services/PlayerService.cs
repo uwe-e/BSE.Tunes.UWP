@@ -203,9 +203,10 @@ namespace BSE.Tunes.StoreApp.Services
         {
             try
             {
-                this.m_currentTrack = track;
-                if (this.m_currentTrack != null)
+                if (track != null)
                 {
+                    this.m_currentTrack = track;
+
                     Guid guid = this.m_currentTrack.Guid;
                     if (guid != null && !guid.Equals(Guid.Empty))
                     {

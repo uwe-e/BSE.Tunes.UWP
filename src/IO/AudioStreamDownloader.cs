@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BSE.Tunes.StoreApp.Extensions;
+using BSE.Tunes.StoreApp.Services;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using BSE.Tunes.StoreApp.Services;
-using BSE.Tunes.StoreApp.Extensions;
 
 namespace BSE.Tunes.StoreApp.IO
 {
@@ -24,7 +24,7 @@ namespace BSE.Tunes.StoreApp.IO
 		#endregion
 
 		#region FieldsPrivate
-		private IDataService m_dataService;
+		private readonly IDataService m_dataService;
 		private Stream m_responseStream;
 		private bool m_isCanceled;
 		private HttpStatusCode m_httpStatusCode;
@@ -76,7 +76,7 @@ namespace BSE.Tunes.StoreApp.IO
 			}
 			this.m_totalBytesToReceive = -1;
             long totalBytesToReceive = -1;
-            long bytesReceived = 0;
+            long bytesReceived;
 			this.m_isCanceled = false;
 			bool hasDownloadStarted = false;
 			int exceptionAttempt = 0;
@@ -239,31 +239,19 @@ namespace BSE.Tunes.StoreApp.IO
 		}
         protected virtual void OnDownloadComplete()
         {
-            if (this.DownloadComplete != null)
-            {
-                this.DownloadComplete(this, EventArgs.Empty);
-            }
+            this.DownloadComplete?.Invoke(this, EventArgs.Empty);
         }
 		protected virtual void OnDownloadStarting()
 		{
-			if (this.DownloadStarting != null)
-			{
-				this.DownloadStarting(this, EventArgs.Empty);
-			}
-		}
+            this.DownloadStarting?.Invoke(this, EventArgs.Empty);
+        }
 		protected void OnDownloadProgessStarted()
 		{
-			if (this.DownloadProgessStarted != null)
-			{
-				this.DownloadProgessStarted(this, EventArgs.Empty);
-			}
-		}
+            this.DownloadProgessStarted?.Invoke(this, EventArgs.Empty);
+        }
         protected virtual void OnPreloadComplete()
         {
-            if (this.PreloadComplete != null)
-            {
-                this.PreloadComplete(this, EventArgs.Empty);
-            }
+            this.PreloadComplete?.Invoke(this, EventArgs.Empty);
         }
 		#endregion
 
@@ -275,10 +263,10 @@ namespace BSE.Tunes.StoreApp.IO
 			try
 			{
                 await LocalStorage.ReleaseCacheAsync(24100224);
-                await IOUtilities.WrapSharingViolations(async () =>
+				await IOUtilities.WrapSharingViolations(async () =>
 				{
 					IStorageFolder storageFolder = await LocalStorage.GetTempFolderAsync();
-                    var storageFile = await storageFolder.CreateFileAsync(trackId.ToString(), creationCollisionOption) as StorageFile;
+					var	storageFile = await storageFolder.CreateFileAsync(trackId.ToString(), creationCollisionOption) as StorageFile;
 					IRandomAccessStream windowsRuntimeStream = await storageFile.OpenAsync(FileAccessMode.ReadWrite);
 					stream = windowsRuntimeStream.AsStream();
 				});
@@ -287,6 +275,10 @@ namespace BSE.Tunes.StoreApp.IO
 			{
 				isUnauthorizedAccess = true;
 			}
+			catch(IOException)
+			{
+                isUnauthorizedAccess = true;
+            }
 			if (isUnauthorizedAccess)
 			{
 				//When, for example, the new track for playing is the same than the current played track.
@@ -296,6 +288,22 @@ namespace BSE.Tunes.StoreApp.IO
 				});
 			}
 			return stream;
+		}
+
+		private Task<bool> TryGetStorageFileIfExits(IStorageFolder storageFolder, string fileName, out StorageFile storageFile)
+		{
+			bool fileExists = false;
+			storageFile= null;
+			try
+			{
+				Task<StorageFile> task = Task.Run(async () =>
+					await storageFolder.GetFileAsync(fileName)
+					);
+				storageFile = task.Result;
+				fileExists = true;
+            }
+			catch { }
+			return Task.FromResult(fileExists);
 		}
 		private async Task<long> GetFileSizeAsync(Uri uri)
 		{

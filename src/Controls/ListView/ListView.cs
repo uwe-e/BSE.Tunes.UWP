@@ -36,8 +36,7 @@ namespace BSE.Tunes.StoreApp.Controls
 
         private static void OnEnablePreSelectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ListView listView = d as ListView;
-            if (listView != null)
+            if (d is ListView listView)
             {
                 listView.ContainerContentChanging += OnListContainerContentChanging;
             }
@@ -45,8 +44,7 @@ namespace BSE.Tunes.StoreApp.Controls
 
         private static void OnListContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         {
-            var itemContainer = args.ItemContainer as ListViewItemEx;
-            if (itemContainer != null)
+            if (args.ItemContainer is ListViewItemEx itemContainer)
             {
                 itemContainer.EnablePreSelection = ((ListView)sender).EnablePreSelection;
             }
@@ -125,10 +123,7 @@ namespace BSE.Tunes.StoreApp.Controls
         {
             PreSelectionCommand?.Execute(e.SelectedItem);
             EventHandler<ItemPreSelectionClickEventArgs> handler = ItemPreSelectionClick;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            handler?.Invoke(this, e);
         }
 
         internal void SetPreselection(object SelectedItem)
@@ -162,10 +157,9 @@ namespace BSE.Tunes.StoreApp.Controls
 
         private static void AlternatingRowChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            ListView control = dependencyObject as ListView;
-            if (control != null)
+            if (dependencyObject is ListView listView)
             {
-                control.AlternatingRow = dependencyPropertyChangedEventArgs.NewValue as Brush;
+                listView.AlternatingRow = dependencyPropertyChangedEventArgs.NewValue as Brush;
             }
         }
     }

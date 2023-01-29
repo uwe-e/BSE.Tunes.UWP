@@ -33,5 +33,25 @@ namespace BSE.Tunes.StoreApp.Models.Contract
         {
             get; set;
         }
+
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+
+            Track track = (Track)obj;
+            if (!track.Id.Equals(Id))
+            {
+                return false;
+            }
+            if (!track.Guid.Equals(Guid))
+            {
+                return false;
+            }
+            return true;
+
+        }
     }
 }
