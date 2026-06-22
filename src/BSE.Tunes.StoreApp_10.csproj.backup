@@ -29,7 +29,7 @@
     <AppInstallerUri>C:\Git\storeapp</AppInstallerUri>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>7E2DB7B36582A5021F60037FA357340315A34E78</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>E9EBCDD44E04CA0FC63F8ECA4ABCBEC7E9FB2959</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -365,7 +365,6 @@
     <Content Include="Assets\Square44x44Logo.targetsize-256_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Help.htm" />
-    <None Include="client-bsetunes-com.pfx" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
